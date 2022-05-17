@@ -1,10 +1,13 @@
 import Routeing from './routeing'
+import { Provider } from "react-redux";
+import store from "./redux/store"
+
 
 function App() {
   return (
-    <div>
+    <Provider store={store}>
       <Routeing />
-    </div>
+    </Provider>
   );
 }
 

@@ -37,6 +37,7 @@ const Homelayout = () => {
             <div className='sm:mx-6 mx-2 mt-6 shadow'>
                 <TailwindTableCss columns={columns} data={data} />
             </div>
+            {/* <AlertMsgComponent /> */}
         </div>
     );
 };
@@ -58,7 +59,7 @@ const selectMenulist = [
 const columns = [
     {
         name: "Name",
-        selector: "Name",
+        selector:row => row.Name,
         sortable: true,
         // style: {
         //     display: 'flex',
@@ -68,41 +69,45 @@ const columns = [
     },
     {
         name: "Description",
-        selector: "Description",
+        selector:row => row.Description,
         sortable: true,
     },
     {
         name: "Column 1",
-        selector: "Column1",
+        selector:row => row.Column1,
         sortable: true,
     },
     {
         name: "Column 2",
-        selector: "Column2",
+        selector:row => row.Column2,
         sortable: true,
     },
     {
         name: "Column 3",
-        selector: "Column3",
+        selector:row => row.Column3,
         sortable: true,
     },
     {
         name: "Created On",
-        selector: "CreatedOn",
+        width:'130px',
+        selector:row => row.CreatedOn,
         sortable: true,
     },
     {
         name: "Created By",
-        selector: "CreatedBy",
+        width:'130px',
+        selector:row => row.CreatedBy,
         sortable: true,
     }, {
         name: "Last Modified",
-        selector: "LastModified",
+        width:'130px',
+        selector:row => row.LastModified,
         sortable: true,
     },
     {
         name: "Action",
-        // selector: "LastModified",
+        width:'130px',
+        // selector:row => row. "LastModified",
         // sortable: true,
         cell: (row) => (
             <TableActionCell row={row} />

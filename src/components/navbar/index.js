@@ -1,6 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Disclosure, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
+import { Navigate } from "react-router-dom";
 
 const navigation = [
     { name: 'Dashboard', href: '#', current: false },
@@ -13,7 +14,12 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Navbar() {
+export default function Navbar(props) {
+
+    const handleLogout = () => {
+        localStorage.clear()
+        window.location.href = '/login'
+    }
     return (
         <Disclosure as="nav">
             {({ open }) => (
@@ -56,6 +62,7 @@ export default function Navbar() {
                                 </div>
                                 <div className="inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                     <button
+                                        onClick={handleLogout}
                                         className="hidden lg:block cursor-pointer p-1 rounded-full text-green-800"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -95,6 +102,8 @@ export default function Navbar() {
 
 
                             <button
+                                title='👋 Logout'
+                                // onClick={handleLogout}
                                 className="flex items-center justify-start px-3 py-2 cursor-pointer p-1 text-gray-900"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

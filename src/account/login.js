@@ -1,13 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { LOGIN_USER } from '../redux/actions/user';
 import LoginForm from './loginForm';
 
-const Login = () => {
+const Login = (props) => {
+    const { LOGIN_USER } = props
+    // console.log(process.env)
+
 
     return (
         <div>
-            <LoginForm />
+            <LoginForm LOGIN_USER={LOGIN_USER} />
         </div>
     )
 }
 
-export default Login;
+export default connect(null, { LOGIN_USER })(Login)

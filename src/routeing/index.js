@@ -1,24 +1,25 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-
-import Home from '../pages/home'
 import Login from '../account/login'
-// import Navbar from '../components/navbar';
-// const checkAuth = true
+import Home from '../pages/home'
+import ProtectedRoutes from '../protectedRoute';
 
 const Routeing = () => {
-    // const [checkAuth, setCheckOut] = useState()
 
     return (
         <>
             <BrowserRouter>
                 <Routes>
-
                     <Route path="/" element={<Login />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/home" element={<Home />} />
+
+                    {/* Protected routes here  */}
+                    <Route element={<ProtectedRoutes />}>
+                        <Route path="/home" element={<Home />} />
+                    </Route>
 
                 </Routes>
+
             </BrowserRouter>
         </>
     )
