@@ -10,7 +10,7 @@ export default function SelectModule(props) {
 
     return (
         <div className="sm:w-72 w-full">
-            <Listbox style={{ zIndex: 100 }} value={selected} onChange={setSelected}>
+            <Listbox style={{ zIndex: 10 }} value={selected} onChange={setSelected}>
                 <div className="relative mt-1">
                     <Listbox.Button className="relative w-full cursor-pointer bg-white py-2 pl-3 pr-10 text-left border border-gray-700 focus:outline-none focus-visible:border-green-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                         <span className="block truncate">{selected.name}</span>
