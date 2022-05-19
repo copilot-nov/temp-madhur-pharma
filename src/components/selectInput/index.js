@@ -6,7 +6,7 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 export default function SelectModule(props) {
     const { selectMenulist } = props
-    const [selected, setSelected] = useState(selectMenulist[0])
+    const [selected, setSelected] = useState({ name: 'User Management' })
 
     return (
         <div className="sm:w-72 w-full">

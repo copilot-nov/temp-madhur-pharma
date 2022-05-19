@@ -2,22 +2,24 @@ import React, { useState } from 'react';
 import { ADD_USER_BY_ADMIN } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 
+const defaultState = {
+    name: "",
+    password: "",
+    emp_id: "",
+    department: "",
+    designation: "",
+    email: "",
+    phone: "",
+    notes: "",
+    role_id: 0,
+    role_notes: ""
+}
+
 const UserManagment = (props) => {
     const { closeModal } = props
     // redux functions 
     const { ADD_USER_BY_ADMIN } = props
-    const [payload, setPayload] = useState({
-        name: "",
-        password: "",
-        emp_id: "",
-        department: "",
-        designation: "",
-        email: "",
-        phone: "",
-        notes: "",
-        role_id: 0,
-        role_notes: ""
-    })
+    const [payload, setPayload] = useState(defaultState)
 
     const handleOnChange = (e) => {
         let { name, value } = e.target
@@ -27,11 +29,11 @@ const UserManagment = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(payload)
-        let copypayload  = payload
+        let copypayload = payload
         copypayload.role_id = Number(copypayload.role_id)
         ADD_USER_BY_ADMIN(payload)
-        // closeModal()
+        closeModal()
+        setPayload(defaultState)
     }
 
     return (
