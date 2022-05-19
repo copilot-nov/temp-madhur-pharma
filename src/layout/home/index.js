@@ -31,14 +31,10 @@ const Homelayout = (props) => {
                         />
                     </div>
                 </div>
-                <div className="col-span-6 sm:col-span-3">
-                    <div className='flex items-center justify-center'>
-                        {/* <TablePagination /> */}
-                    </div>
-                </div>
             </div>
             <div className='sm:mx-6 mx-2 mt-6 shadow'>
-                <TailwindTableCss columns={selected?.columns} data={data} />
+             
+                <TailwindTableCss columns={selected?.columns || selectModuleColumn[1]?.columns} data={data} />
             </div>
             {/* <AlertMsgComponent /> */}
         </div>

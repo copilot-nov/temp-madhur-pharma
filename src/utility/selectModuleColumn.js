@@ -1,3 +1,4 @@
+import moment from 'moment'
 import TableActionCell from '../components/tailwind-table/tableActionCell'
 
 let customerCol = [
@@ -28,7 +29,7 @@ let customerCol = [
     },
     {
         name: "Created By",
-        width: '130px',
+        // width: '80px',
         selector: row => row.CreatedBy,
         sortable: true,
     },
@@ -49,44 +50,44 @@ let customerCol = [
 let userCol = [
     {
         name: "Name",
-        selector: row => row.Name,
+        selector: row => row.name,
         sortable: true,
     },
     {
         name: "Empolyee id",
-        selector: row => row.Description,
+        selector: row => row.emp_id,
         sortable: true,
     },
     {
         name: "Designation",
-        selector: row => row.Column1,
+        selector: row => row.designation,
         sortable: true,
     },
     {
         name: "Department",
-        selector: row => row.Column2,
+        selector: row => row.department,
         sortable: true,
     },
     {
         name: "Email",
-        selector: row => row.Column3,
+        selector: row => row.email,
         sortable: true,
     },
     {
         name: "Phone",
-        selector: row => row.Column3,
+        selector: row => row.phone,
         sortable: true,
     },
     {
         name: "Created By",
-        width: '130px',
-        selector: row => row.CreatedBy,
+        // width: '80px',
+        selector: row => row.created_by,
         sortable: true,
     },
     {
         name: "Created On",
         width: '130px',
-        selector: row => row.CreatedOn,
+        selector: row => moment(row.created_on).format('DD/MM/YYYY'),
         sortable: true,
     },
     {
@@ -121,7 +122,7 @@ let ProductCol = [
     },
     {
         name: "Created by",
-        width: '130px',
+        // width: '80px',
         selector: row => row.CreatedBy,
         sortable: true,
     },
@@ -167,7 +168,7 @@ let MaterialCol = [
     },
     {
         name: "Created by",
-        width: '130px',
+        // width: '80px',
         selector: row => row.CreatedBy,
         sortable: true,
     },
@@ -203,7 +204,7 @@ let IngredientCol = [
     },
     {
         name: "Created by",
-        width: '130px',
+        // width: '80px',
         selector: row => row.CreatedBy,
         sortable: true,
     },
@@ -256,7 +257,7 @@ let OrderCol = [
     },
     {
         name: "Created by",
-        width: '130px',
+        // width: '80px',
         selector: row => row.CreatedBy,
         sortable: true,
     },
@@ -276,10 +277,10 @@ let OrderCol = [
 ]
 
 export const selectModuleColumn = [
-    { name: 'Customer Management', column: customerCol },
-    { name: 'User Management', column: userCol },
-    { name: 'Product Management', column: ProductCol },
-    { name: 'Material Management', column: MaterialCol },
-    { name: 'Ingredient Management', column: IngredientCol },
-    { name: 'Order Management', column: OrderCol },
+    { name: 'Customer Management', columns: customerCol },
+    { name: 'User Management', columns: userCol },
+    { name: 'Product Management', columns: ProductCol },
+    { name: 'Material Management', columns: MaterialCol },
+    { name: 'Ingredient Management', columns: IngredientCol },
+    { name: 'Order Management', columns: OrderCol },
 ]
