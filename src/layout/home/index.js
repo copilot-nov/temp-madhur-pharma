@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AddModal from '../../components/addmodal';
 import Navbar from '../../components/navbar'
 import TextInput from '../../components/searchInput';
-import SelectModule from '../../components/selectInput';
+import SelectManagmentType from '../../components/SelectManagmentType';
 import TailwindTableCss from '../../components/tailwind-table';
 import TableActionCell from '../../components/tailwind-table/tableActionCell'
+import { selectModuleColumn } from '../../utility/selectModuleColumn';
 
 const Homelayout = (props) => {
     const { data } = props
+    const [selected, setSelected] = useState(selectModuleColumn[1])
+
     return (
         <div>
             <Navbar />
             <div className='sm:mx-6 mx-2 mt-10'>
-                <SelectModule selectMenulist={selectMenulist} />
+                <SelectManagmentType selected={selected} setSelected={setSelected} selectModuleColumn={selectModuleColumn} />
             </div>
             <div className="grid grid-cols-6 gap-6 sm:mx-6 mx-2 mt-8">
                 <div className="col-span-6 sm:col-span-3">
@@ -36,7 +39,7 @@ const Homelayout = (props) => {
                 </div>
             </div>
             <div className='sm:mx-6 mx-2 mt-6 shadow'>
-                <TailwindTableCss columns={columns} data={data} />
+                <TailwindTableCss columns={selected?.columns} data={data} />
             </div>
             {/* <AlertMsgComponent /> */}
         </div>
@@ -44,75 +47,3 @@ const Homelayout = (props) => {
 };
 
 export default Homelayout;
-
-// AdminReducer
-const selectMenulist = [
-    { name: 'Select Module' },
-    { name: 'Customer Management' },
-    { name: 'User Management' },
-    { name: 'Process Management' },
-    { name: 'Product Management' },
-    { name: 'Materil Management' },
-    { name: 'Ingredient Management' },
-    { name: 'Order Management' },
-]
-
-const columns = [
-    {
-        name: "Name",
-        selector: row => row.Name,
-        sortable: true,
-        // style: {
-        //     display: 'flex',
-        //     justifyContent: 'center',
-        // },
-        // cell: (row) => (<span>{row?.title} {row?.id} </span>)
-    },
-    {
-        name: "Description",
-        selector: row => row.Description,
-        sortable: true,
-    },
-    {
-        name: "Column 1",
-        selector: row => row.Column1,
-        sortable: true,
-    },
-    {
-        name: "Column 2",
-        selector: row => row.Column2,
-        sortable: true,
-    },
-    {
-        name: "Column 3",
-        selector: row => row.Column3,
-        sortable: true,
-    },
-    {
-        name: "Created On",
-        width: '130px',
-        selector: row => row.CreatedOn,
-        sortable: true,
-    },
-    {
-        name: "Created By",
-        width: '130px',
-        selector: row => row.CreatedBy,
-        sortable: true,
-    }, {
-        name: "Last Modified",
-        width: '130px',
-        selector: row => row.LastModified,
-        sortable: true,
-    },
-    {
-        name: "Action",
-        width: '130px',
-        // selector:row => row. "LastModified",
-        // sortable: true,
-        cell: (row) => (
-            <TableActionCell row={row} />
-        )
-    },
-
-];

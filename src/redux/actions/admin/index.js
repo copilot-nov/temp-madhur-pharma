@@ -20,8 +20,6 @@ export const GET_USER_BY_ADMIN = () => {
     let url = `${baseUrl}/users`
     return async dispatch => {
         try {
-            console.log(getHeaders())
-
             let res = await axios.get(url, { headers: getHeaders() })
             if (res?.data.success) {
                 dispatch({ type: 'GET_USER_BY_ADMIN', payload: res?.data?.data })

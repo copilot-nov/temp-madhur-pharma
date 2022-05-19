@@ -4,9 +4,8 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 
 
-export default function SelectModule(props) {
-    const { selectMenulist } = props
-    const [selected, setSelected] = useState({ name: 'User Management' })
+export default function SelectManagmentType(props) {
+    const { selectModuleColumn, selected,setSelected } = props
 
     return (
         <div className="sm:w-72 w-full">
@@ -28,7 +27,7 @@ export default function SelectModule(props) {
                         leaveTo="opacity-0"
                     >
                         <Listbox.Options className="absolute mt-1 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                            {selectMenulist.map((person, personIdx) => (
+                            {selectModuleColumn.map((person, personIdx) => (
                                 <Listbox.Option
                                     key={personIdx}
                                     className={({ active }) =>

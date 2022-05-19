@@ -11,7 +11,6 @@ const Home = (props) => {
     useEffect(() => {
         GET_USER_BY_ADMIN()
     }, [])
-
     return (
         <div>
             <Homelayout data={usermanagmentList} />
