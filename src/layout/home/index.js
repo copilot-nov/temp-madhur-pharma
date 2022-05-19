@@ -4,7 +4,6 @@ import Navbar from '../../components/navbar'
 import TextInput from '../../components/searchInput';
 import SelectManagmentType from '../../components/SelectManagmentType';
 import TailwindTableCss from '../../components/tailwind-table';
-import TableActionCell from '../../components/tailwind-table/tableActionCell'
 import { selectModuleColumn } from '../../utility/selectModuleColumn';
 
 const Homelayout = (props) => {

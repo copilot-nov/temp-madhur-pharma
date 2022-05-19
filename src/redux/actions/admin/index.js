@@ -8,10 +8,10 @@ const getHeaders = () => {
         'accept': 'application/json',
     }
 }
-const getUsetInfo = () => {
-    return JSON.parse(localStorage.getItem('userInfo'))
-    // return JSON.pase(localStorage.getItem('userInfo'))
-}
+// const getUsetInfo = () => {
+//     return JSON.parse(localStorage.getItem('userInfo'))
+//     // return JSON.pase(localStorage.getItem('userInfo'))
+// }
 
 // console.log(getUsetInfo())
 

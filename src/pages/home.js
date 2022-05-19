@@ -8,9 +8,10 @@ const Home = (props) => {
     const { usermanagmentList } = props
     // action redux function
     const { GET_USER_BY_ADMIN } = props
+    
     useEffect(() => {
         GET_USER_BY_ADMIN()
-    }, [])
+    }, [GET_USER_BY_ADMIN])
     return (
         <div>
             <Homelayout data={usermanagmentList} />
