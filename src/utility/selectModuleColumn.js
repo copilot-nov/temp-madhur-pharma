@@ -4,39 +4,39 @@ import TableActionCell from '../components/tailwind-table/tableActionCell'
 let customerCol = [
     {
         name: "Name",
-        selector: row => row.Name,
+        selector: row => row.name,
         sortable: true,
     },
     {
         name: "City",
-        selector: row => row.Description,
+        selector: row => row.city,
         sortable: true,
     },
     {
         name: "Contact person",
-        selector: row => row.Column1,
+        selector: row => row.contact_person,
         sortable: true,
     },
     {
         name: "Email",
-        selector: row => row.Column2,
+        selector: row => row.email,
         sortable: true,
     },
-    {
+    {   
         name: "Phone",
-        selector: row => row.Column3,
+        selector: row => row.phone,
         sortable: true,
     },
     {
         name: "Created By",
         // width: '80px',
-        selector: row => row.CreatedBy,
+        selector: row => row.created_by,
         sortable: true,
     },
     {
         name: "Created On",
         width: '130px',
-        selector: row => row.CreatedOn,
+        selector: row => moment(row.created_on).format('DD/MM/YYYY'),
         sortable: true,
     },
     {
@@ -102,34 +102,34 @@ let userCol = [
 let ProductCol = [
     {
         name: "Name",
-        selector: row => row.Name,
+        selector: row => row.name,
         sortable: true,
     },
     {
         name: "Customer",
-        selector: row => row.Description,
+        selector: row => row.customer_id,
         sortable: true,
     },
     {
         name: "Product code",
-        selector: row => row.Column1,
+        selector: row => row.code,
         sortable: true,
     },
     {
         name: "HSN code",
-        selector: row => row.Column2,
+        selector: row => row.hsn_code,
         sortable: true,
     },
     {
         name: "Created by",
         // width: '80px',
-        selector: row => row.CreatedBy,
+        selector: row => row.created_by,
         sortable: true,
     },
     {
         name: "Created On",
         width: '130px',
-        selector: row => row.CreatedOn,
+        selector: row => moment(row.created_on).format('DD/MM/YYYY'),
         sortable: true,
     },
     {
@@ -143,39 +143,39 @@ let ProductCol = [
 let MaterialCol = [
     {
         name: "Name",
-        selector: row => row.Name,
+        selector: row => row.name,
         sortable: true,
     },
     {
         name: "Code",
-        selector: row => row.Description,
+        selector: row => row.code,
         sortable: true,
     },
     {
         name: "Capacity",
-        selector: row => row.Column1,
+        selector: row => row.capacity,
         sortable: true,
     },
     {
         name: "UOM",
-        selector: row => row.Column2,
+        selector: row => row.uom,
         sortable: true,
     },
     {
         name: "SKU",
-        selector: row => row.Column2,
+        selector: row => row.sku,
         sortable: true,
     },
     {
         name: "Created by",
         // width: '80px',
-        selector: row => row.CreatedBy,
+        selector: row => row.created_by,
         sortable: true,
     },
     {
         name: "Created On",
         width: '130px',
-        selector: row => row.CreatedOn,
+        selector: row => moment(row.created_on).format('DD/MM/YYYY'),
         sortable: true,
     },
     {
@@ -189,29 +189,29 @@ let MaterialCol = [
 let IngredientCol = [
     {
         name: "Name",
-        selector: row => row.Name,
+        selector: row => row.name,
         sortable: true,
     },
     {
         name: "Code",
-        selector: row => row.Description,
+        selector: row => row.code,
         sortable: true,
     },
     {
         name: "UOM",
-        selector: row => row.Column2,
+        selector: row => row.uom,
         sortable: true,
     },
     {
         name: "Created by",
         // width: '80px',
-        selector: row => row.CreatedBy,
+        selector: row => row.created_by,
         sortable: true,
     },
     {
         name: "Created On",
         width: '130px',
-        selector: row => row.CreatedOn,
+        selector: row => moment(row.created_on).format('DD/MM/YYYY'),
         sortable: true,
     },
     {
@@ -226,17 +226,17 @@ let IngredientCol = [
 let OrderCol = [
     {
         name: "Order id",
-        selector: row => row.Name,
+        selector: row => row.id,
         sortable: true,
     },
     {
         name: "Customer",
-        selector: row => row.Description,
+        selector: row => row.customer_id,
         sortable: true,
     },
     {
         name: "Order date",
-        selector: row => row.Column1,
+        selector: row => moment(row.order_date).format('DD/MM/YYYY'),
         sortable: true,
     },
     {
@@ -252,19 +252,19 @@ let OrderCol = [
     {
         name: "Status",
         width: '130px',
-        selector: row => row.CreatedBy,
+        selector: row => row.status,
         sortable: true,
     },
     {
         name: "Created by",
         // width: '80px',
-        selector: row => row.CreatedBy,
+        selector: row => moment(row.created_by).format('DD/MM/YYYY'),
         sortable: true,
     },
     {
         name: "Created On",
         width: '130px',
-        selector: row => row.CreatedOn,
+        selector: row => moment(row.created_on).format('DD/MM/YYYY'),
         sortable: true,
     },
     {

@@ -1,28 +1,38 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Homelayout from '../layout/home'
-import { GET_USER_BY_ADMIN } from '../redux/actions/admin';
+import {
+    GET_USER_BY_ADMIN, GET_CUSTOMER_BY_ADMIN,
+    GET_INGREDIENT_LIST, GET_MATERIAL_LIST,
+    GET_PRODUCT_LIST, GET_ORDER_LIST
+} from '../redux/actions/admin';
 
 const Home = (props) => {
-    // states 
-    const { usermanagmentList } = props
-    // action redux function
-    const { GET_USER_BY_ADMIN } = props
-    
+    const { GET_USER_BY_ADMIN, GET_CUSTOMER_BY_ADMIN,
+        GET_INGREDIENT_LIST, GET_MATERIAL_LIST,
+        GET_PRODUCT_LIST, GET_ORDER_LIST } = props
+
     useEffect(() => {
         GET_USER_BY_ADMIN()
-    }, [GET_USER_BY_ADMIN])
+        GET_CUSTOMER_BY_ADMIN()
+        GET_INGREDIENT_LIST()
+        GET_MATERIAL_LIST()
+        GET_PRODUCT_LIST()
+        GET_ORDER_LIST()
+    }, [GET_USER_BY_ADMIN, GET_ORDER_LIST,
+        GET_CUSTOMER_BY_ADMIN, GET_INGREDIENT_LIST,
+        GET_MATERIAL_LIST, GET_PRODUCT_LIST])
+
     return (
         <div>
-            <Homelayout data={usermanagmentList} />
+            <Homelayout />
         </div>
     );
 };
 
 
-const mapStateToProps = (state) => {
-    return {
-        usermanagmentList: state?.AdminReducer?.usermanagmentList
-    };
-};
-export default connect(mapStateToProps, { GET_USER_BY_ADMIN })(Home);
+export default connect(null, {
+    GET_USER_BY_ADMIN, GET_CUSTOMER_BY_ADMIN,
+    GET_INGREDIENT_LIST, GET_MATERIAL_LIST,
+    GET_PRODUCT_LIST, GET_ORDER_LIST
+})(Home);

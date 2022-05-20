@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import AddModal from '../../components/addmodal';
 import Navbar from '../../components/navbar'
 import TextInput from '../../components/searchInput';
@@ -7,8 +8,29 @@ import TailwindTableCss from '../../components/tailwind-table';
 import { selectModuleColumn } from '../../utility/selectModuleColumn';
 
 const Homelayout = (props) => {
-    const { data } = props
+    const { usermanagmentList, CustomerManagmentList, ingredientList, materialList, productList, orderList } = props?.AdminReducer
     const [selected, setSelected] = useState(selectModuleColumn[1])
+    const [data, setData] = useState([])
+
+    const dataBycondition = () => {
+        if (selected?.name === 'Customer Management') {
+            return CustomerManagmentList
+        } else if (selected?.name === 'User Management') {
+            return usermanagmentList
+        } else if (selected?.name === 'Product Management') {
+            return productList
+        } else if (selected?.name === 'Material Management') {
+            return materialList
+        } else if (selected?.name === 'Ingredient Management') {
+            return ingredientList
+        } else if (selected?.name === 'Order Management') {
+            return orderList
+        }
+    }
+
+    useEffect(() => {
+        setData(dataBycondition())
+    }, [dataBycondition, CustomerManagmentList, usermanagmentList, materialList, ingredientList])
 
     return (
         <div>
@@ -21,7 +43,7 @@ const Homelayout = (props) => {
                     <div className='flex items-center justify-start'>
                         <TextInput />
                         <AddModal
-                            titleModal='Add'
+                            titleModal={selected?.name}
                             classes='flex items-center justify-start px-3 py-2 cursor-pointer p-1 text-green-900'
                             btnTitle={
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" viewBox="0 0 20 20" fill="currentColor">
@@ -33,7 +55,6 @@ const Homelayout = (props) => {
                 </div>
             </div>
             <div className='sm:mx-6 mx-2 mt-6 shadow'>
-             
                 <TailwindTableCss columns={selected?.columns || selectModuleColumn[1]?.columns} data={data} />
             </div>
             {/* <AlertMsgComponent /> */}
@@ -41,4 +62,11 @@ const Homelayout = (props) => {
     );
 };
 
-export default Homelayout;
+
+const mapStateToProps = (state) => {
+    // console.log(state)
+    return {
+        AdminReducer: state?.AdminReducer,
+    };
+};
+export default connect(mapStateToProps, null)(Homelayout);
