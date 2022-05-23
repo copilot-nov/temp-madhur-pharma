@@ -30,7 +30,7 @@ const Homelayout = (props) => {
 
     useEffect(() => {
         setData(dataBycondition())
-    }, [dataBycondition, CustomerManagmentList, usermanagmentList, materialList, ingredientList])
+    }, [dataBycondition, orderList, productList, CustomerManagmentList, usermanagmentList, materialList, ingredientList])
 
     return (
         <div>

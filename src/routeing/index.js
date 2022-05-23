@@ -3,6 +3,8 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from '../account/login'
 import Home from '../pages/home'
 import ProtectedRoutes from '../protectedRoute';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Routeing = () => {
 
@@ -21,6 +23,7 @@ const Routeing = () => {
                 </Routes>
 
             </BrowserRouter>
+            <ToastContainer />
         </>
     )
 }

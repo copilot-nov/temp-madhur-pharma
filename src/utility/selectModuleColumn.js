@@ -22,7 +22,7 @@ let customerCol = [
         selector: row => row.email,
         sortable: true,
     },
-    {   
+    {
         name: "Phone",
         selector: row => row.phone,
         sortable: true,
@@ -43,7 +43,7 @@ let customerCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="customer" row={row} />
+            <TableActionCell type="customer" url={`/customer/master/${row?.id}`} row={row} />
         )
     },
 ]
@@ -94,7 +94,7 @@ let userCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="user" row={row} />
+            <TableActionCell type='user' url={`/users/${row?.id}`} row={row} />
         )
     },
 ]
@@ -136,7 +136,7 @@ let ProductCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="product" row={row} />
+            <TableActionCell type="product" url={`/product/master/${row?.id}`} row={row} />
         )
     },
 ]
@@ -182,10 +182,11 @@ let MaterialCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="material" row={row} />
+            <TableActionCell type="material" url={`/material/master/${row?.id}`} row={row} />
         )
     },
 ]
+
 let IngredientCol = [
     {
         name: "Name",
@@ -218,7 +219,7 @@ let IngredientCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="ingradient" row={row} />
+            <TableActionCell type="ingredient" url={`/ingredient/master/${row?.id}`} row={row} />
         )
     },
 ]
@@ -271,7 +272,7 @@ let OrderCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="order" row={row} />
+            <TableActionCell type="order" url={`/order/master/${row?.id}`} row={row} />
         )
     },
 ]
