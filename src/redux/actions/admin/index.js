@@ -28,13 +28,13 @@ export const GET_USER_BY_ADMIN = () => {
         }
     }
 }
-export const GET_CUSTOMER_BY_ADMIN = () => {
+export const GET_CUSTOMER_LIST = () => {
     let url = `${baseUrl}/customer/master`
     return async dispatch => {
         try {
             let res = await axios.get(url, { headers: getHeaders() })
             if (res?.data.success) {
-                dispatch({ type: 'GET_CUSTOMER_BY_ADMIN', payload: res?.data?.data })
+                dispatch({ type: 'GET_CUSTOMER_LIST', payload: res?.data?.data })
             } else {
                 toast.info(res.data?.msg, styleToastify);
                 return false //{ open: true, title: 'Password !', message: res.data?.msg, alertType: 'error' }
@@ -79,6 +79,7 @@ export const GET_MATERIAL_LIST = () => {
         }
     }
 }
+
 export const GET_PRODUCT_LIST = () => {
     let url = `${baseUrl}/product/master`
     return async dispatch => {
@@ -122,18 +123,107 @@ export const ADD_USER_BY_ADMIN = (payload) => {
             let res = await axios.post(url, payload, { headers: getHeaders() })
             if (res?.data.success) {
                 dispatch(GET_USER_BY_ADMIN())
-                toast.success(res.data?.data, styleToastify);
-                return true
+                return { status: 'success', msg: 'User Added successfully!' }
             } else {
-                toast.info(res.data?.msg, styleToastify);
-                return false //{ open: true, title: 'Password !', message: res.data?.msg, alertType: 'error' }
+                return { status: 'info', msg: res.data?.msg }
             }
         }
         catch (error) {
-            toast.error((error.message).replace(/\\/g, ""), styleToastify);
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
         }
     }
 }
+
+export const ADD_CUSTOMER_ADMIN = (payload) => {
+    let url = `${baseUrl}/customer/master/create`
+    return async dispatch => {
+        try {
+            let res = await axios.post(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch(GET_CUSTOMER_LIST())
+                return { status: 'success', msg: 'Customer Added successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+
+export const ADD_PRODUCT_ADMIN = (payload) => {
+    let url = `${baseUrl}/product/master/create`
+    return async dispatch => {
+        try {
+            let res = await axios.post(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch(GET_PRODUCT_LIST())
+                return { status: 'success', msg: 'Product Added successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+
+export const ADD_INGREDIENT_ADMIN = (payload) => {
+    let url = `${baseUrl}/ingredient/master/create`
+    return async dispatch => {
+        try {
+            let res = await axios.post(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch(GET_INGREDIENT_LIST())
+                return { status: 'success', msg: 'Ingredient Added successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+
+export const ADD_MATERIAL_ADMIN = (payload) => {
+    let url = `${baseUrl}/material/master/create`
+    return async dispatch => {
+        try {
+            let res = await axios.post(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch(GET_MATERIAL_LIST())
+                return { status: 'success', msg: 'Material Added successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+
+export const ADD_ORDER_ADMIN = (payload) => {
+    let url = `${baseUrl}/order/master/create`
+    return async dispatch => {
+        try {
+            let res = await axios.post(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch(GET_ORDER_LIST())
+                return { status: 'success', msg: 'Order Added successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+
 export const DELETE_MODULE_FROM_ADMIN = (type, deletepath) => {
     let url = `${baseUrl}${deletepath}`
     return async dispatch => {
@@ -152,15 +242,13 @@ export const DELETE_MODULE_FROM_ADMIN = (type, deletepath) => {
                 } else if (type === 'order') {
                     await dispatch(GET_ORDER_LIST())
                 }
-                toast.success(res.data?.data, styleToastify);
-                return true
+                return { status: 'success', msg: 'Item Deleted successfully!' }
             } else {
-                toast.info(res.data?.msg, styleToastify);
-                return false //{ open: true, title: 'Password !', message: res.data?.msg, alertType: 'error' }
+                return { status: 'info', msg: res.data?.msg }
             }
         }
         catch (error) {
-            toast.error((error.message).replace(/\\/g, ""), styleToastify);
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
         }
     }
 }

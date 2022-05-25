@@ -44,7 +44,7 @@ const TableActionCell = (props) => {
                 btnTitle={'Remove'}
                 deleteConfirm={deleteConfirm}
                 title={'Remove this user'}
-                des={`Make inActive to ${row?.name} !`} />
+                des={`Delete ${row?.name} !`} />
         </Fragment>
 
     )

@@ -1,17 +1,19 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
-import UserManagment from '../formAdd/user-managment'
+import MainFormAdd from '../formAdd'
 
 export default function AddModal(props) {
     const { classes, btnTitle, titleModal } = props
     let [isOpen, setIsOpen] = useState(false)
-
+    const [handleResponse, setHandleResponse] = useState(null)
+    
     function closeModal() {
         setIsOpen(false)
     }
 
     function openModal() {
         setIsOpen(true)
+        setHandleResponse(null)
     }
 
     return (
@@ -52,9 +54,13 @@ export default function AddModal(props) {
                                     >
                                         {titleModal}
                                     </Dialog.Title>
-                                    <div className='sm:p-10 p-2'>
+                                    <div className='p-2'>
                                         <div className="sm:mt-2 mt-4">
-                                            <UserManagment openModal={openModal} closeModal={closeModal} />
+                                            <MainFormAdd
+                                                handleResponse={handleResponse}
+                                                setHandleResponse={setHandleResponse}
+                                                titleModal={titleModal}
+                                                closeModal={closeModal} />
                                         </div>
                                     </div>
                                 </Dialog.Panel>

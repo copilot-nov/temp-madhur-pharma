@@ -284,4 +284,5 @@ export const selectModuleColumn = [
     { name: 'Material Management', columns: MaterialCol },
     { name: 'Ingredient Management', columns: IngredientCol },
     { name: 'Order Management', columns: OrderCol },
+    { name: 'Manufacturing Template', columns: [] }
 ]

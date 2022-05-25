@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
-import { ADD_USER_BY_ADMIN } from '../../redux/actions/admin';
+import { ADD_CUSTOMER_ADMIN } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 
 const defaultState = {
-    name: "",
-    password: "",
-    emp_id: "",
-    department: "",
-    designation: "",
-    email: "",
-    phone: "",
-    notes: "",
-    role_id: 0,
-    role_notes: ""
+    "name": "string",
+    "industry": 0,
+    "code": "string",
+    "address_1": "string",
+    "address_2": "string",
+    "state": "string",
+    "district": "string",
+    "block": "string",
+    "city": "string",
+    "pincode": "string",
+    "email": "string@gmail.com",
+    "phone": "string",
+    "contact_person": "string",
+    "class_id": 0,
+    "sub_class_id": 0,
+    "notes": "string",
+    "iconpic": "string"
 }
 
-const UserManagment = (props) => {
+const CustomerManagment = (props) => {
     const { closeModal, setHandleResponse } = props
     // redux functions 
-    const { ADD_USER_BY_ADMIN } = props
+    const { ADD_CUSTOMER_ADMIN } = props
     const [payload, setPayload] = useState(defaultState)
 
     const handleOnChange = (e) => {
@@ -29,14 +36,9 @@ const UserManagment = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let copypayload = payload
-        let istrue = await ADD_USER_BY_ADMIN(copypayload)
-        if (istrue?.status) {
-            closeModal()
-            setPayload(defaultState)
-            setHandleResponse(istrue)
-        } else {
-            setHandleResponse(istrue)
-        }
+        let istrue = await ADD_CUSTOMER_ADMIN(copypayload)
+        // setPayload(defaultState)
+        setHandleResponse(istrue)
     }
 
     return (
@@ -62,6 +64,22 @@ const UserManagment = (props) => {
                             <div className="col-span-6 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
+                                        Email
+                                    </p>
+                                    <input
+                                        required
+                                        name='email'
+                                        type='email'
+                                        onChange={handleOnChange}
+                                        defaultValue={payload?.email}
+                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-span-6 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
                                         Phone
                                     </p>
                                     <input
@@ -78,108 +96,90 @@ const UserManagment = (props) => {
 
                             <div className="col-span-6 sm:col-span-3">
                                 <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Email
-                                    </p>
-                                    <input
-                                        required
-                                        name='email'
-                                        type='email'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.email}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="col-span-6 sm:col-span-3">
-                                <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900 mr-4">
-                                        Password
+                                        Contact Person
                                     </p>
                                     <input
 
                                         required
-                                        name='password'
+                                        name='contact_person'
                                         onChange={handleOnChange}
-                                        defaultValue={payload?.password}
+                                        defaultValue={payload?.contact_person}
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                     />
                                 </div>
                             </div>
 
-                            <div className="col-span-6 sm:col-span-3">
+                            <div className="col-span-4 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Department
-                                    </p>
-                                    <input
-                                        required
-                                        name='department'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.department}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="col-span-6 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Designation
-                                    </p>
-                                    <input
-                                        required
-                                        name='designation'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.designation}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="col-span-6 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Employee Id
-                                    </p>
-                                    <input
-                                        required
-                                        name='emp_id'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.emp_id}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-span-6 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Role Id
+                                        Industry
                                     </p>
                                     <input
                                         required
                                         type='number'
-                                        name='role_id'
+                                        name='industry'
                                         onChange={handleOnChange}
-                                        defaultValue={payload?.role_id}
+                                        defaultValue={payload?.industry}
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                     />
                                 </div>
                             </div>
-
+                            <div className="col-span-4 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Class id
+                                    </p>
+                                    <input
+                                        required
+                                        type='number'
+                                        name='class_id'
+                                        onChange={handleOnChange}
+                                        defaultValue={payload?.class_id}
+                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-span-4 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Sub Class id
+                                    </p>
+                                    <input
+                                        required
+                                        type='number'
+                                        name='sub_class_id'
+                                        onChange={handleOnChange}
+                                        defaultValue={payload?.sub_class_id}
+                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                    />
+                                </div>
+                            </div>
+                            {/* <div className="col-span-4 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Icon pic
+                                    </p>
+                                    <input
+                                        required
+                                        name='iconpic'
+                                        onChange={handleOnChange}
+                                        defaultValue={payload?.iconpic}
+                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                    />
+                                </div>
+                            </div> */}
                             {/* <div className="col-span-6 sm:col-span-6">
                                 <div className='w-full items-start'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Notes
+                                        Address 1
                                     </p>
-                                    <textarea
-                                        id="notes"
+                                    <input
+                                        id="address_1"
                                         required
-                                        name="notes"
-                                        rows={3}
+                                        name="address_1"
                                         onChange={handleOnChange}
-                                        defaultValue={payload?.notes}
+                                        defaultValue={payload?.address_1}
                                         className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
                                     />
                                 </div>
@@ -187,20 +187,95 @@ const UserManagment = (props) => {
                             <div className="col-span-6 sm:col-span-6">
                                 <div className='w-full items-start'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Role Note
+                                        Address 2
                                     </p>
-                                    <textarea
+                                    <input
+                                        id="address_2"
                                         required
-                                        id="role_notes"
-                                        name="role_notes"
-                                        rows={3}
+                                        name="address_2"
                                         onChange={handleOnChange}
-                                        defaultValue={payload?.role_notes}
+                                        defaultValue={payload?.address_2}
                                         className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
                                     />
                                 </div>
                             </div> */}
 
+                            {/* <div className="col-span-6 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Block
+                                    </p>
+                                    <input
+                                        required
+                                        type='text'
+                                        name='block'
+                                        onChange={handleOnChange}
+                                        defaultValue={payload?.block}
+                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                    />
+                                </div>
+                            </div> */}
+                            {/* <div className="col-span-6 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Pincode
+                                    </p>
+                                    <input
+                                        required
+                                        // max={6}
+                                        // maxLength={6}
+                                        name='pincode'
+                                        onChange={handleOnChange}
+                                        defaultValue={payload?.pincode}
+                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                    />
+                                </div>
+                            </div> */}
+                            {/* <div className="col-span-6 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        District
+                                    </p>
+                                    <input
+                                        required
+                                        type='text'
+                                        name='district'
+                                        onChange={handleOnChange}
+                                        defaultValue={payload?.district}
+                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                    />
+                                </div>
+                            </div> */}
+                            {/* <div className="col-span-6 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        State
+                                    </p>
+                                    <input
+                                        required
+                                        type='text'
+                                        name='state'
+                                        onChange={handleOnChange}
+                                        defaultValue={payload?.state}
+                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                    />
+                                </div>
+                            </div> */}
+                            <div className="col-span-6 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        City
+                                    </p>
+                                    <input
+                                        required
+                                        type='text'
+                                        name='city'
+                                        onChange={handleOnChange}
+                                        defaultValue={payload?.city}
+                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -223,4 +298,4 @@ const UserManagment = (props) => {
     )
 }
 
-export default connect(null, { ADD_USER_BY_ADMIN })(UserManagment);
+export default connect(null, { ADD_CUSTOMER_ADMIN })(CustomerManagment);
