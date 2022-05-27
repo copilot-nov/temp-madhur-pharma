@@ -3,16 +3,7 @@ import { ADD_USER_BY_ADMIN } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 
 const defaultState = {
-    name: "",
-    password: "",
-    emp_id: "",
-    department: "",
-    designation: "",
-    email: "",
-    phone: "",
-    notes: "",
-    role_id: 0,
-    role_notes: ""
+    
 }
 
 const UserManagment = (props) => {
@@ -31,7 +22,6 @@ const UserManagment = (props) => {
         let copypayload = payload
         let istrue = await ADD_USER_BY_ADMIN(copypayload)
         if (istrue?.status) {
-            closeModal()
             setPayload(defaultState)
             setHandleResponse(istrue)
         } else {
@@ -157,14 +147,28 @@ const UserManagment = (props) => {
                                     <p className="block text-sm font-medium text-gray-900">
                                         Role Id
                                     </p>
-                                    <input
+                                    <select
+                                        type='number'
+                                        name='role_id'
+                                        onChange={handleOnChange}
+                                        defaultValue={payload?.role_id}
+                                        className="b-white w-full focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                    >
+                                        <option>Select</option>
+                                        <option value={11}> Admin</option>
+                                        <option value={12}> Store Manager</option>
+                                        <option value={13}> Production Manager</option>
+                                        <option value={14}> Production Operator</option>
+                                        <option value={15}> QA Manager</option>
+                                    </select>
+                                    {/* <input
                                         required
                                         type='number'
                                         name='role_id'
                                         onChange={handleOnChange}
                                         defaultValue={payload?.role_id}
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
 

@@ -79,7 +79,6 @@ export const GET_MATERIAL_LIST = () => {
         }
     }
 }
-
 export const GET_PRODUCT_LIST = () => {
     let url = `${baseUrl}/product/master`
     return async dispatch => {
@@ -97,6 +96,7 @@ export const GET_PRODUCT_LIST = () => {
         }
     }
 }
+// GET_MASTER_DATA_LIST
 
 export const GET_ORDER_LIST = () => {
     let url = `${baseUrl}/order/master`
@@ -105,6 +105,24 @@ export const GET_ORDER_LIST = () => {
             let res = await axios.get(url, { headers: getHeaders() })
             if (res?.data.success) {
                 dispatch({ type: 'GET_ORDER_LIST', payload: res?.data?.data })
+            } else {
+                toast.info(res.data?.msg, styleToastify);
+                return false //{ open: true, title: 'Password !', message: res.data?.msg, alertType: 'error' }
+            }
+        }
+        catch (error) {
+            toast.error((error.message).replace(/\\/g, ""), styleToastify);
+        }
+    }
+}
+
+export const GET_MASTER_DATA_LIST = () => {
+    let url = `${baseUrl}/master_data`
+    return async dispatch => {
+        try {
+            let res = await axios.get(url, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch({ type: 'GET_MASTER_DATA_LIST', payload: res?.data?.data })
             } else {
                 toast.info(res.data?.msg, styleToastify);
                 return false //{ open: true, title: 'Password !', message: res.data?.msg, alertType: 'error' }

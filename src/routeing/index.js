@@ -14,14 +14,12 @@ const Routeing = () => {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/login" element={<Login />} />
-
                     {/* Protected routes here  */}
                     <Route element={<ProtectedRoutes />}>
                         <Route path="/home" element={<Home />} />
                     </Route>
 
                 </Routes>
-
             </BrowserRouter>
             <ToastContainer />
         </>

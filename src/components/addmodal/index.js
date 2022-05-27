@@ -6,7 +6,7 @@ export default function AddModal(props) {
     const { classes, btnTitle, titleModal } = props
     let [isOpen, setIsOpen] = useState(false)
     const [handleResponse, setHandleResponse] = useState(null)
-    
+
     function closeModal() {
         setIsOpen(false)
     }

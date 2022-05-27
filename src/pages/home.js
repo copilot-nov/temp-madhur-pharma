@@ -4,13 +4,14 @@ import Homelayout from '../layout/home'
 import {
     GET_USER_BY_ADMIN, GET_CUSTOMER_LIST,
     GET_INGREDIENT_LIST, GET_MATERIAL_LIST,
-    GET_PRODUCT_LIST, GET_ORDER_LIST
+    GET_PRODUCT_LIST, GET_ORDER_LIST,
+    GET_MASTER_DATA_LIST
 } from '../redux/actions/admin';
 
 const Home = (props) => {
     const { GET_USER_BY_ADMIN, GET_CUSTOMER_LIST,
         GET_INGREDIENT_LIST, GET_MATERIAL_LIST,
-        GET_PRODUCT_LIST, GET_ORDER_LIST } = props
+        GET_PRODUCT_LIST, GET_ORDER_LIST,GET_MASTER_DATA_LIST } = props
 
     useEffect(() => {
         GET_USER_BY_ADMIN()
@@ -19,7 +20,8 @@ const Home = (props) => {
         GET_MATERIAL_LIST()
         GET_PRODUCT_LIST()
         GET_ORDER_LIST()
-    }, [GET_USER_BY_ADMIN, GET_ORDER_LIST,
+        GET_MASTER_DATA_LIST()
+    }, [GET_USER_BY_ADMIN, GET_ORDER_LIST,GET_MASTER_DATA_LIST,
         GET_CUSTOMER_LIST, GET_INGREDIENT_LIST,
         GET_MATERIAL_LIST, GET_PRODUCT_LIST])
 
@@ -34,5 +36,5 @@ const Home = (props) => {
 export default connect(null, {
     GET_USER_BY_ADMIN, GET_CUSTOMER_LIST,
     GET_INGREDIENT_LIST, GET_MATERIAL_LIST,
-    GET_PRODUCT_LIST, GET_ORDER_LIST
+    GET_PRODUCT_LIST, GET_ORDER_LIST,GET_MASTER_DATA_LIST
 })(Home);

@@ -1,78 +1,49 @@
-import { Tab } from '@headlessui/react'
-import MaterialManagment from './material-managment'
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
-export default function ManufactureTemplateTabs(props) {
-  const { closeModal, setHandleResponse } = props
+import { useState } from "react";
+// import ProcessMaster from "./process-master";
+import ManufactureTemplateTabs from "./tabs";
 
 
-  return (
-    <div className="w-full sm:px-0">
-      <Tab.Group>
-        <Tab.List className="flex space-x-1 rounded-xl bg-gray-300 p-1">
-          {listOftabs.map((category) => (
-            <Tab
-              key={category}
-              className={({ selected }) =>
-                classNames(
-                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-green-700',
-                  'ring-white ring-opacity-60 ring-offset-2  focus:outline-none focus:ring-2',
-                  selected
-                    ? 'bg-white shadow'
-                    : 'text-green-900 hover:bg-white/[0.12] hover:text-green-900'
-                )
-              }
-            >
-              {category}
-            </Tab>
-          ))}
-        </Tab.List>
-        <Tab.Panels>
-          <Tab.Panel
-            className={classNames(
-              'rounded-xl bg-white p-3',
-              'ring-white ring-opacity-60 ring-offset-2  focus:outline-none focus:ring-2'
-            )}
-          >
-            <MaterialManagment closeModal={closeModal} setHandleResponse={setHandleResponse} />
-          </Tab.Panel>
-          <Tab.Panel
-            className={classNames(
-              'rounded-xl bg-white p-3',
-              'ring-white ring-opacity-60 ring-offset-2  focus:outline-none focus:ring-2'
-            )}
-          >
-            <MaterialManagment closeModal={closeModal} setHandleResponse={setHandleResponse} />
-          </Tab.Panel>
-          <Tab.Panel
-            className={classNames(
-              'rounded-xl bg-white p-3',
-              'ring-white ring-opacity-60 ring-offset-2  focus:outline-none focus:ring-2'
-            )}
-          >
-            <MaterialManagment closeModal={closeModal} setHandleResponse={setHandleResponse} />
-          </Tab.Panel>
-          <Tab.Panel
-            className={classNames(
-              'rounded-xl bg-white p-3',
-              'ring-white ring-opacity-60 ring-offset-2  focus:outline-none focus:ring-2'
-            )}
-          >
-            <MaterialManagment closeModal={closeModal} setHandleResponse={setHandleResponse} />
-          </Tab.Panel>
-          
-        </Tab.Panels>
-      </Tab.Group>
-    </div>
-  )
-}
-
-
-const listOftabs = [
-  'Tab1',
-  'Tab2',
-  'Tab3',
-  'Tab4',
+const processMasterList = [
+    'Product Formulation',
+    'Ingredient Dispensing',
+    'Product Manufacturing',
+    'Product Unloading',
+    'Packing Material Dispensing',
+    'Cleaning & Inspection',
+    'Data Coding',
+    'Filling & Packing',
+    'Weighing',
+    'Dispatch'
 ]
+const ManufactureTemplate = () => {
+    const [select, setSelcted] = useState([])
+
+    const handleSelect = (value) => {
+        let copydata = []
+        if (select?.includes(value)) {
+            copydata = select?.filter(item => item !== value)
+            setSelcted(copydata)
+        } else {
+            setSelcted([...select, value])
+        }
+    }
+
+    const getNext = () => {
+        let index = processMasterList.indexOf(select)
+        console.log(index)
+    }
+
+    return (
+        <div style={{ width: '1200px', minWidth: '400px', height: '90vh' }}>
+            <ManufactureTemplateTabs processMasterList={processMasterList} select={select} tabsName={select} handleSelect={handleSelect} />
+
+            {select?.length > 0 && <div className="bottom-8 right-8 right fixed flex justify-end">
+                <button className="mx-2 bg-gray-300 px-6 py-2 text-gray-900 rounded hover:bg-gray-100">Back</button>
+                <button onClick={getNext} className="bg-green-900 px-6 py-2 text-white rounded hover:bg-green-800">Next</button>
+            </div>}
+
+        </div>
+    )
+}
+
+export default ManufactureTemplate;

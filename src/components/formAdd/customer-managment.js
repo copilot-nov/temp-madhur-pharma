@@ -1,31 +1,18 @@
 import React, { useState } from 'react';
 import { ADD_CUSTOMER_ADMIN } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
+import AutoSearch from '../autoComplete';
 
 const defaultState = {
-    "name": "string",
-    "industry": 0,
-    "code": "string",
-    "address_1": "string",
-    "address_2": "string",
-    "state": "string",
-    "district": "string",
-    "block": "string",
-    "city": "string",
-    "pincode": "string",
-    "email": "string@gmail.com",
-    "phone": "string",
-    "contact_person": "string",
-    "class_id": 0,
-    "sub_class_id": 0,
-    "notes": "string",
-    "iconpic": "string"
+
 }
 
 const CustomerManagment = (props) => {
     const { closeModal, setHandleResponse } = props
+    const { ADD_CUSTOMER_ADMIN, masterDataList } = props
+    const [mainclass, setMainClass] = useState(masterDataList[0])
+    const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
     // redux functions 
-    const { ADD_CUSTOMER_ADMIN } = props
     const [payload, setPayload] = useState(defaultState)
 
     const handleOnChange = (e) => {
@@ -36,10 +23,13 @@ const CustomerManagment = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let copypayload = payload
+        copypayload.class_id = mainclass.id
+        copypayload.sub_class_id = mainSubclass.id
         let istrue = await ADD_CUSTOMER_ADMIN(copypayload)
         // setPayload(defaultState)
         setHandleResponse(istrue)
     }
+    console.log(mainclass)
 
     return (
         <div className="md:col-span-2">
@@ -116,7 +106,6 @@ const CustomerManagment = (props) => {
                                         Industry
                                     </p>
                                     <input
-                                        required
                                         type='number'
                                         name='industry'
                                         onChange={handleOnChange}
@@ -128,100 +117,40 @@ const CustomerManagment = (props) => {
                             <div className="col-span-4 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Class id
+                                        Class
                                     </p>
-                                    <input
-                                        required
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
+                                    {/* <input
                                         type='number'
                                         name='class_id'
                                         onChange={handleOnChange}
                                         defaultValue={payload?.class_id}
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                             <div className="col-span-4 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Sub Class id
+                                        Sub Class
                                     </p>
-                                    <input
-                                        required
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
+
+                                    {/* <input
                                         type='number'
                                         name='sub_class_id'
                                         onChange={handleOnChange}
                                         defaultValue={payload?.sub_class_id}
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
-                            {/* <div className="col-span-4 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Icon pic
-                                    </p>
-                                    <input
-                                        required
-                                        name='iconpic'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.iconpic}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
-                                </div>
-                            </div> */}
-                            {/* <div className="col-span-6 sm:col-span-6">
-                                <div className='w-full items-start'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Address 1
-                                    </p>
-                                    <input
-                                        id="address_1"
-                                        required
-                                        name="address_1"
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.address_1}
-                                        className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-span-6 sm:col-span-6">
-                                <div className='w-full items-start'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Address 2
-                                    </p>
-                                    <input
-                                        id="address_2"
-                                        required
-                                        name="address_2"
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.address_2}
-                                        className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
-                                    />
-                                </div>
-                            </div> */}
-
-                            {/* <div className="col-span-6 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Block
-                                    </p>
-                                    <input
-                                        required
-                                        type='text'
-                                        name='block'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.block}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
-                                </div>
-                            </div> */}
-                            {/* <div className="col-span-6 sm:col-span-3">
+                            <div className="col-span-6 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
                                         Pincode
                                     </p>
                                     <input
-                                        required
                                         // max={6}
                                         // maxLength={6}
                                         name='pincode'
@@ -230,44 +159,13 @@ const CustomerManagment = (props) => {
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                     />
                                 </div>
-                            </div> */}
-                            {/* <div className="col-span-6 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        District
-                                    </p>
-                                    <input
-                                        required
-                                        type='text'
-                                        name='district'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.district}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
-                                </div>
-                            </div> */}
-                            {/* <div className="col-span-6 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        State
-                                    </p>
-                                    <input
-                                        required
-                                        type='text'
-                                        name='state'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.state}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
-                                </div>
-                            </div> */}
+                            </div>
                             <div className="col-span-6 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
                                         City
                                     </p>
                                     <input
-                                        required
                                         type='text'
                                         name='city'
                                         onChange={handleOnChange}
@@ -298,4 +196,10 @@ const CustomerManagment = (props) => {
     )
 }
 
-export default connect(null, { ADD_CUSTOMER_ADMIN })(CustomerManagment);
+const mapStateToProps = (state) => {
+    // console.log(state)
+    return {
+        masterDataList: state?.AdminReducer.masterDataList,
+    };
+};
+export default connect(mapStateToProps, { ADD_CUSTOMER_ADMIN })(CustomerManagment);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ADD_PRODUCT_ADMIN } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
+import AutoSearch from '../autoComplete';
 
 const defaultState = {
     "name": "",
@@ -18,8 +19,11 @@ const defaultState = {
 const ProductManagment = (props) => {
     const { closeModal, setHandleResponse } = props
     // redux functions 
-    const { ADD_PRODUCT_ADMIN } = props
+    const { ADD_PRODUCT_ADMIN, masterDataList } = props
     const [payload, setPayload] = useState(defaultState)
+    const [mainclass, setMainClass] = useState(masterDataList[0])
+    const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
+    const [code, setCode] = useState(masterDataList[0])
 
     const handleOnChange = (e) => {
         let { name, value, type } = e.target
@@ -29,9 +33,11 @@ const ProductManagment = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let copypayload = payload
-        let istrue =await ADD_PRODUCT_ADMIN(copypayload)
+        copypayload.class_id = mainclass.id
+        copypayload.sub_class_id = mainSubclass.id
+        // copypayload.code = mainSubclass.data_code
+        let istrue = await ADD_PRODUCT_ADMIN(copypayload)
         if (istrue?.status) {
-            closeModal()
             setPayload(defaultState)
             setHandleResponse(istrue)
         } else {
@@ -82,14 +88,16 @@ const ProductManagment = (props) => {
                                     <p className="block text-sm font-medium text-gray-900">
                                         Code
                                     </p>
-                                    <input
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={code} setSelected={setCode} />
+
+                                    {/* <input
                                         required
                                         type='text'
                                         name='code'
                                         onChange={handleOnChange}
                                         defaultValue={payload?.code}
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                             <div className="col-span-4 sm:col-span-3">
@@ -110,79 +118,19 @@ const ProductManagment = (props) => {
                             <div className="col-span-4 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Class id
+                                        Class
                                     </p>
-                                    <input
-                                        required
-                                        type='number'
-                                        name='class_id'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.class_id}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
                                 </div>
                             </div>
                             <div className="col-span-4 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Sub Class id
+                                        Sub Class
                                     </p>
-                                    <input
-                                        required
-                                        type='number'
-                                        name='sub_class_id'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.sub_class_id}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
                                 </div>
                             </div>
-                            {/* <div className="col-span-4 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Icon pic
-                                    </p>
-                                    <input
-                                        required
-                                        name='iconpic'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.iconpic}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
-                                </div>
-                            </div> */}
-                            {/* <div className="col-span-6 sm:col-span-6">
-                                <div className='w-full items-start'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        description
-                                    </p>
-                                    <textarea
-                                        rows={3}
-                                        id="description"
-                                        required
-                                        name="description"
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.description}
-                                        className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-span-6 sm:col-span-6">
-                                <div className='w-full items-start'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Notes
-                                    </p>
-                                    <textarea
-                                        id="notes"
-                                        required
-                                        rows={3}
-                                        name="notes"
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.notes}
-                                        className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
-                                    />
-                                </div>
-                            </div> */}
                         </div>
                     </div>
                     <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -205,4 +153,10 @@ const ProductManagment = (props) => {
     )
 }
 
-export default connect(null, { ADD_PRODUCT_ADMIN })(ProductManagment);
+const mapStateToProps = (state) => {
+    // console.log(state)
+    return {
+        masterDataList: state?.AdminReducer.masterDataList,
+    };
+};
+export default connect(mapStateToProps, { ADD_PRODUCT_ADMIN })(ProductManagment);

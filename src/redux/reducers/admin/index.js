@@ -5,7 +5,8 @@ const initialState = {
     ingredientList: [],
     materialList: [],
     productList: [],
-    orderList: []
+    orderList: [],
+    masterDataList: []
 }
 export const AdminReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -21,6 +22,8 @@ export const AdminReducer = (state = initialState, action) => {
             return { ...state, productList: action.payload };
         case "GET_ORDER_LIST":
             return { ...state, orderList: action.payload };
+        case "GET_MASTER_DATA_LIST":
+            return { ...state, masterDataList: action.payload };
         default: return state
             break
 

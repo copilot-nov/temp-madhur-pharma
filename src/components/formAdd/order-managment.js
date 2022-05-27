@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import { ADD_ORDER_ADMIN } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
+import AutoSearch from '../autoComplete';
 
 const defaultState = {
-    "po_id": "",
-    "customer_id": 0,
-    "order_date": "",
-    "status": "",
-    "description": "",
-    "notes": ""
+   
 }
 
 
 const OrderManagment = (props) => {
     const { closeModal, setHandleResponse } = props
     // redux functions 
-    const { ADD_ORDER_ADMIN } = props
+    const { ADD_ORDER_ADMIN,masterDataList } = props
     const [payload, setPayload] = useState(defaultState)
+    const [status, setStatus] = useState(masterDataList[0])
 
     const handleOnChange = (e) => {
         let { name, value, type } = e.target
@@ -26,9 +23,9 @@ const OrderManagment = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let copypayload = payload
+        copypayload.status = status.data_code
         let istrue = await ADD_ORDER_ADMIN(copypayload)
         if (istrue?.status) {
-            closeModal()
             setPayload(defaultState)
             setHandleResponse(istrue)
         } else {
@@ -70,6 +67,7 @@ const OrderManagment = (props) => {
                                     />
                                 </div>
                             </div>
+                        
                             <div className="col-span-6 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
@@ -106,14 +104,15 @@ const OrderManagment = (props) => {
                                     <p className="block text-sm font-medium text-gray-900">
                                         Status
                                     </p>
-                                    <input
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={status} setSelected={setStatus} />
+                                    {/* <input
                                         required
                                         type='text'
                                         name='status'
                                         onChange={handleOnChange}
                                         defaultValue={payload?.status}
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                             <div className="col-span-6 sm:col-span-6">
@@ -169,5 +168,10 @@ const OrderManagment = (props) => {
         </div>
     )
 }
-
-export default connect(null, { ADD_ORDER_ADMIN })(OrderManagment);
+const mapStateToProps = (state) => {
+    // console.log(state)
+    return {
+        masterDataList: state?.AdminReducer.masterDataList,
+    };
+};
+export default connect(mapStateToProps, { ADD_ORDER_ADMIN })(OrderManagment);

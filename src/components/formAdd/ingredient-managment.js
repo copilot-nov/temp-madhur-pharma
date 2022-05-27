@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
 import { ADD_INGREDIENT_ADMIN } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
+import AutoSearch from '../autoComplete';
 
 const defaultState = {
-    "name": "",
-    "description": "",
-    "code": "",
-    "uom": "",
-    "class_id": 0,
-    "sub_class_id": 0,
-    "notes": "",
-    "iconpic": ""
+
 }
 
 
 const IngredientManagment = (props) => {
-    const { closeModal,setHandleResponse } = props
+    const { closeModal, setHandleResponse } = props
     // redux functions 
-    const { ADD_INGREDIENT_ADMIN } = props
+    const { ADD_INGREDIENT_ADMIN, masterDataList } = props
     const [payload, setPayload] = useState(defaultState)
+    const [mainclass, setMainClass] = useState(masterDataList[0])
+    const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
+    const [uom, setUOM] = useState(masterDataList[0])
 
     const handleOnChange = (e) => {
         let { name, value, type } = e.target
@@ -28,9 +25,11 @@ const IngredientManagment = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let copypayload = payload
+        copypayload.class_id = mainclass.id
+        copypayload.sub_class_id = mainSubclass.id
+        copypayload.uom = uom.data_code
         let istrue = await ADD_INGREDIENT_ADMIN(copypayload)
         if (istrue?.status) {
-            closeModal()
             setPayload(defaultState)
             setHandleResponse(istrue)
         } else {
@@ -65,7 +64,6 @@ const IngredientManagment = (props) => {
                                         Code
                                     </p>
                                     <input
-                                        required
                                         type='text'
                                         name='code'
                                         onChange={handleOnChange}
@@ -77,31 +75,17 @@ const IngredientManagment = (props) => {
                             <div className="col-span-4 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Class id
+                                        Class
                                     </p>
-                                    <input
-                                        required
-                                        type='number'
-                                        name='class_id'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.class_id}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
                                 </div>
                             </div>
                             <div className="col-span-4 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Sub Class id
+                                        Sub Class
                                     </p>
-                                    <input
-                                        required
-                                        type='number'
-                                        name='sub_class_id'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.sub_class_id}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
                                 </div>
                             </div>
                             <div className="col-span-4 sm:col-span-3">
@@ -109,45 +93,9 @@ const IngredientManagment = (props) => {
                                     <p className="block text-sm font-medium text-gray-900">
                                         UOM
                                     </p>
-                                    <input
-                                        required
-                                        name='uom'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.uom}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={uom} setSelected={setUOM} />
                                 </div>
                             </div>
-                            {/* <div className="col-span-4 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Icon pic
-                                    </p>
-                                    <input
-                                        required
-                                        name='iconpic'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.iconpic}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    />
-                                </div>
-                            </div> */}
-                            {/* <div className="col-span-6 sm:col-span-6">
-                                <div className='w-full items-start'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Notes
-                                    </p>
-                                    <textarea
-                                        id="notes"
-                                        required
-                                        rows={3}
-                                        name="notes"
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.notes}
-                                        className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
-                                    />
-                                </div>
-                            </div> */}
                         </div>
                     </div>
                     <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -169,5 +117,10 @@ const IngredientManagment = (props) => {
         </div>
     )
 }
-
-export default connect(null, { ADD_INGREDIENT_ADMIN })(IngredientManagment);
+const mapStateToProps = (state) => {
+    // console.log(state)
+    return {
+        masterDataList: state?.AdminReducer.masterDataList,
+    };
+};
+export default connect(mapStateToProps, { ADD_INGREDIENT_ADMIN })(IngredientManagment);
