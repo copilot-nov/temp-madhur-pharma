@@ -3,7 +3,7 @@ import CustomerManagment from './customer-managment';
 import ProductManagment from "./product-managment";
 import OrderManagment from "./order-managment";
 import IngredientManagment from './ingredient-managment'
-import ManufactureTemplateTabs from './ManufactureTemplate'
+import ManufactureTemplateTabs from '../ManufactureTemplate'
 import MaterialManagment from "./material-managment";
 import { Alert } from '../alert'
 

@@ -75,6 +75,14 @@ const IngredientManagment = (props) => {
                             <div className="col-span-4 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
+                                        UOM
+                                    </p>
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={uom} setSelected={setUOM} />
+                                </div>
+                            </div>
+                            <div className="col-span-4 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
                                         Class
                                     </p>
                                     <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
@@ -86,14 +94,6 @@ const IngredientManagment = (props) => {
                                         Sub Class
                                     </p>
                                     <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
-                                </div>
-                            </div>
-                            <div className="col-span-4 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        UOM
-                                    </p>
-                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={uom} setSelected={setUOM} />
                                 </div>
                             </div>
                         </div>

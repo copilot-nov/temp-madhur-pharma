@@ -37,9 +37,9 @@ const ManufactureTemplate = () => {
         <div style={{ width: '1200px', minWidth: '400px', height: '90vh' }}>
             <ManufactureTemplateTabs processMasterList={processMasterList} select={select} tabsName={select} handleSelect={handleSelect} />
 
-            {select?.length > 0 && <div className="bottom-8 right-8 right fixed flex justify-end">
-                <button className="mx-2 bg-gray-300 px-6 py-2 text-gray-900 rounded hover:bg-gray-100">Back</button>
-                <button onClick={getNext} className="bg-green-900 px-6 py-2 text-white rounded hover:bg-green-800">Next</button>
+            {select?.length > 0 && <div className="bottom-12 right-10 right fixed flex justify-end">
+                <button className="mx-2 bg-gray-300 px-6 py-2 text-gray-900 hover:bg-gray-100">Cancel</button>
+                <button onClick={getNext} className="bg-green-900 px-6 py-2 text-white hover:bg-green-800">Submit</button>
             </div>}
 
         </div>

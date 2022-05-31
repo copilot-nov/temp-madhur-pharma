@@ -20,10 +20,10 @@ export default function AutoSearch(props) {
     return (
         <div>
             <Combobox value={selected} onChange={setSelected}>
-                <div className="relative mt-1">
+                <div className="relative">
                     <div className="border border-gray-700 relative w-full cursor-default overflow-hidden  bg-white text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <Combobox.Input
-                            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-green-900 focus:ring-0"
+                            className="w-full h-9 border-none pl-3 pr-10 text-sm leading-5 text-green-900 focus:ring-0"
                             displayValue={(person) => person[keyname]}
                             onChange={(event) => setQuery(event.target.value)}
                         />

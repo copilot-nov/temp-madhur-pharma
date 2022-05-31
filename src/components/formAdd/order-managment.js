@@ -105,14 +105,6 @@ const OrderManagment = (props) => {
                                         Status
                                     </p>
                                     <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={status} setSelected={setStatus} />
-                                    {/* <input
-                                        required
-                                        type='text'
-                                        name='status'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.status}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    /> */}
                                 </div>
                             </div>
                             <div className="col-span-6 sm:col-span-6">

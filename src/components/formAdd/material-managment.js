@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import AutoSearch from '../autoComplete';
 
 const defaultState = {
-   
+
 }
 
 const MaterialManagment = (props) => {
-    const { closeModal,setHandleResponse } = props
+    const { closeModal, setHandleResponse } = props
     // redux functions 
-    const { ADD_MATERIAL_ADMIN,masterDataList } = props
+    const { ADD_MATERIAL_ADMIN, masterDataList } = props
     const [payload, setPayload] = useState(defaultState)
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
@@ -23,7 +23,7 @@ const MaterialManagment = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        let copypayload =  payload
+        let copypayload = payload
         copypayload.class_id = mainclass.id
         copypayload.sub_class_id = mainSubclass.id
         copypayload.uom = uom.data_code
@@ -57,22 +57,7 @@ const MaterialManagment = (props) => {
                                     />
                                 </div>
                             </div>
-                            <div className="col-span-4 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Class
-                                    </p>
-                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
-                                </div>
-                            </div>
-                            <div className="col-span-4 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Sub Class
-                                    </p>
-                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
-                                </div>
-                            </div>
+
                             <div className="col-span-4 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
@@ -122,6 +107,22 @@ const MaterialManagment = (props) => {
                                         defaultValue={payload?.sku}
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                     />
+                                </div>
+                            </div>
+                            <div className="col-span-4 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Class
+                                    </p>
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
+                                </div>
+                            </div>
+                            <div className="col-span-4 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Sub Class
+                                    </p>
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
                                 </div>
                             </div>
                         </div>

@@ -114,37 +114,7 @@ const CustomerManagment = (props) => {
                                     />
                                 </div>
                             </div>
-                            <div className="col-span-4 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Class
-                                    </p>
-                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
-                                    {/* <input
-                                        type='number'
-                                        name='class_id'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.class_id}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    /> */}
-                                </div>
-                            </div>
-                            <div className="col-span-4 sm:col-span-3">
-                                <div className='w-full items-center'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Sub Class
-                                    </p>
-                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
 
-                                    {/* <input
-                                        type='number'
-                                        name='sub_class_id'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.sub_class_id}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    /> */}
-                                </div>
-                            </div>
                             <div className="col-span-6 sm:col-span-3">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
@@ -172,6 +142,22 @@ const CustomerManagment = (props) => {
                                         defaultValue={payload?.city}
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                     />
+                                </div>
+                            </div>
+                            <div className="col-span-4 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Class
+                                    </p>
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
+                                </div>
+                            </div>
+                            <div className="col-span-4 sm:col-span-3">
+                                <div className='w-full items-center'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Sub Class
+                                    </p>
+                                    <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
                                 </div>
                             </div>
                         </div>

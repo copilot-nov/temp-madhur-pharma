@@ -3,7 +3,7 @@ import { ADD_USER_BY_ADMIN } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 
 const defaultState = {
-    
+
 }
 
 const UserManagment = (props) => {
@@ -161,50 +161,8 @@ const UserManagment = (props) => {
                                         <option value={14}> Production Operator</option>
                                         <option value={15}> QA Manager</option>
                                     </select>
-                                    {/* <input
-                                        required
-                                        type='number'
-                                        name='role_id'
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.role_id}
-                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                    /> */}
                                 </div>
                             </div>
-
-                            {/* <div className="col-span-6 sm:col-span-6">
-                                <div className='w-full items-start'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Notes
-                                    </p>
-                                    <textarea
-                                        id="notes"
-                                        required
-                                        name="notes"
-                                        rows={3}
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.notes}
-                                        className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
-                                    />
-                                </div>
-                            </div>
-                            <div className="col-span-6 sm:col-span-6">
-                                <div className='w-full items-start'>
-                                    <p className="block text-sm font-medium text-gray-900">
-                                        Role Note
-                                    </p>
-                                    <textarea
-                                        required
-                                        id="role_notes"
-                                        name="role_notes"
-                                        rows={3}
-                                        onChange={handleOnChange}
-                                        defaultValue={payload?.role_notes}
-                                        className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
-                                    />
-                                </div>
-                            </div> */}
-
                         </div>
                     </div>
                     <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
