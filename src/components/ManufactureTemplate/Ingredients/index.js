@@ -7,9 +7,11 @@ const Ingredient = (props) => {
     const [select, setSelcted] = useState([])
     const [ingredientPayload, setIngredientPayload] = useState([])
 
-    const handleQty = (e) => {
+    const handleQty = async (e) => {
         let { name, value } = e.target
-        setIngredientPayload([...ingredientPayload, { name: name, qty: Number(value) }])
+        let copydata = await ingredientPayload?.filter((item) => item?.name !== name)
+        copydata.push({ name: name, qty: Number(value) })
+        await setIngredientPayload(copydata)
     }
 
     useMemo(() => {
@@ -51,8 +53,7 @@ const Ingredient = (props) => {
                 }
             </div>
             <br />
-            {totalQty}
-            {totalQty > 500 && <Alert type='error' msg={'invalid  !'} />}
+            {totalQty > 100 && <Alert type='error' msg={'invalid  !'} />}
         </div>
     )
 }
