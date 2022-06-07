@@ -22,6 +22,7 @@ const processMasterTab = [
 
 export default function ManufactureTemplateTabs(props) {
   const { tabsName, select, handleSelect, processMasterList } = props
+  // console.log(processMasterList)
 
   return (
     <div className="w-full sm:px-0 h-100">
@@ -46,11 +47,13 @@ export default function ManufactureTemplateTabs(props) {
         <Tab.Panels>
           {
             processMasterTab?.map((tab) => {
+              // console.log(tab?.tabName)
               return tabsName?.includes(tab?.tabName) && (
+                
                 <Tab.Panel
                   key={tab?.tabName}
                   className={classNames('bg-white pt-3', 'ring-white ring-opacity-60 ring-offset-2  focus:outline-none focus:ring-2')}>
-                  <div style={{ height: '80%' }}><SubSection /></div>
+                  <div style={{ height: '80%' }}><SubSection subTab={tab?.tabName} /></div>
                 </Tab.Panel>
               )
             })

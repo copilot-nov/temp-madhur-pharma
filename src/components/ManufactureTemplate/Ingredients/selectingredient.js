@@ -13,7 +13,7 @@ const IngredientsList = [
     { id: 8, name: 'Geogaard' },
     { id: 9, name: 'Aqua Tonus Fragrance' },
 ]
-const SelectIngredient = ({ select, setSelcted }) => {
+const SelectIngredient = ({ select, setSelect }) => {
     const [listOfFilter, setListOfFilter] = useState(IngredientsList)
     let [isOpen, setIsOpen] = useState(false)
 
@@ -35,9 +35,9 @@ const SelectIngredient = ({ select, setSelcted }) => {
         let copydata = []
         if (select?.includes(value?.name)) {
             copydata = select?.filter(item => item !== value?.name)
-            setSelcted(copydata)
+            setSelect(copydata)
         } else {
-            setSelcted([...select, value?.name])
+            setSelect([...select, value?.name])
         }
     }
 
