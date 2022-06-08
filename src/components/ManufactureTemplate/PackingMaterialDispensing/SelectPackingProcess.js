@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import ListOfIngredients from './list'
+import ListOfPackingProcess from './PackingList'
 
 const IngredientsList = [
     { id: 1, name: 'Cyclopentasiloxane' },
@@ -13,7 +13,7 @@ const IngredientsList = [
     { id: 8, name: 'Geogaard' },
     { id: 9, name: 'Aqua Tonus Fragrance' },
 ]
-const SelectIngredient = ({ select, setSelect }) => {
+const SelectPackingProcess = ({ select, setSelect }) => {
     const [listOfFilter, setListOfFilter] = useState(IngredientsList)
     let [isOpen, setIsOpen] = useState(false)
 
@@ -84,7 +84,7 @@ const SelectIngredient = ({ select, setSelect }) => {
                                     <Dialog.Title as="h3" className="mb-2 text-lg font-medium leading-6 text-gray-900">
                                         Select Ingredients
                                     </Dialog.Title>
-                                    <ListOfIngredients handleSearch={handleSearch} listOfFilter={listOfFilter} select={select} handleSelect={handleSelect} />
+                                    <ListOfPackingProcess handleSearch={handleSearch} listOfFilter={listOfFilter} select={select} handleSelect={handleSelect} />
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>
@@ -95,4 +95,4 @@ const SelectIngredient = ({ select, setSelect }) => {
     )
 }
 
-export default SelectIngredient;
+export default SelectPackingProcess;
