@@ -8,20 +8,20 @@ function classNames(...classes) {
 }
 
 
-const processMasterTab = [
-  { tabName: 'Ingredient Dispensing' },
-  { tabName: 'Product Manufacturing' },
-  { tabName: 'Product Unloading' },
-  { tabName: 'Packing Material Dispensing' },
-  { tabName: 'Cleaning & Inspection' },
-  { tabName: 'Data Coding' },
-  { tabName: 'Filling & Packing' },
-  { tabName: 'Weighing' },
-  { tabName: 'Dispatch' },
-]
+// const processMasterTab = [
+//   { tabName: 'Ingredient Dispensing' },
+//   { tabName: 'Product Manufacturing' },
+//   { tabName: 'Product Unloading' },
+//   { tabName: 'Packing Material Dispensing' },
+//   { tabName: 'Cleaning & Inspection' },
+//   { tabName: 'Data Coding' },
+//   { tabName: 'Filling & Packing' },
+//   { tabName: 'Weighing' },
+//   { tabName: 'Dispatch' },
+// ]
 
 export default function ManufactureTemplateTabs(props) {
-  const { tabsName, select, handleSelect, processMasterList } = props
+  const { tabsName, select, handleSelect, processMasterList, processId } = props
   // console.log(processMasterList)
 
   return (
@@ -46,14 +46,14 @@ export default function ManufactureTemplateTabs(props) {
         </Tab.List>
         <Tab.Panels>
           {
-            processMasterTab?.map((tab) => {
+            processMasterList?.map((tab) => {
               // console.log(tab?.tabName)
-              return tabsName?.includes(tab?.tabName) && (
+              return tabsName?.includes(tab?.name) && (
                 
                 <Tab.Panel
-                  key={tab?.tabName}
+                  key={tab?.name}
                   className={classNames('bg-white pt-3', 'ring-white ring-opacity-60 ring-offset-2  focus:outline-none focus:ring-2')}>
-                  <div style={{ height: '80%' }}><SubSection subTab={tab?.tabName} /></div>
+                  <div style={{ height: '80%' }}><SubSection subTab={tab?.name} /></div>
                 </Tab.Panel>
               )
             })
@@ -62,7 +62,7 @@ export default function ManufactureTemplateTabs(props) {
           <Tab.Panel className={classNames('bg-white pt-3', 'ring-white ring-opacity-60 ring-offset-2  focus:outline-none focus:ring-2')}>
             <ProductForField />
             <br />
-            <ProcessMaster processMasterList={processMasterList} select={select} handleSelect={handleSelect} />
+            <ProcessMaster processMasterList={processMasterList} select={select} handleSelect={handleSelect} processId={processId} />
           </Tab.Panel>
 
         </Tab.Panels>

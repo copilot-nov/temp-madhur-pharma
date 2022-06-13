@@ -8,7 +8,7 @@ const Ingredient = (props) => {
     const { subTab } = props
     const [select, setSelect] = useState([])
     const [ingredientPayload, setIngredientPayload] = useState([])
-
+    console.log(select)
     const handleQty = async (e) => {
         let { name, value } = e.target
         let copydata = await ingredientPayload?.filter((item) => item?.name !== name)
@@ -55,6 +55,16 @@ const Ingredient = (props) => {
                         })
                     }
                 </div>
+                {select?.length > 0 ? 
+                    <div className="pr-10 py-3 flex justify-end sm:px-6 mt-10">
+                        <button
+                            type="submit"
+                            className=" py-2 px-8 border border-transparent shadow-sm text-sm font-medium text-white bg-green-900 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                        >
+                            Save
+                        </button>
+                    </div>
+                :""}
                 <br />
                 {totalQty > 100 && <Alert type='error' msg={'invalid  !'} />}
             </div>

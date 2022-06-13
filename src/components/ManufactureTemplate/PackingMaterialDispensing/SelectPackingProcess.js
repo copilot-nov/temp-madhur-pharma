@@ -82,7 +82,7 @@ const SelectPackingProcess = ({ select, setSelect }) => {
                             >
                                 <Dialog.Panel className="w-full max-w-md transform bg-white p-6 text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title as="h3" className="mb-2 text-lg font-medium leading-6 text-gray-900">
-                                        Select Ingredients
+                                        Select Packing Procedures
                                     </Dialog.Title>
                                     <ListOfPackingProcess handleSearch={handleSearch} listOfFilter={listOfFilter} select={select} handleSelect={handleSelect} />
                                 </Dialog.Panel>

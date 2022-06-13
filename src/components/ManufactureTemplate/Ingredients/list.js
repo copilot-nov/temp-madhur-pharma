@@ -19,7 +19,7 @@ const ListOfIngredients = ({ handleSearch, listOfFilter, select,handleSelect }) 
                             <button key={item?.id} onClick={() => { handleSelect(item) }} className="w-full hover:shadow flex items-center gap-2 p-2 mt-2">
                                 <img className="w-6 h-6" src={select?.includes(item?.name) ? SelectedCheckBox : CheckBox} alt={item?.name} />
                                 <div className="flex flex-col">
-                                    <strong className="text-slate-900 text-sm font-medium dark:text-slate-200">{item?.name}</strong>
+                                    <strong className="text-slate-900 text-sm font-medium dark:text-green-900">{item?.name}</strong>
                                 </div>
                             </button>
                         )

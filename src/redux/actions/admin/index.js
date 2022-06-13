@@ -45,6 +45,23 @@ export const GET_CUSTOMER_LIST = () => {
         }
     }
 }
+export const GET_MANUFACTURING_TEMPLATE_LIST = () => {
+    let url = `${baseUrl}/manufacturing-template/product/formulation`
+    return async dispatch => {
+        try {
+            let res = await axios.get(url, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch({ type: 'GET_MANUFACTURING_TEMPLATE_LIST', payload: res?.data?.data })
+            } else {
+                toast.info(res.data?.msg, styleToastify);
+                return false //{ open: true, title: 'Password !', message: res.data?.msg, alertType: 'error' }
+            }
+        }
+        catch (error) {
+            toast.error((error.message).replace(/\\/g, ""), styleToastify);
+        }
+    }
+}
 export const GET_INGREDIENT_LIST = () => {
     let url = `${baseUrl}/ingredient/master`
     return async dispatch => {
@@ -130,6 +147,94 @@ export const GET_MASTER_DATA_LIST = () => {
         }
         catch (error) {
             toast.error((error.message).replace(/\\/g, ""), styleToastify);
+        }
+    }
+}
+
+export const GET_PROCESS_MASTER_LIST = () => {
+    let url = `${baseUrl}/manufacturing-template/process/master`
+    return async dispatch => {
+        try {
+            let res = await axios.get(url, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch({ type: 'GET_PROCESS_MASTER_LIST', payload: res?.data?.data })
+            } else {
+                toast.info(res.data?.msg, styleToastify);
+                return false //{ open: true, title: 'Password !', message: res.data?.msg, alertType: 'error' }
+            }
+        }
+        catch (error) {
+            toast.error((error.message).replace(/\\/g, ""), styleToastify);
+        }
+    }
+}
+
+export const UPDATE_MODULE_FROM_ADMIN = (payload,Id,type) => {
+    let url = `${baseUrl}/users/${Id}`
+    return async dispatch => {
+        try {
+            let res = await axios.put(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                if (type === 'user') {
+                    // toast.success(res.data?.data, styleToastify);
+                    await dispatch(GET_USER_BY_ADMIN())
+                } else if (type === 'product') {
+                    await dispatch(GET_PRODUCT_LIST())
+                } else if (type === 'material') {
+                    await dispatch(GET_MATERIAL_LIST())
+                } else if (type === 'ingredient') {
+                    await dispatch(GET_INGREDIENT_LIST())
+                } else if (type === 'order') {
+                    await dispatch(GET_ORDER_LIST())
+                }
+                // dispatch(UPDATE_MODULE_FROM_ADMIN())
+                return { status: 'success', msg: 'Item Edited successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+
+export const ADD_PRODUCT_FORMULATION = (payload) => {
+    // console.log(payload)
+    let url = `${baseUrl}/manufacturing-template/product/formulation/create`
+    return async dispatch => {
+        try {
+            let res = await axios.post(url, payload, { headers: getHeaders() })
+            // console.log(res)
+            if (res?.data.success) {
+                dispatch(GET_MANUFACTURING_TEMPLATE_LIST())
+                return { status: 'success', msg: 'Product Formulation Added successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+
+export const ADD_PRODUCTION_PROCESS = (payload) => {
+    // console.log(payload)
+    let url = `${baseUrl}/manufacturing-template/production/process/create`
+    return async dispatch => {
+        try {
+            let res = await axios.post(url, payload, { headers: getHeaders() })
+            // console.log(res)
+            if (res?.data.success) {
+                dispatch(GET_MANUFACTURING_TEMPLATE_LIST())
+                return { status: 'success', msg: 'Product Formulation Added successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
         }
     }
 }

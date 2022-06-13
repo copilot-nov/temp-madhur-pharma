@@ -21,8 +21,15 @@ export default function AddModal(props) {
             <button onClick={openModal} className={classes}>
                 {btnTitle}
             </button>
+            <MainFormAdd
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                handleResponse={handleResponse}
+                setHandleResponse={setHandleResponse}
+                titleModal={titleModal}
+                closeModal={closeModal} />
 
-            <Transition appear show={isOpen} as={Fragment}>
+            {/* <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={closeModal}>
                     <Transition.Child
                         as={Fragment}
@@ -68,7 +75,7 @@ export default function AddModal(props) {
                         </div>
                     </div>
                 </Dialog>
-            </Transition>
+            </Transition> */}
         </>
     )
 }

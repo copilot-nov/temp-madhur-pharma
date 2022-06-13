@@ -1,5 +1,11 @@
 import moment from 'moment'
 import TableActionCell from '../components/tailwind-table/tableActionCell'
+import EditDeleteActionForUser from '../components/UserManagement/EditDeleteAction'
+import EditDeleteActionForProduct from '../components/ProductManagement/EditDeleteActionProduct'
+import EditDeleteActionOrder from '../components/OrderManagement/EditDeleteActionOrder'
+import EditDeleteActionMaterial from '../components/MaterialManagement/EditDeleteActionMaterial'
+import EditDeleteActionIngredient from '../components/IngredientManagement/EditDeleteActionIngredient'
+import EditDaleteActionCustomer from '../components/CustomerManagement/EditDaleteActionCustomer'
 
 let customerCol = [
     {
@@ -43,7 +49,7 @@ let customerCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="customer" url={`/customer/master/${row?.id}`} row={row} />
+            <EditDaleteActionCustomer type="customer" url={`/customer/master/${row?.id}`} row={row} />
         )
     },
 ]
@@ -94,7 +100,7 @@ let userCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type='user' url={`/users/${row?.id}`} row={row} />
+            <EditDeleteActionForUser type='user' Id={row?.id} url={`/users/${row?.id}`} row={row} />
         )
     },
 ]
@@ -136,7 +142,7 @@ let ProductCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="product" url={`/product/master/${row?.id}`} row={row} />
+            <EditDeleteActionForProduct type="product" url={`/product/master/${row?.id}`} row={row} />
         )
     },
 ]
@@ -182,7 +188,7 @@ let MaterialCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="material" url={`/material/master/${row?.id}`} row={row} />
+            <EditDeleteActionMaterial type="material" url={`/material/master/${row?.id}`} row={row} />
         )
     },
 ]
@@ -205,6 +211,43 @@ let IngredientCol = [
     },
     {
         name: "Created by",
+        // width: '80px',
+        selector: row => row.created_by,
+        sortable: true,
+    },
+    {
+        name: "Created On",
+        width: '130px',
+        selector: row => moment(row.created_on).format('DD/MM/YYYY'),
+        sortable: true,
+    },
+    {
+        name: "Action",
+        width: '130px',
+        cell: (row) => (
+            <EditDeleteActionIngredient type="ingredient" url={`/ingredient/master/${row?.id}`} row={row} />
+        )
+    },
+]
+
+let ManufactureTemplate = [
+    {
+        name: "Name",
+        selector: row => row.name,
+        sortable: true,
+    },
+    {
+        name: "Description",
+        selector: row => row.description,
+        sortable: true,
+    },
+    {
+        name: "License No.",
+        selector: row => row.license_no,
+        sortable: true,
+    },
+    {
+        name: "Created By",
         // width: '80px',
         selector: row => row.created_by,
         sortable: true,
@@ -272,7 +315,7 @@ let OrderCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="order" url={`/order/master/${row?.id}`} row={row} />
+            <EditDeleteActionOrder type="order" url={`/order/master/${row?.id}`} row={row} />
         )
     },
 ]
@@ -284,5 +327,5 @@ export const selectModuleColumn = [
     { name: 'Material Management', columns: MaterialCol },
     { name: 'Ingredient Management', columns: IngredientCol },
     { name: 'Order Management', columns: OrderCol },
-    { name: 'Manufacturing Template', columns: [] }
+    { name: 'Manufacturing Template', columns: ManufactureTemplate }
 ]
