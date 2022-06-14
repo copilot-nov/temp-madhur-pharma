@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { UPDATE_MODULE_FROM_ADMIN } from '../../redux/actions/admin';
+import { UPDATE_PRODUCT } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 import AutoSearch from '../autoComplete';
 import { Dialog, Transition } from '@headlessui/react';
@@ -20,7 +20,7 @@ const defaultState = {
 const EditProduct = (props) => {
     const { setOpenEdit, setHandleResponse, openEdit, titleModal, Id, type, row} = props
     // redux functions 
-    const { UPDATE_MODULE_FROM_ADMIN, masterDataList } = props
+    const { UPDATE_PRODUCT, masterDataList } = props
     const [payload, setPayload] = useState(defaultState)
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
@@ -37,7 +37,7 @@ const EditProduct = (props) => {
         copypayload.class_id = mainclass.id
         copypayload.sub_class_id = mainSubclass.id
         // copypayload.code = mainSubclass.data_code
-        let istrue = await UPDATE_MODULE_FROM_ADMIN(copypayload, Id, type)
+        let istrue = await UPDATE_PRODUCT(copypayload, Id)
         if (istrue?.status) {
             setPayload(defaultState)
             setHandleResponse(istrue)
@@ -201,4 +201,4 @@ const mapStateToProps = (state) => {
         masterDataList: state?.AdminReducer.masterDataList,
     };
 };
-export default connect(mapStateToProps, { UPDATE_MODULE_FROM_ADMIN })(EditProduct);
+export default connect(mapStateToProps, { UPDATE_PRODUCT })(EditProduct);

@@ -169,25 +169,98 @@ export const GET_PROCESS_MASTER_LIST = () => {
     }
 }
 
-export const UPDATE_MODULE_FROM_ADMIN = (payload,Id,type) => {
+export const UPDATE_CUSTOMER = (payload, Id) => {
+    let url = `${baseUrl}/customer/master/${Id}`
+    return async dispatch => {
+        try {
+            let res = await axios.put(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch(GET_CUSTOMER_LIST())
+                return { status: 'success', msg: 'Item Edited successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+export const UPDATE_USER = (payload, Id) => {
     let url = `${baseUrl}/users/${Id}`
     return async dispatch => {
         try {
             let res = await axios.put(url, payload, { headers: getHeaders() })
             if (res?.data.success) {
-                if (type === 'user') {
-                    // toast.success(res.data?.data, styleToastify);
-                    await dispatch(GET_USER_BY_ADMIN())
-                } else if (type === 'product') {
-                    await dispatch(GET_PRODUCT_LIST())
-                } else if (type === 'material') {
-                    await dispatch(GET_MATERIAL_LIST())
-                } else if (type === 'ingredient') {
-                    await dispatch(GET_INGREDIENT_LIST())
-                } else if (type === 'order') {
-                    await dispatch(GET_ORDER_LIST())
-                }
-                // dispatch(UPDATE_MODULE_FROM_ADMIN())
+                dispatch(GET_USER_BY_ADMIN())
+                return { status: 'success', msg: 'Item Edited successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+export const UPDATE_PRODUCT = (payload, Id) => {
+    let url = `${baseUrl}/product/master/${Id}`
+    return async dispatch => {
+        try {
+            let res = await axios.put(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch(GET_PRODUCT_LIST())
+                return { status: 'success', msg: 'Item Edited successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+export const UPDATE_MATERIAL = (payload, Id) => {
+    let url = `${baseUrl}/material/master/${Id}`
+    return async dispatch => {
+        try {
+            let res = await axios.put(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch(GET_MATERIAL_LIST())
+                return { status: 'success', msg: 'Item Edited successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+export const UPDATE_ORDER = (payload, Id) => {
+    let url = `${baseUrl}/order/master/${Id}`
+    return async dispatch => {
+        try {
+            let res = await axios.put(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch(GET_ORDER_LIST())
+                return { status: 'success', msg: 'Item Edited successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    }
+}
+export const UPDATE_INGREDIENT = (payload, Id) => {
+    let url = `${baseUrl}/ingredient/master/${Id}`
+    return async dispatch => {
+        try {
+            let res = await axios.put(url, payload, { headers: getHeaders() })
+            if (res?.data.success) {
+                dispatch(GET_INGREDIENT_LIST())
                 return { status: 'success', msg: 'Item Edited successfully!' }
             } else {
                 return { status: 'info', msg: res.data?.msg }

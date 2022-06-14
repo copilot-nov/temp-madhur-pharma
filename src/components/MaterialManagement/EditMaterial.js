@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { ADD_MATERIAL_ADMIN } from '../../redux/actions/admin';
+import { UPDATE_MATERIAL } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 import AutoSearch from '../autoComplete';
 import { Dialog, Transition } from '@headlessui/react';
@@ -11,7 +11,7 @@ const defaultState = {
 const EditMaterial = (props) => {
     const { setOpenEdit, setHandleResponse, openEdit, Id, type, row} = props
     // redux functions 
-    const { ADD_MATERIAL_ADMIN, masterDataList } = props
+    const { UPDATE_MATERIAL, masterDataList } = props
     const [payload, setPayload] = useState(defaultState)
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
@@ -28,7 +28,7 @@ const EditMaterial = (props) => {
         // copypayload.class_id = mainclass.id
         // copypayload.sub_class_id = mainSubclass.id
         copypayload.uom = uom.data_code
-        let istrue = await ADD_MATERIAL_ADMIN(copypayload,Id,type)
+        let istrue = await UPDATE_MATERIAL(copypayload,Id)
         if (istrue?.status) {
             setPayload(defaultState)
             setHandleResponse(istrue)
@@ -194,4 +194,4 @@ const mapStateToProps = (state) => {
         masterDataList: state?.AdminReducer.masterDataList,
     };
 };
-export default connect(mapStateToProps, { ADD_MATERIAL_ADMIN })(EditMaterial);
+export default connect(mapStateToProps, { UPDATE_MATERIAL })(EditMaterial);

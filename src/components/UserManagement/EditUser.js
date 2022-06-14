@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { UPDATE_MODULE_FROM_ADMIN } from '../../redux/actions/admin';
+import { UPDATE_USER } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 import { Dialog, Transition } from '@headlessui/react';
 
@@ -13,7 +13,7 @@ const roleState = {
 const EditUser = (props) => {
     const { setOpenEdit, setHandleResponse, openEdit, Id, type, row} = props
     // redux functions 
-    const { UPDATE_MODULE_FROM_ADMIN } = props
+    const { UPDATE_USER } = props
     const [payload, setPayload] = useState(defaultState)
     const [roledata, setroledata] = useState(roleState)
 
@@ -30,8 +30,9 @@ const EditUser = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let copypayload = {"user_master": payload, "user_role": roleState}
-        let istrue = await UPDATE_MODULE_FROM_ADMIN(copypayload, Id, type)
+        let istrue = await UPDATE_USER(copypayload, Id)
         if (istrue?.status) {
+            setOpenEdit(false)
             // setPayload(defaultState)
             // setroledata(roleState)
             setHandleResponse(istrue)
@@ -237,4 +238,4 @@ const EditUser = (props) => {
     )
 }
 
-export default connect(null, { UPDATE_MODULE_FROM_ADMIN })(EditUser);
+export default connect(null, { UPDATE_USER })(EditUser);

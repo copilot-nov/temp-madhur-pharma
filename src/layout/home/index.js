@@ -34,7 +34,7 @@ const Homelayout = (props) => {
     useEffect(() => {
         setData(dataBycondition())
     }, [dataBycondition, orderList, manufacturingTemplateList, productList, CustomerManagmentList, usermanagmentList, materialList, ingredientList])
-    console.log(data)
+    // console.log(data)
     return (
         <div>
             <Navbar />

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { ADD_INGREDIENT_ADMIN } from '../../redux/actions/admin';
+import { UPDATE_INGREDIENT } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 import AutoSearch from '../autoComplete';
 import { Dialog, Transition } from '@headlessui/react';
@@ -12,7 +12,7 @@ const defaultState = {
 const EditIngredient = (props) => {
     const { setOpenEdit, setHandleResponse, openEdit, Id, type, row} = props
     // redux functions 
-    const { ADD_INGREDIENT_ADMIN, masterDataList } = props
+    const { UPDATE_INGREDIENT, masterDataList } = props
     const [payload, setPayload] = useState(defaultState)
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
@@ -29,7 +29,7 @@ const EditIngredient = (props) => {
         copypayload.class_id = mainclass.id
         copypayload.sub_class_id = mainSubclass.id
         copypayload.uom = uom.data_code
-        let istrue = await ADD_INGREDIENT_ADMIN(copypayload, Id, type)
+        let istrue = await UPDATE_INGREDIENT(copypayload, Id, type)
         if (istrue?.status) {
             setPayload(defaultState)
             setHandleResponse(istrue)
@@ -164,4 +164,4 @@ const mapStateToProps = (state) => {
         masterDataList: state?.AdminReducer.masterDataList,
     };
 };
-export default connect(mapStateToProps, { ADD_INGREDIENT_ADMIN })(EditIngredient);
+export default connect(mapStateToProps, { UPDATE_INGREDIENT })(EditIngredient);

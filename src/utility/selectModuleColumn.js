@@ -49,7 +49,7 @@ let customerCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <EditDaleteActionCustomer type="customer" url={`/customer/master/${row?.id}`} row={row} />
+            <EditDaleteActionCustomer type="customer" url={`/customer/master/${row?.id}`} row={row} Id={row?.id} />
         )
     },
 ]
@@ -142,7 +142,7 @@ let ProductCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <EditDeleteActionForProduct type="product" url={`/product/master/${row?.id}`} row={row} />
+            <EditDeleteActionForProduct type="product" url={`/product/master/${row?.id}`} row={row} Id={row?.id} />
         )
     },
 ]
@@ -188,7 +188,7 @@ let MaterialCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <EditDeleteActionMaterial type="material" url={`/material/master/${row?.id}`} row={row} />
+            <EditDeleteActionMaterial type="material" url={`/material/master/${row?.id}`} row={row} Id={row?.id} />
         )
     },
 ]
@@ -225,7 +225,7 @@ let IngredientCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <EditDeleteActionIngredient type="ingredient" url={`/ingredient/master/${row?.id}`} row={row} />
+            <EditDeleteActionIngredient type="ingredient" url={`/ingredient/master/${row?.id}`} row={row} Id={row?.id} />
         )
     },
 ]
@@ -262,7 +262,7 @@ let ManufactureTemplate = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="ingredient" url={`/ingredient/master/${row?.id}`} row={row} />
+            <TableActionCell type="ingredient" url={`/ingredient/master/${row?.id}`} row={row} Id={row?.id} />
         )
     },
 ]
@@ -315,7 +315,7 @@ let OrderCol = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <EditDeleteActionOrder type="order" url={`/order/master/${row?.id}`} row={row} />
+            <EditDeleteActionOrder type="order" url={`/order/master/${row?.id}`} row={row} Id={row?.id} />
         )
     },
 ]

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { ADD_ORDER_ADMIN } from '../../redux/actions/admin';
+import { UPDATE_ORDER } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 import AutoSearch from '../autoComplete';
 import { Dialog, Transition } from '@headlessui/react';
@@ -12,7 +12,7 @@ const defaultState = {
 const EditOrder = (props) => {
     const { setOpenEdit, setHandleResponse, openEdit, titleModal, Id, type, row } = props
     // redux functions 
-    const { ADD_ORDER_ADMIN, masterDataList } = props
+    const { UPDATE_ORDER, masterDataList } = props
     const [payload, setPayload] = useState(defaultState)
     const [status, setStatus] = useState(masterDataList[0])
 
@@ -25,7 +25,7 @@ const EditOrder = (props) => {
         e.preventDefault()
         let copypayload = payload
         copypayload.status = status.data_code
-        let istrue = await ADD_ORDER_ADMIN(copypayload,Id, type)
+        let istrue = await UPDATE_ORDER(copypayload,Id)
         if (istrue?.status) {
             setPayload(defaultState)
             setHandleResponse(istrue)
@@ -207,4 +207,4 @@ const mapStateToProps = (state) => {
         masterDataList: state?.AdminReducer.masterDataList,
     };
 };
-export default connect(mapStateToProps, { ADD_ORDER_ADMIN })(EditOrder);
+export default connect(mapStateToProps, { UPDATE_ORDER })(EditOrder);

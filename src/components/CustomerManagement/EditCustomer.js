@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { ADD_CUSTOMER_ADMIN } from '../../redux/actions/admin';
+import { UPDATE_CUSTOMER } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 import AutoSearch from '../autoComplete';
 import { Dialog, Transition } from '@headlessui/react';
@@ -12,7 +12,8 @@ const defaultState = {
 
 const CustomerManagment = (props) => {
     const { setOpenEdit, setHandleResponse, openEdit, Id, type, row} = props
-    const { ADD_CUSTOMER_ADMIN, masterDataList } = props
+    // console.log()
+    const { UPDATE_CUSTOMER, masterDataList } = props
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
     // redux functions 
@@ -30,7 +31,7 @@ const CustomerManagment = (props) => {
         // copypayload.sub_class_id = mainSubclass.id
         copypayload.city = "CITY_BANGALORE"
 
-        let istrue = await ADD_CUSTOMER_ADMIN(copypayload,Id,type)
+        let istrue = await UPDATE_CUSTOMER(copypayload,row?.id)
         // setPayload(defaultState)
         setOpenEdit(false)
         setHandleResponse(istrue)
@@ -236,4 +237,4 @@ const mapStateToProps = (state) => {
         masterDataList: state?.AdminReducer.masterDataList,
     };
 };
-export default connect(mapStateToProps, { ADD_CUSTOMER_ADMIN })(CustomerManagment);
+export default connect(mapStateToProps, { UPDATE_CUSTOMER })(CustomerManagment);
