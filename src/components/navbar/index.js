@@ -1,13 +1,14 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Disclosure, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { Navigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Link, Navigate } from "react-router-dom";
 
 const navigation = [
     { name: 'Dashboard', href: '#', current: false },
-    { name: 'Production', href: '#', current: false },
+    { name: 'Production', href: '/production', current: true },
     // { name: 'Reports', href: '#', current: false },
-    { name: 'Admin', href: '#', current: true },
+    { name: 'Admin', href: '/home', current: false },
 ]
 
 function classNames(...classes) {
@@ -15,11 +16,20 @@ function classNames(...classes) {
 }
 
 export default function Navbar(props) {
+    // const [route, setRoute] = useState("/production")
 
+    // const handlePages = (item) => {
+    //     console.log(item)
+    //     setRoute(item?.href)
+    // }
     const handleLogout = () => {
         localStorage.clear()
         window.location.href = '/login'
     }
+    // useEffect(()=> {
+        
+    // }, [])
+    // console.log(route)
     return (
         <Disclosure as="nav">
             {({ open }) => (
@@ -33,17 +43,19 @@ export default function Navbar(props) {
                                 <div className="hidden sm:block sm:ml-6 sm:flex sm:items-center ">
                                     <div className="flex items-center  space-x-4">
                                         {navigation.map((item) => (
-                                            <a
+                                            <Link
+                                                to={`${item?.href}`}
+                                                // onClick={() => handlePages(item)}
                                                 key={item.name}
-                                                href={item.href}
+                                                // href={item.href}
                                                 className={classNames(
-                                                    item.current ? 'border-b-2 border-green-800 text-green-800' : 'text-gray-900',
+                                                    item.href === props.current ? 'border-b-2 border-green-800 text-green-800' : 'text-gray-900',
                                                     'px-3 py-2 text-sm font-medium font-bold'
                                                 )}
-                                                aria-current={item.current ? 'page' : undefined}
+                                                // aria-current={item.current ? 'page' : undefined}
                                             >
                                                 {item.name}
-                                            </a>
+                                            </Link>
                                         ))}
                                     </div>
                                 </div>

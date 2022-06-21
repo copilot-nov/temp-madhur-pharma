@@ -16,7 +16,7 @@ const MaterialManagment = (props) => {
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
     const [uom, setUOM] = useState(masterDataList[0])
-
+    console.log(masterDataList)
     const handleOnChange = (e) => {
         let { name, value, type } = e.target
         setPayload({ ...payload, [name]: type === 'number' ? Number(value) : value })

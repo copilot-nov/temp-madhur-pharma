@@ -26,8 +26,8 @@ const EditIngredient = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let copypayload = payload
-        copypayload.class_id = mainclass.id
-        copypayload.sub_class_id = mainSubclass.id
+        // copypayload.class_id = mainclass.id
+        // copypayload.sub_class_id = mainSubclass.id
         copypayload.uom = uom.data_code
         let istrue = await UPDATE_INGREDIENT(copypayload, Id, type)
         if (istrue?.status) {
@@ -86,7 +86,7 @@ const EditIngredient = (props) => {
                                                                     required
                                                                     name='name'
                                                                     onChange={handleOnChange}
-                                                                    defaultValue={payload?.name}
+                                                                    defaultValue={row?.name}
                                                                     className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                                                 />
                                                             </div>
@@ -101,7 +101,7 @@ const EditIngredient = (props) => {
                                                                     type='text'
                                                                     name='code'
                                                                     onChange={handleOnChange}
-                                                                    defaultValue={payload?.code}
+                                                                    defaultValue={row?.code}
                                                                     className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                                                 />
                                                             </div>

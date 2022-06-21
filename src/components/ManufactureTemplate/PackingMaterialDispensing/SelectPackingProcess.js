@@ -1,20 +1,22 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import ListOfPackingProcess from './PackingList'
+import { connect } from 'react-redux'
 
-const IngredientsList = [
-    { id: 1, name: 'Cyclopentasiloxane' },
-    { id: 2, name: 'Dimethiconol' },
-    { id: 3, name: 'Polydimethylsiloxane' },
-    { id: 4, name: 'Squalene Oil' },
-    { id: 5, name: 'Argania Spinosa Kernel Oil' },
-    { id: 6, name: 'Baobab Oil' },
-    { id: 7, name: 'Vitamin E-Acetate' },
-    { id: 8, name: 'Geogaard' },
-    { id: 9, name: 'Aqua Tonus Fragrance' },
-]
-const SelectPackingProcess = ({ select, setSelect }) => {
-    const [listOfFilter, setListOfFilter] = useState(IngredientsList)
+// const materialList = [
+//     { id: 1, name: 'Cyclopentasiloxane' },
+//     { id: 2, name: 'Dimethiconol' },
+//     { id: 3, name: 'Polydimethylsiloxane' },
+//     { id: 4, name: 'Squalene Oil' },
+//     { id: 5, name: 'Argania Spinosa Kernel Oil' },
+//     { id: 6, name: 'Baobab Oil' },
+//     { id: 7, name: 'Vitamin E-Acetate' },
+//     { id: 8, name: 'Geogaard' },
+//     { id: 9, name: 'Aqua Tonus Fragrance' },
+// ]
+const SelectPackingProcess = (props) => {
+    const { select, setSelect, materialList, setMaterialId, materialId} = props
+    const [listOfFilter, setListOfFilter] = useState(materialList)
     let [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
@@ -27,17 +29,21 @@ const SelectPackingProcess = ({ select, setSelect }) => {
 
     const handleSearch = async (e) => {
         let { value } = e.target
-        let searchResult = await IngredientsList?.filter((item) => item?.name.toLowerCase().includes(value.toLowerCase()))
+        let searchResult = await materialList?.filter((item) => item?.name.toLowerCase().includes(value.toLowerCase()))
         await setListOfFilter(searchResult)
     }
-
+    // console.log(select)
     const handleSelect = (value) => {
+        
         let copydata = []
         if (select?.includes(value?.name)) {
             copydata = select?.filter(item => item !== value?.name)
             setSelect(copydata)
+            
         } else {
             setSelect([...select, value?.name])
+            setMaterialId([...materialId, value?.id])
+
         }
     }
 
@@ -51,7 +57,7 @@ const SelectPackingProcess = ({ select, setSelect }) => {
                     <svg xmlns="http://www.w3.org/2000/svg" className="text-gray-700 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                    <span className='ml-4 text-gray-700'>Search for Ingredient</span>
+                    <span className='ml-4 text-gray-700'>Search for Materials</span>
                 </div>
             </button>
 
@@ -82,7 +88,7 @@ const SelectPackingProcess = ({ select, setSelect }) => {
                             >
                                 <Dialog.Panel className="w-full max-w-md transform bg-white p-6 text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title as="h3" className="mb-2 text-lg font-medium leading-6 text-gray-900">
-                                        Select Packing Procedures
+                                        Select Materials
                                     </Dialog.Title>
                                     <ListOfPackingProcess handleSearch={handleSearch} listOfFilter={listOfFilter} select={select} handleSelect={handleSelect} />
                                 </Dialog.Panel>
@@ -95,4 +101,10 @@ const SelectPackingProcess = ({ select, setSelect }) => {
     )
 }
 
-export default SelectPackingProcess;
+const mapStateToProps = (state) => {
+    return {
+        materialList: state?.AdminReducer.materialList,
+
+    };
+};
+export default connect(mapStateToProps, null)(SelectPackingProcess);

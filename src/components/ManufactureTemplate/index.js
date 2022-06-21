@@ -21,11 +21,16 @@ import ManufactureTemplateTabs from "./tabs";
 const ManufactureTemplate = (props) => {
     const { GET_PROCESS_MASTER_LIST, processMaster, isOpen, titleModal, setIsOpen, closeModal } = props
     const [select, setSelcted] = useState([])
-    const [ processId, setProcessId]= useState([])
+    const [processId, setProcessId] = useState([])
+    const [selectedProcessData, setSelectedProcessData] = useState()
+    const [selectedMaterial, setSelectedMaterial] = useState([])
+
+
     // const [ processName, setProcessName]= useState
 
 
     const handleSelect = (value) => {
+        setSelectedProcessData(value)
         setProcessId([...processId, value?.id])
         // console.log(value)
         let copydata = []
@@ -89,7 +94,16 @@ const ManufactureTemplate = (props) => {
                                         {titleModal}
                                     </Dialog.Title>
                                     <div style={{ width: '1400px', minWidth: '400px', height: '90vh' }}>
-                                        <ManufactureTemplateTabs processMasterList={processMaster} select={select} tabsName={select} handleSelect={handleSelect} processId={processId}/>
+                                        <ManufactureTemplateTabs
+                                            processMasterList={processMaster}
+                                            select={select}
+                                            tabsName={select}
+                                            handleSelect={handleSelect}
+                                            processId={processId}
+                                            selectedProcessData={selectedProcessData}
+                                            setSelectedMaterial={setSelectedMaterial}
+                                            selectedMaterial={selectedMaterial}
+                                        />
 
                                         <div>
                                             {select?.length > 0 &&

@@ -1,20 +1,23 @@
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import ListOfIngredients from './list'
+import { connect } from 'react-redux'
 
-const IngredientsList = [
-    { id: 1, name: 'Cyclopentasiloxane' },
-    { id: 2, name: 'Dimethiconol' },
-    { id: 3, name: 'Polydimethylsiloxane' },
-    { id: 4, name: 'Squalene Oil' },
-    { id: 5, name: 'Argania Spinosa Kernel Oil' },
-    { id: 6, name: 'Baobab Oil' },
-    { id: 7, name: 'Vitamin E-Acetate' },
-    { id: 8, name: 'Geogaard' },
-    { id: 9, name: 'Aqua Tonus Fragrance' },
-]
-const SelectIngredient = ({ select, setSelect }) => {
-    const [listOfFilter, setListOfFilter] = useState(IngredientsList)
+// const IngredientsList = [
+//     { id: 1, name: 'Cyclopentasiloxane' },
+//     { id: 2, name: 'Dimethiconol' },
+//     { id: 3, name: 'Polydimethylsiloxane' },
+//     { id: 4, name: 'Squalene Oil' },
+//     { id: 5, name: 'Argania Spinosa Kernel Oil' },
+//     { id: 6, name: 'Baobab Oil' },
+//     { id: 7, name: 'Vitamin E-Acetate' },
+//     { id: 8, name: 'Geogaard' },
+//     { id: 9, name: 'Aqua Tonus Fragrance' },
+// ]
+const SelectIngredient = (props) => {
+    const { select, setSelect, ingredientList, setIngredientId, ingredientId } = props
+    // console.log(ingredientList)
+    const [listOfFilter, setListOfFilter] = useState(ingredientList)
     let [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
@@ -27,17 +30,19 @@ const SelectIngredient = ({ select, setSelect }) => {
 
     const handleSearch = async (e) => {
         let { value } = e.target
-        let searchResult = await IngredientsList?.filter((item) => item?.name.toLowerCase().includes(value.toLowerCase()))
+        let searchResult = await ingredientList?.filter((item) => item?.name.toLowerCase().includes(value.toLowerCase()))
         await setListOfFilter(searchResult)
     }
 
     const handleSelect = (value) => {
+        // setIngredientId(...ingredientId, value.id)
         let copydata = []
         if (select?.includes(value?.name)) {
             copydata = select?.filter(item => item !== value?.name)
             setSelect(copydata)
         } else {
             setSelect([...select, value?.name])
+            setIngredientId([...ingredientId, value?.id])
         }
     }
 
@@ -95,4 +100,10 @@ const SelectIngredient = ({ select, setSelect }) => {
     )
 }
 
-export default SelectIngredient;
+const mapStateToProps = (state) => {
+    return {
+        ingredientList: state?.AdminReducer.ingredientList,
+
+    };
+};
+export default connect(mapStateToProps, null)(SelectIngredient);

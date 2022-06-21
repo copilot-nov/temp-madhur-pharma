@@ -5,6 +5,7 @@ import Home from '../pages/home'
 import ProtectedRoutes from '../protectedRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Production from '../pages/production';
 
 const Routeing = () => {
 
@@ -14,6 +15,9 @@ const Routeing = () => {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/login" element={<Login />} />
+                    <Route element={<ProtectedRoutes />}>
+                        <Route path="/production" element={<Production />} />
+                    </Route>
                     {/* Protected routes here  */}
                     <Route element={<ProtectedRoutes />}>
                         <Route path="/home" element={<Home />} />

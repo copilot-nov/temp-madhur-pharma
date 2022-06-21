@@ -11,8 +11,9 @@ import DataCoding from './DataCoding'
 import FillingAndPacking from './FillingAndPacking'
 
 const SubSection = (props) => {
-    const { subTab } = props
+    const { subTab, selectedProcessData, setSelectedMaterial,selectedMaterial} = props
     const [selectedTab, setSelectedTab] = useState('Guidlines')
+    
 
     return (
         <div className='w-full' style={{height: "70vh"}} >
@@ -28,14 +29,14 @@ const SubSection = (props) => {
                 </button>
             </div>
             <div className='shadow mt-4 '>
-                {selectedTab === 'Guidlines' && <Guidlines />}
-                {selectedTab === 'Checklist' && <Checklist />}
-                {selectedTab === 'Packing Material Dispensing' && <PackingMaterialsDispensing />}
-                {selectedTab === 'Cleaning & Inspection' && <CleaningAndInspection />}
-                {selectedTab === 'Data Coding' && <DataCoding />}
-                {selectedTab === 'Filling & Packing' && <FillingAndPacking />}
-                {selectedTab === "Product Manufacturing" && <ProductManufacturing subTab={subTab} />}
-                {selectedTab === "Ingredient Dispensing" && <Ingredients subTab={subTab} />}
+                {selectedTab === 'Guidlines' && <Guidlines selectedProcessData={selectedProcessData} />}
+                {selectedTab === 'Checklist' && <Checklist selectedProcessData={selectedProcessData} />}
+                {selectedTab === 'Packing Material Dispensing' && <PackingMaterialsDispensing selectedProcessData={selectedProcessData} setSelectedMaterial={setSelectedMaterial} selectedMaterial={selectedMaterial} />}
+                {selectedTab === 'Cleaning & Inspection' && <CleaningAndInspection selectedMaterial={selectedMaterial} selectedProcessData={selectedProcessData} />}
+                {selectedTab === 'Data Coding' && <DataCoding selectedMaterial={selectedMaterial} selectedProcessData={selectedProcessData} />}
+                {selectedTab === 'Filling & Packing' && <FillingAndPacking selectedMaterial={selectedMaterial} selectedProcessData={selectedProcessData}/>}
+                {selectedTab === "Product Manufacturing" && <ProductManufacturing subTab={subTab} selectedProcessData={selectedProcessData} />}
+                {selectedTab === "Ingredient Dispensing" && <Ingredients subTab={subTab} selectedProcessData={selectedProcessData} />}
 
             </div>
 

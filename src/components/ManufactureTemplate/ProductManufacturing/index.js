@@ -1,18 +1,73 @@
 import { Listbox, Transition } from "@headlessui/react"
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 import { Fragment, useState } from "react"
+import { connect } from "react-redux"
+import { ADD_PRODUCTION_PROCESS_STAGES } from "../../../redux/actions/admin"
+import { Alert } from "../../alert"
 import StageSteps from "./stageSteps"
 
 const ProductManufacturing = (props) => {
-    const { subTab } = props
+    const { subTab, formulationData, selectedProcessData, ADD_PRODUCTION_PROCESS_STAGES } = props
     const [selected, setSelected] = useState(Stages[0])
     const [numberOfSelectedStage, setNumberOfSelectedStage] = useState([])
+    const [handleResponse, setHandleResponse] = useState(null)
+    const [stagesList, setStagesList] = useState([])
+    // const [mainList, setMainList] = useState([])
+
+
+    // console.log(stagesList)
+    // console.log(formulationData)
+    // console.log(selectedProcessData)
 
     const handleSelectedValue = (e) => {
         setNumberOfSelectedStage(Stages)
         setSelected(e)
-        let findIndex = Stages.findIndex((item) =>  item === e)
-        setNumberOfSelectedStage(Stages.slice(0,findIndex+1))
+        let findIndex = Stages.findIndex((item) => item === e)
+        setNumberOfSelectedStage(Stages.slice(0, findIndex + 1))
+    }
+
+
+    const handleSubmit = async () => {
+        let finalList = []
+        let payload = {
+            "prod_proc_id": 0,
+            "data": []
+        }
+        formulationData.filter((data) => {
+            payload.prod_proc_id = data?.id
+            if (data?.process_id === selectedProcessData?.id)
+                numberOfSelectedStage.map((item, index) => {
+                    // console.log(stagesList)
+                    let innerPayload = {
+                        "stage": `${item}`,
+                        "notes": "test",
+                        "stage_step_list": []
+                    }
+                    stagesList.map((list) => {
+                        // console.log(list ,"hgvasgdj")
+                        if (list?.stage === item) {
+                            list?.steps.map((text, i) => {
+                                innerPayload?.stage_step_list.push({
+                                    "text": text?.text,
+                                    "notes": "text"
+                                })
+                            })
+                        }
+                    })
+                    payload?.data.push(innerPayload)
+
+                })
+
+
+        })
+        console.log(payload)
+
+        let istrue = await ADD_PRODUCTION_PROCESS_STAGES(payload)
+        if (istrue?.status) {
+            setHandleResponse(istrue)
+        } else {
+            setHandleResponse(istrue)
+        }
     }
 
     return (
@@ -69,6 +124,7 @@ const ProductManufacturing = (props) => {
                     </Listbox>
                 </div>
             </div>
+            {handleResponse !== null && <Alert type={handleResponse?.status} msg={handleResponse?.msg} />}
             <div className="grid grid-cols-1">
 
                 {
@@ -76,17 +132,34 @@ const ProductManufacturing = (props) => {
                         return (
                             <div key={item} className="m-1 flex items-center text-green-900 w-full hover:shadow">
                                 <p className="ml-2"> <span className="mr-2">{i + 1} . </span>{`Stage- ${item}`} </p>
-                                <StageSteps/>
+                                <StageSteps numberOfSelectedStage={numberOfSelectedStage} setStagesList={setStagesList} stagesList={stagesList} currentStage={item} index={i} />
                             </div>
                         )
                     })
                 }
             </div>
+            {numberOfSelectedStage?.length > 0 ?
+                <div className="pr-10 py-3 flex justify-end sm:px-6 mt-10">
+                    <button
+                        onClick={handleSubmit}
+                        type="submit"
+                        className=" py-2 px-8 border border-transparent shadow-sm text-sm font-medium text-white bg-green-900 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                    >
+                        Save
+                    </button>
+                </div>
+                : ""}
 
         </div>
     )
 }
 
-export default ProductManufacturing
+const mapStateToProps = (state) => {
+    return {
+        formulationData: state?.AdminReducer.formulationData,
 
-const Stages = [1,2,3,4,5,6,7,8,9,10]
+    };
+};
+export default connect(mapStateToProps, {ADD_PRODUCTION_PROCESS_STAGES})(ProductManufacturing);
+
+const Stages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

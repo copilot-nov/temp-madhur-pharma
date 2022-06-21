@@ -12,7 +12,7 @@ const defaultState = {
     "license_no": "",
     "notes": "",
     "iconpic": "",
-    
+
 }
 
 
@@ -37,7 +37,7 @@ const ProductFormulationField = (props) => {
         copypayload.notes = "Testing"
         copypayload.iconpic = "img"
         let istrue = await ADD_PRODUCT_FORMULATION(copypayload)
-        // console.log(istrue)
+
         if (istrue?.status) {
             setPayload(defaultState)
             setHandleResponse(istrue)
@@ -47,7 +47,7 @@ const ProductFormulationField = (props) => {
     }
 
     return (
-        <div className="shadow-lg p-2 rounded h-64">
+        <div className="shadow-lg p-2 rounded h-75">
             {handleResponse !== null && <Alert type={handleResponse?.status} msg={handleResponse?.msg} />}
             <div className="grid grid-cols-3">
                 <div className='m-2 w-96 items-center'>
@@ -113,6 +113,7 @@ const mapStateToProps = (state) => {
     // console.log(state)
     return {
         productList: state?.AdminReducer.productList,
+
     };
 };
-export default connect(mapStateToProps, {ADD_PRODUCT_FORMULATION})(ProductFormulationField);
+export default connect(mapStateToProps, { ADD_PRODUCT_FORMULATION })(ProductFormulationField);

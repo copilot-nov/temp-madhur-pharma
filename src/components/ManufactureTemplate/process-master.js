@@ -10,19 +10,16 @@ const defaultState = {
 }
 
 const ProcessMaster = (props) => {
-    const { select, handleSelect, processMasterList, processId, ADD_PRODUCTION_PROCESS} = props
-    const { manufacturingTemplateList } = props?.AdminReducer
+    const { select, formulationData, handleSelect, processMasterList, processId, ADD_PRODUCTION_PROCESS} = props
     const [handleResponse, setHandleResponse] = useState(null)
-    // console.log(select)
     const handleSubmit = async () => {
         let payload = {
             "data": []
         }
-        const formulationData = manufacturingTemplateList.at(-1)
         processId?.map((id) => {
             payload?.data.push({
                 "process_id": id,
-                "formulation_id": formulationData?.id,
+                "formulation_id": 20/*formulationData?.id*/,
                 "notes": "test"
             })
         })
@@ -32,11 +29,9 @@ const ProcessMaster = (props) => {
         } else {
             setHandleResponse(istrue)
         }
-
-
-
-
     }
+
+    
     return (
         <div>
             <div className="shadow-lg p-2 rounded h-96">
@@ -79,7 +74,9 @@ const ProcessMaster = (props) => {
 const mapStateToProps = (state) => {
     // console.log(state)
     return {
-        AdminReducer: state?.AdminReducer,
+        // AdminReducer: state?.AdminReducer,
+        formulationData: state?.AdminReducer.formulationData,
+
     };
 };
 export default connect(mapStateToProps, {ADD_PRODUCTION_PROCESS})(ProcessMaster);

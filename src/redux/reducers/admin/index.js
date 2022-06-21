@@ -9,6 +9,7 @@ const initialState = {
     manufacturingTemplateList: [],
     masterDataList: [],
     processMaster: [],
+    formulationData: [],
 }
 export const AdminReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -28,6 +29,8 @@ export const AdminReducer = (state = initialState, action) => {
             return { ...state, orderList: action.payload };
         case "GET_PROCESS_MASTER_LIST":
             return { ...state, processMaster: action.payload };
+        case "FORMULATION_DATA":
+            return { ...state, formulationData: action.payload };
         case "GET_MASTER_DATA_LIST":
             return { ...state, masterDataList: action.payload };
         default: return state

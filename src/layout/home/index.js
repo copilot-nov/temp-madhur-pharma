@@ -11,7 +11,7 @@ const Homelayout = (props) => {
     const { usermanagmentList, CustomerManagmentList, ingredientList, materialList, productList, manufacturingTemplateList, orderList } = props?.AdminReducer
     const [selected, setSelected] = useState(selectModuleColumn[1])
     const [data, setData] = useState([])
-
+    // console.log(manufacturingTemplateList)
     const dataBycondition = () => {
         if (selected?.name === 'Customer Management') {
             return CustomerManagmentList
@@ -30,14 +30,14 @@ const Homelayout = (props) => {
         }
     }
     // console.log(selected)
-//  console.log(selected?.name)
+    //  console.log(selected?.name)
     useEffect(() => {
         setData(dataBycondition())
     }, [dataBycondition, orderList, manufacturingTemplateList, productList, CustomerManagmentList, usermanagmentList, materialList, ingredientList])
     // console.log(data)
     return (
         <div>
-            <Navbar />
+            <Navbar current={"/home"} />
             <div className='sm:mx-6 mx-2 mt-10'>
                 <SelectManagmentType selected={selected} setSelected={setSelected} selectModuleColumn={selectModuleColumn} />
             </div>
