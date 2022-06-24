@@ -46,7 +46,7 @@ const EditDeleteActionForIngredient = (props) => {
                 cancelConfirm={cancelConfirm}
                 btnTitle={'Remove'}
                 deleteConfirm={deleteConfirm}
-                title={'Remove this user'}
+                title={'Remove this Ingredient'}
                 des={`Delete ${row?.name} !`} />
             <EditIngredient Id={Id} openEdit={openEdit} setOpenEdit={setOpenEdit} type={type} row={row} />
         </Fragment>

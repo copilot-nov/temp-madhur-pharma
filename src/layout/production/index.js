@@ -30,7 +30,7 @@ let ProductionBatchColumn = [
     },
     {
         name: "Quantity",
-        selector: row => `${row.plan_quantity}  ${row.uom}`,
+        selector: row => `${row.plan_quantity}  ${row.production_batch_uom?.label}`,
         sortable: true,
     },
     {
@@ -52,14 +52,13 @@ let ProductionBatchColumn = [
     },
     {
         name: "Start Date",
-        width: '130px',
         selector: row => moment(row.plan_startdate).format('DD/MM/YYYY'),
         sortable: true,
     },
     {
         name: "Created by",
         width: '130px',
-        selector: row => row.created_by,
+        selector: row => row.production_batch_createdBy?.created_by,
         sortable: true,
     },
     {
@@ -74,6 +73,7 @@ let ProductionBatchColumn = [
 
 const Productionlayout = (props) => {
     const { productionBatchList } = props
+    console.log(productionBatchList)
     const [open, setOpen] = useState(false)
     const [handleResponse, setHandleResponse] = useState(null)
 

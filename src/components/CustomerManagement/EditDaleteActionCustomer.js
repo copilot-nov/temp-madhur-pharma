@@ -9,8 +9,7 @@ const EditDeleteActionForCustomer = (props) => {
     let [openEdit, setOpenEdit] = useState(false)
     // common pass
     const { type, row, url, Id } = props
-    // redux method 
-    console.log(row)
+    
     const { DELETE_MODULE_FROM_ADMIN } = props
 
     function cancelConfirm() {
@@ -47,7 +46,7 @@ const EditDeleteActionForCustomer = (props) => {
                 cancelConfirm={cancelConfirm}
                 btnTitle={'Remove'}
                 deleteConfirm={deleteConfirm}
-                title={'Remove this user'}
+                title={'Remove this Customer'}
                 des={`Delete ${row?.name} !`} />
             <EditCustomer openEdit={openEdit} setOpenEdit={setOpenEdit} type={type} row={row} Id={Id} />
         </Fragment>

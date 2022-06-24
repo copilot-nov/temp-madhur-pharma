@@ -36,7 +36,7 @@ let customerCol = [
     {
         name: "Created By",
         // width: '80px',
-        selector: row => row.created_by,
+        selector: row => row?.customer_m_createdBy?.created_by,
         sortable: true,
     },
     {
@@ -212,7 +212,7 @@ let IngredientCol = [
     {
         name: "Created by",
         // width: '80px',
-        selector: row => row.created_by,
+        selector: row => row?.ingredient_m_createdBy?.created_by,
         sortable: true,
     },
     {
@@ -269,8 +269,8 @@ let ManufactureTemplate = [
 
 let OrderCol = [
     {
-        name: "Order id",
-        selector: row => row.id,
+        name: "PO ID",
+        selector: row => row.po_id,
         sortable: true,
     },
     {
@@ -283,34 +283,24 @@ let OrderCol = [
         selector: row => moment(row.order_date).format('DD/MM/YYYY'),
         sortable: true,
     },
-    {
-        name: "Product",
-        selector: row => row.Column2,
-        sortable: true,
-    },
-    {
-        name: "Quantity",
-        selector: row => row.Column3,
-        sortable: true,
-    },
+
     {
         name: "Status",
-        width: '130px',
         selector: row => row.status,
         sortable: true,
     },
     {
         name: "Created by",
-        // width: '80px',
-        selector: row => moment(row.created_by).format('DD/MM/YYYY'),
-        sortable: true,
-    },
-    {
-        name: "Created On",
         width: '130px',
-        selector: row => moment(row.created_on).format('DD/MM/YYYY'),
+        selector: row => row.created_by,
         sortable: true,
     },
+    // {
+    //     name: "Created On",
+    //     width: '130px',
+    //     selector: row => moment(row.created_on).format('DD/MM/YYYY'),
+    //     sortable: true,
+    // },
     {
         name: "Action",
         width: '130px',

@@ -12,6 +12,7 @@ const Homelayout = (props) => {
     const [selected, setSelected] = useState(selectModuleColumn[1])
     const [data, setData] = useState([])
     // console.log(manufacturingTemplateList)
+    // console.log(materialList)
     const dataBycondition = () => {
         if (selected?.name === 'Customer Management') {
             return CustomerManagmentList

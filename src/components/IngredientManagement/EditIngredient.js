@@ -13,10 +13,11 @@ const EditIngredient = (props) => {
     const { setOpenEdit, setHandleResponse, openEdit, Id, type, row} = props
     // redux functions 
     const { UPDATE_INGREDIENT, masterDataList } = props
+    let UOMList = masterDataList?.filter((item) => item?.type_id === 32)
     const [payload, setPayload] = useState(defaultState)
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
-    const [uom, setUOM] = useState(masterDataList[0])
+    const [uom, setUOM] = useState(UOMList)
 
     const handleOnChange = (e) => {
         let { name, value, type } = e.target
@@ -28,15 +29,19 @@ const EditIngredient = (props) => {
         let copypayload = payload
         // copypayload.class_id = mainclass.id
         // copypayload.sub_class_id = mainSubclass.id
-        copypayload.uom = uom.data_code
+        
+        if (uom !== undefined){
+            copypayload.uom = uom.data_code
+        }
         let istrue = await UPDATE_INGREDIENT(copypayload, Id, type)
         if (istrue?.status) {
             setPayload(defaultState)
-            setHandleResponse(istrue)
+            // setHandleResponse(istrue)
             setOpenEdit(false)
-        } else {
-            setHandleResponse(istrue)
-        }
+        } 
+        // else {
+        //     setHandleResponse(istrue)
+        // }
     }
 
     return (
@@ -111,7 +116,7 @@ const EditIngredient = (props) => {
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     UOM
                                                                 </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={uom} setSelected={setUOM} />
+                                                                <AutoSearch data={UOMList} keyname='label' valuename='id' selected={uom} setSelected={setUOM} />
                                                             </div>
                                                         </div>
                                                         <div className="col-span-4 sm:col-span-3">

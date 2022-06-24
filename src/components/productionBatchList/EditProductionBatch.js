@@ -3,15 +3,15 @@ import { ADD_ORDER_ADMIN } from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 import AutoSearch from '../autoComplete';
 import { Dialog, Transition } from '@headlessui/react';
-import { ADD_PRODUCTION_BATCH, UPDATE_PRODUCTION_BATCH } from '../../redux/actions/production';
+import { UPDATE_PRODUCTION_BATCH } from '../../redux/actions/production';
 
 const defaultState = {
 
 }
 const ProductionBatch = (props) => {
-    const { openEdit, setOpenEdit, materialList, masterDataList, productList, orderList, Id,row,setHandleResponse,handleResponse } = props
+    const { openEdit, setOpenEdit, materialList, masterDataList, productList, orderList, Id, row, setHandleResponse, handleResponse, UPDATE_PRODUCTION_BATCH} = props
     let UOMList = masterDataList?.filter((item) => item?.type_id === 32)
-    let statusList = masterDataList?.filter((item) => item?.type_id ===  27)
+    let statusList = masterDataList?.filter((item) => item?.type_id === 27)
     const [payload, setPayload] = useState(defaultState)
     const [SKU, setSKU] = useState(materialList)
     const [UOM, setUOM] = useState(UOMList)
@@ -29,15 +29,27 @@ const ProductionBatch = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let copypayload = payload
-        copypayload.po_id = POID?.po_id
-        copypayload.sku_id = SKU?.id
-        copypayload.product_id = Product?.id
-        copypayload.uom = UOM?.data_code
-        copypayload.status = status?.data_code
+        if (POID !== undefined) {
+            copypayload.po_id = POID?.po_id
+        }
+        if (SKU !== undefined) {
+            copypayload.sku_id = SKU?.id
+        }
+        if (Product !== undefined) {
+            copypayload.product_id = Product?.id
+        }
+        if (UOM !== undefined) {
+            copypayload.uom = UOM?.data_code
+        }
+        if (status !== undefined) {
+            copypayload.status = status?.data_code
+        }
+
 
         // console.log(copypayload)
         let istrue = await UPDATE_PRODUCTION_BATCH(copypayload, Id)
-        if (istrue?.status) {
+        // console.log(istrue)
+        if (istrue) {
             setOpenEdit(false)
             // setHandleResponse(istrue)
         } else {
@@ -48,7 +60,7 @@ const ProductionBatch = (props) => {
     return (
         <div>
             <Transition appear show={openEdit} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => {setOpenEdit(false)}}>
+                <Dialog as="div" className="relative z-10" onClose={() => { setOpenEdit(false) }}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -91,7 +103,7 @@ const ProductionBatch = (props) => {
                                                                     Batch Name
                                                                 </p>
                                                                 <input
-                                                                    
+
                                                                     name='batch_code'
                                                                     onChange={handleOnChange}
                                                                     defaultValue={row?.batch_code}
@@ -129,7 +141,7 @@ const ProductionBatch = (props) => {
                                                                     Quantity
                                                                 </p>
                                                                 <input
-                                                                    
+
                                                                     type='number'
                                                                     name='plan_quantity'
                                                                     onChange={handleOnChange}
@@ -152,7 +164,7 @@ const ProductionBatch = (props) => {
                                                                     Units
                                                                 </p>
                                                                 <input
-                                                                    
+
                                                                     type='number'
                                                                     name='units'
                                                                     onChange={handleOnChange}
@@ -167,7 +179,7 @@ const ProductionBatch = (props) => {
                                                                     Unit Price
                                                                 </p>
                                                                 <input
-                                                                    
+
                                                                     type='number'
                                                                     name='unit_price'
                                                                     onChange={handleOnChange}
@@ -182,7 +194,7 @@ const ProductionBatch = (props) => {
                                                                     Start Date
                                                                 </p>
                                                                 <input
-                                                                    
+
                                                                     type='date'
                                                                     name='plan_startdate'
                                                                     onChange={handleOnChange}
@@ -197,7 +209,7 @@ const ProductionBatch = (props) => {
                                                                     End Date
                                                                 </p>
                                                                 <input
-                                                                    
+
                                                                     type='date'
                                                                     name='plan_enddate'
                                                                     onChange={handleOnChange}
@@ -222,7 +234,7 @@ const ProductionBatch = (props) => {
                                                                 <textarea
                                                                     rows={2}
                                                                     id="description"
-                                                                    
+
                                                                     name="description"
                                                                     onChange={handleOnChange}
                                                                     defaultValue={row?.description}
@@ -234,7 +246,7 @@ const ProductionBatch = (props) => {
                                                 </div>
                                                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                                     <button
-                                                        onClick={() => {setOpenEdit(false)}}
+                                                        onClick={() => { setOpenEdit(false) }}
                                                         className="mr-2 inline-flex justify-center py-2 px-8 border border-green-900 shadow-sm text-sm font-medium text-green-900 bg-white hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                                     >
                                                         Cancel
@@ -267,4 +279,4 @@ const mapStateToProps = (state) => {
         orderList: state?.AdminReducer.orderList,
     };
 };
-export default connect(mapStateToProps, { ADD_PRODUCTION_BATCH })(ProductionBatch);
+export default connect(mapStateToProps, { UPDATE_PRODUCTION_BATCH })(ProductionBatch);

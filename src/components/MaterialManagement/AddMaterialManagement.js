@@ -12,11 +12,13 @@ const MaterialManagment = (props) => {
     const { closeModal, setHandleResponse,isOpen,titleModal, setIsOpen } = props
     // redux functions 
     const { ADD_MATERIAL_ADMIN, masterDataList } = props
+    // console.log(masterDataList)
+    let UOMList = masterDataList?.filter((item) => item?.type_id === 32)
     const [payload, setPayload] = useState(defaultState)
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
-    const [uom, setUOM] = useState(masterDataList[0])
-    console.log(masterDataList)
+    const [uom, setUOM] = useState(UOMList)
+    // console.log(masterDataList)
     const handleOnChange = (e) => {
         let { name, value, type } = e.target
         setPayload({ ...payload, [name]: type === 'number' ? Number(value) : value })
@@ -29,6 +31,7 @@ const MaterialManagment = (props) => {
         // copypayload.sub_class_id = mainSubclass.id
         copypayload.uom = uom.data_code
         let istrue = await ADD_MATERIAL_ADMIN(copypayload)
+        // console.log(istrue)
         if (istrue?.status) {
             setPayload(defaultState)
             setHandleResponse(istrue)
@@ -126,10 +129,10 @@ const MaterialManagment = (props) => {
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     UOM
                                                                 </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={uom} setSelected={setUOM} />
+                                                                <AutoSearch data={UOMList} keyname='label' valuename='id' selected={uom} setSelected={setUOM} />
                                                             </div>
                                                         </div>
-                                                        <div className="col-span-4 sm:col-span-3">
+                                                        {/* <div className="col-span-4 sm:col-span-3">
                                                             <div className='w-full items-center'>
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     SKU
@@ -142,7 +145,7 @@ const MaterialManagment = (props) => {
                                                                     className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                                                 />
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                         <div className="col-span-4 sm:col-span-3">
                                                             <div className='w-full items-center opacity-30'>
                                                                 <p className="block text-sm font-medium text-gray-900">

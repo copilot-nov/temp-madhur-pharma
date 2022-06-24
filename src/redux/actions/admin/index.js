@@ -341,7 +341,7 @@ export const UPDATE_ORDER = (payload, Id) => {
             let res = await axios.put(url, payload, { headers: getHeaders() })
             if (res?.data.success) {
                 dispatch(GET_ORDER_LIST())
-                return { status: 'success', msg: 'Order Edited successfully!' }
+                return (toast.success(('Order Edited successfully!').replace(/\\/g, ""), styleToastify))
             } else {
                 return { status: 'info', msg: res.data?.msg }
             }
@@ -522,6 +522,7 @@ export const ADD_ORDER_ADMIN = (payload) => {
     return async dispatch => {
         try {
             let res = await axios.post(url, payload, { headers: getHeaders() })
+            // console.log(res)
             if (res?.data.success) {
                 dispatch(GET_ORDER_LIST())
                 return { status: 'success', msg: 'Order Added successfully!' }
@@ -662,6 +663,8 @@ export const DELETE_MODULE_FROM_ADMIN = (type, deletepath) => {
                     await dispatch(GET_INGREDIENT_LIST())
                 } else if (type === 'order') {
                     await dispatch(GET_ORDER_LIST())
+                } else if (type === 'customer') {
+                    await dispatch(GET_CUSTOMER_LIST())
                 }
                 return { status: 'success', msg: 'Item Deleted successfully!' }
             } else {

@@ -6,16 +6,19 @@ import { Dialog, Transition } from '@headlessui/react';
 
 const defaultState = {
     // "code": "testing",
-    
-    
+
+
 }
 
 const CustomerManagment = (props) => {
-    const { setOpenEdit, setHandleResponse, openEdit, Id, type, row} = props
+    const { setOpenEdit, setHandleResponse, openEdit, Id, type, row } = props
     // console.log()
     const { UPDATE_CUSTOMER, masterDataList } = props
+    let cityList = masterDataList?.filter((item) => item?.type_id === 31)
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
+    const [city, setCity] = useState(cityList)
+
     // redux functions 
     const [payload, setPayload] = useState(defaultState)
 
@@ -29,9 +32,12 @@ const CustomerManagment = (props) => {
         let copypayload = payload
         // copypayload.class_id = mainclass.id
         // copypayload.sub_class_id = mainSubclass.id
-        copypayload.city = "CITY_BANGALORE"
+        if (city !== undefined) {
+            copypayload.city = city?.data_code
 
-        let istrue = await UPDATE_CUSTOMER(copypayload,row?.id)
+        }
+
+        let istrue = await UPDATE_CUSTOMER(copypayload, row?.id)
         // setPayload(defaultState)
         setOpenEdit(false)
         setHandleResponse(istrue)
@@ -42,7 +48,7 @@ const CustomerManagment = (props) => {
     return (
         <div>
             <Transition appear show={openEdit} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => {setOpenEdit(false)}}>
+                <Dialog as="div" className="relative z-10" onClose={() => { setOpenEdit(false) }}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -170,21 +176,16 @@ const CustomerManagment = (props) => {
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="col-span-6 sm:col-span-3">
+                                                        <div className="col-span-4 sm:col-span-3 ">
                                                             <div className='w-full items-center'>
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     City
                                                                 </p>
-                                                                <input
-                                                                    type='text'
-                                                                    name='city'
-                                                                    onChange={handleOnChange}
-                                                                    defaultValue={row?.city}
-                                                                    className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                                                />
+                                                                {/* <input disabled="true" className='border border-gray-700 relative w-full cursor-default overflow-hidden h-10 bg-white text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'/> */}
+                                                                <AutoSearch className=" cursor-not-allowed" data={cityList} keyname='label' valuename='id' selected={city} setSelected={setCity} />
                                                             </div>
                                                         </div>
-                                                        <div  className="col-span-4 sm:col-span-3 ">
+                                                        <div className="col-span-4 sm:col-span-3 ">
                                                             <div className='w-full items-center opacity-30'>
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     Class
@@ -206,7 +207,7 @@ const CustomerManagment = (props) => {
                                                 </div>
                                                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                                     <button
-                                                        onClick={() => {setOpenEdit(false)}}
+                                                        onClick={() => { setOpenEdit(false) }}
                                                         className="mr-2 inline-flex justify-center py-2 px-8 border border-green-900 shadow-sm text-sm font-medium text-green-900 bg-white hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                                     >
                                                         Cancel
