@@ -1,12 +1,10 @@
+import { ADD_PRODUCTION_CHECKLIST } from "../../../redux/actions/admin";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { ADD_PRODUCTION_GUIDELINES } from "../../redux/actions/admin";
-import { Alert } from "../alert";
+import { Alert } from "../../alert";
 
-
-const Guidlines = (props) => {
-    const { selectedProcessData, ADD_PRODUCTION_GUIDELINES, formulationData } = props
-    const [numberOfList, setNumberOfList] = useState(1)
+const Checklist = (props) => {
+    const { selectedProcessData, ADD_PRODUCTION_CHECKLIST, formulationData } = props
     const [inputList, setInputList] = useState([{ text: "", key: Math.floor(Math.random(9) * 1000000) }])
     const [handleResponse, setHandleResponse] = useState(null)
 
@@ -20,11 +18,9 @@ const Guidlines = (props) => {
         let newInputList = inputList
         newInputList = newInputList?.filter((item) => item.key !== i.key)
         setInputList(newInputList)
-        setNumberOfList(numberOfList - 1)
     }
     const handlePlusButton = () => {
         setInputList([...inputList, { text: "", key: Math.floor(Math.random(9) * 1000000) }])
-        setNumberOfList(numberOfList + 1)
     }
 
     const handleSubmit = async () => {
@@ -42,13 +38,14 @@ const Guidlines = (props) => {
                     })
                 })
         })
-        let istrue = await ADD_PRODUCTION_GUIDELINES(payload)
+        let istrue = await ADD_PRODUCTION_CHECKLIST(payload)
         if (istrue?.status) {
             setHandleResponse(istrue)
         } else {
             setHandleResponse(istrue)
         }
     }
+
 
     return (
         <div className="p-4">
@@ -60,7 +57,7 @@ const Guidlines = (props) => {
                             <div className="flex justify-between items-center">
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Enter Guidelines
+                                        Enter Checklist
                                     </p>
                                     <input
                                         value={item?.text}
@@ -107,5 +104,4 @@ const mapStateToProps = (state) => {
 
     };
 };
-export default connect(mapStateToProps, { ADD_PRODUCTION_GUIDELINES })(Guidlines);
-
+export default connect(mapStateToProps, { ADD_PRODUCTION_CHECKLIST })(Checklist);

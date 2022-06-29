@@ -1,9 +1,9 @@
-import CheckBox from '../../assets/svg/unSelectCheck.svg'
-import SelectedCheckBox from '../../assets/svg/selectedCheck.svg'
+import CheckBox from '../../../assets/svg/unSelectCheck.svg'
+import SelectedCheckBox from '../../../assets/svg/selectedCheck.svg'
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import { ADD_PRODUCTION_PROCESS } from '../../redux/actions/admin'
-import { Alert } from '../alert'
+import { ADD_PRODUCTION_PROCESS } from '../../../redux/actions/admin'
+import { Alert } from '../../alert'
 
 const defaultState = {
     "data": []

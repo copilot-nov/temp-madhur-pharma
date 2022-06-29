@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { ADD_PRODUCT_FORMULATION } from "../../redux/actions/admin";
-import AutoSearch from "../autoComplete";
-import { Alert } from "../alert";
+import { ADD_PRODUCT_FORMULATION } from "../../../redux/actions/admin";
+import AutoSearch from "../../autoComplete";
+import { Alert } from "../../alert";
 
 
 const defaultState = {

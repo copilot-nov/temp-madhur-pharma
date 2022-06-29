@@ -25,18 +25,18 @@ let ProductionBatchColumn = [
     },
     {
         name: "Product Name",
-        selector: row => row.product_id,
+        selector: row => row.production_batch_product_id?.name,
         sortable: true,
     },
     {
         name: "Quantity",
+        width: '130px',
         selector: row => `${row.plan_quantity}  ${row.production_batch_uom?.label}`,
         sortable: true,
     },
     {
         name: "SKU",
-        width: '130px',
-        selector: row => row.sku_id,
+        selector: row => row.production_batch_sku_id?.name,
         sortable: true,
     },
     {
@@ -47,17 +47,19 @@ let ProductionBatchColumn = [
     },
     {
         name: "Status",
-        selector: row => row.status,
+        width: '140px',
+        selector: row => row.production_batch_status?.label,
         sortable: true,
     },
     {
         name: "Start Date",
+        width: '130px',
         selector: row => moment(row.plan_startdate).format('DD/MM/YYYY'),
         sortable: true,
     },
     {
         name: "Created by",
-        width: '130px',
+        width: '160px',
         selector: row => row.production_batch_createdBy?.created_by,
         sortable: true,
     },
@@ -73,7 +75,7 @@ let ProductionBatchColumn = [
 
 const Productionlayout = (props) => {
     const { productionBatchList } = props
-    console.log(productionBatchList)
+    // console.log(productionBatchList)
     const [open, setOpen] = useState(false)
     const [handleResponse, setHandleResponse] = useState(null)
 

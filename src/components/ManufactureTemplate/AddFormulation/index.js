@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { GET_PROCESS_MASTER_LIST } from "../../redux/actions/admin";
+import { GET_PROCESS_MASTER_LIST } from "../../../redux/actions/admin";
 // import ProcessMaster from "./process-master";
 import ManufactureTemplateTabs from "./tabs";
 

@@ -7,19 +7,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-
-// const processMasterTab = [
-//   { tabName: 'Ingredient Dispensing' },
-//   { tabName: 'Product Manufacturing' },
-//   { tabName: 'Product Unloading' },
-//   { tabName: 'Packing Material Dispensing' },
-//   { tabName: 'Cleaning & Inspection' },
-//   { tabName: 'Data Coding' },
-//   { tabName: 'Filling & Packing' },
-//   { tabName: 'Weighing' },
-//   { tabName: 'Dispatch' },
-// ]
-
 export default function ManufactureTemplateTabs(props) {
   const { tabsName, select, handleSelect, processMasterList, processId, selectedProcessData, setSelectedMaterial,selectedMaterial} = props
   // console.log(processMasterList)

@@ -6,6 +6,7 @@ import EditDeleteActionOrder from '../components/OrderManagement/EditDeleteActio
 import EditDeleteActionMaterial from '../components/MaterialManagement/EditDeleteActionMaterial'
 import EditDeleteActionIngredient from '../components/IngredientManagement/EditDeleteActionIngredient'
 import EditDaleteActionCustomer from '../components/CustomerManagement/EditDaleteActionCustomer'
+import EditDeleteManufacturing from '../components/ManufactureTemplate/EditDeleteFolder/EditDeleteManufacturing'
 
 let customerCol = [
     {
@@ -87,7 +88,7 @@ let userCol = [
     {
         name: "Created By",
         // width: '80px',
-        selector: row => row.created_by,
+        selector: row => row.user_master_createdBy?.created_by,
         sortable: true,
     },
     {
@@ -113,7 +114,7 @@ let ProductCol = [
     },
     {
         name: "Customer",
-        selector: row => row.customer_id,
+        selector: row => row.product_master_customer_id[0]?.name,
         sortable: true,
     },
     {
@@ -129,7 +130,7 @@ let ProductCol = [
     {
         name: "Created by",
         // width: '80px',
-        selector: row => row.created_by,
+        selector: row => row.product_master_createdBy?.created_by,
         sortable: true,
     },
     {
@@ -164,7 +165,7 @@ let MaterialCol = [
     },
     {
         name: "UOM",
-        selector: row => row.uom,
+        selector: row => row.material_master_uom[0]?.label,
         sortable: true,
     },
     {
@@ -175,7 +176,7 @@ let MaterialCol = [
     {
         name: "Created by",
         // width: '80px',
-        selector: row => row.created_by,
+        selector: row => row.material_master_createdBy?.created_by,
         sortable: true,
     },
     {
@@ -249,7 +250,7 @@ let ManufactureTemplate = [
     {
         name: "Created By",
         // width: '80px',
-        selector: row => row.created_by,
+        selector: row => row.product_formulation_createdBy?.created_by,
         sortable: true,
     },
     {
@@ -262,7 +263,7 @@ let ManufactureTemplate = [
         name: "Action",
         width: '130px',
         cell: (row) => (
-            <TableActionCell type="ingredient" url={`/ingredient/master/${row?.id}`} row={row} Id={row?.id} />
+            <EditDeleteManufacturing type="manufacturing" url={`/manufacturing-template/product/formulation/${row?.id}`} row={row} Id={row?.id} />
         )
     },
 ]
@@ -275,7 +276,7 @@ let OrderCol = [
     },
     {
         name: "Customer",
-        selector: row => row.customer_id,
+        selector: row => row.order_customer[0]?.name,
         sortable: true,
     },
     {
@@ -286,7 +287,7 @@ let OrderCol = [
 
     {
         name: "Status",
-        selector: row => row.status,
+        selector: row => row.order_status[0]?.label,
         sortable: true,
     },
     {

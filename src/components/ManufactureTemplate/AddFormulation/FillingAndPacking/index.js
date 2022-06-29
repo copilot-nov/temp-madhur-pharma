@@ -1,8 +1,8 @@
 import { useState } from "react";
-import CheckBox from '../../../assets/svg/unSelectCheck.svg'
-import SelectedCheckBox from '../../../assets/svg/selectedCheck.svg'
-import { ADD_PRODUCTION_PROCESS_INSPECTION } from "../../../redux/actions/admin";
-import { Alert } from "../../alert";
+import CheckBox from '../../../../assets/svg/unSelectCheck.svg'
+import SelectedCheckBox from '../../../../assets/svg/selectedCheck.svg'
+import { ADD_PRODUCTION_PROCESS_INSPECTION } from "../../../../redux/actions/admin";
+import { Alert } from "../../../alert";
 import { connect } from "react-redux";
 
 const FillingAndPacking = (props) => {

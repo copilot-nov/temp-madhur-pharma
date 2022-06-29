@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { connect } from "react-redux";
-import { Alert } from '../../../components/alert';
-import { ADD_PRODUCTION_PROCESS_MATERIAL } from "../../../redux/actions/admin";
+import { Alert } from '../../../../components/alert';
+import { ADD_PRODUCTION_PROCESS_MATERIAL } from "../../../../redux/actions/admin";
 // import ProductManufacturing from "../ProductManufacturing";
 import SelectPackingProcess from "./SelectPackingProcess";
 

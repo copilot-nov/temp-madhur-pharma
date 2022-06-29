@@ -665,6 +665,8 @@ export const DELETE_MODULE_FROM_ADMIN = (type, deletepath) => {
                     await dispatch(GET_ORDER_LIST())
                 } else if (type === 'customer') {
                     await dispatch(GET_CUSTOMER_LIST())
+                } else if (type === 'manufacturing') {
+                    await dispatch(GET_MANUFACTURING_TEMPLATE_LIST())
                 }
                 return { status: 'success', msg: 'Item Deleted successfully!' }
             } else {

@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import SelectIngredient from "./selectingredient";
-import { Alert } from '../../../components/alert';
+import { Alert } from '../../../../components/alert';
 import { connect } from "react-redux";
-import { ADD_PRODUCTION_PROCESS_INGREGIENTS } from "../../../redux/actions/admin";
+import { ADD_PRODUCTION_PROCESS_INGREGIENTS } from "../../../../redux/actions/admin";
 
 
 
