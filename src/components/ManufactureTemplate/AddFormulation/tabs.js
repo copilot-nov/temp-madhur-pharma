@@ -8,7 +8,7 @@ function classNames(...classes) {
 }
 
 export default function ManufactureTemplateTabs(props) {
-  const { tabsName, select, handleSelect, processMasterList, processId, selectedProcessData, setSelectedMaterial,selectedMaterial} = props
+  const { tabsName, select, handleSelect, processMasterList, processId, selectedProcessData, setSelectedMaterial,selectedMaterial, manufacturingTemplateEditResponse, Id} = props
   // console.log(processMasterList)
 
   return (
@@ -20,7 +20,7 @@ export default function ManufactureTemplateTabs(props) {
               classNames('px-4  py-2.5 text-sm font-medium leading-5', 'ring-white ring-opacity-60 ring-offset-2  focus:outline-none focus:ring-2', selected ? 'bg-green-700 shadow text-white' : 'text-green-900 hover:bg-white/[0.12] hover:text-green-900')}>
             Product Formulation
           </Tab>
-          {tabsName.map((tab) => {
+          {tabsName?.map((tab) => {
             return tab !== 'Product Formulation' && (
               <Tab
                 key={tab}
@@ -45,7 +45,7 @@ export default function ManufactureTemplateTabs(props) {
           }
 
           <Tab.Panel className={classNames('bg-white pt-3', 'ring-white ring-opacity-60 ring-offset-2  focus:outline-none focus:ring-2')}>
-            <ProductForField />
+            <ProductForField manufacturingTemplateEditResponse={manufacturingTemplateEditResponse} Id={Id} />
             <br />
             <ProcessMaster processMasterList={processMasterList} select={select} handleSelect={handleSelect} processId={processId} />
           </Tab.Panel>

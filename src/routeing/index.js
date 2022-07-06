@@ -6,6 +6,7 @@ import ProtectedRoutes from '../protectedRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Production from '../pages/production';
+import ProductionDetail from '../pages/productionDetail';
 
 const Routeing = () => {
 
@@ -17,6 +18,9 @@ const Routeing = () => {
                     <Route path="/login" element={<Login />} />
                     <Route element={<ProtectedRoutes />}>
                         <Route path="/production" element={<Production />} />
+                    </Route>
+                    <Route element={<ProtectedRoutes />}>
+                        <Route path="/production/:id" element={<ProductionDetail />} />
                     </Route>
                     {/* Protected routes here  */}
                     <Route element={<ProtectedRoutes />}>

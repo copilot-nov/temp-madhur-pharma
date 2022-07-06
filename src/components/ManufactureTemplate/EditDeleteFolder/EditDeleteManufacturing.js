@@ -1,28 +1,44 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { DELETE_MODULE_FROM_ADMIN } from "../../../redux/actions/admin";
+import { DELETE_MODULE_FROM_ADMIN, GET_PRODUCT_FORMULATION_BY_ID } from "../../../redux/actions/admin";
 import Confirmation from "../../confirmation";
+import MainFormAdd from "../../formAdd";
+import ManufactureTemplateTabs from "../AddFormulation/tabs";
 
 const EditDeleteManufacturing = (props) => {
     let [isOpen, setIsOpen] = useState(false)
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [manufacturingTemplateEditResponse, setManufacturingTemplateEditResponse] = useState(null);
+
     // common pass
-    const { type, row, url } = props
+    const { type, row, url, Id } = props
     // redux method 
     const { DELETE_MODULE_FROM_ADMIN } = props
-
+    
     function cancelConfirm() {
         setIsOpen(false)
     }
-
+    
     const deleteConfirm = () => {
         DELETE_MODULE_FROM_ADMIN(type, url)
         setIsOpen(false)
+    }
+    
+    const handleEditBtn = async () => {
+        try {
+            const data = await GET_PRODUCT_FORMULATION_BY_ID({ formulationId: Id });
+            setManufacturingTemplateEditResponse(data?.data);
+        } catch (err) {
+            console.log(err);
+        }
+        setIsEditOpen(open => !open);
     }
 
     return (
         <Fragment>
             <div className="flex justify-start">
                 <button
+                    onClick={handleEditBtn}
                     className="flex items-center justify-start px-2 py-2 cursor-pointer text-green-900"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
@@ -38,6 +54,17 @@ const EditDeleteManufacturing = (props) => {
                     </svg>
                 </button>
             </div>
+            {/* <ManufactureTemplateTabs closeModal={handleEditBtn}  isOpen={isEditOpen} titleModal={'titleModal'} setIsOpen={setIsEditOpen}/> */}
+            <MainFormAdd
+                isOpen={isEditOpen}
+                setIsOpen={setIsEditOpen}
+                // handleResponse={handleResponse}
+                // setHandleResponse={setHandleResponse}
+                titleModal={'Manufacturing Template'}
+                closeModal={() => setIsEditOpen(false)}
+                Id={Id}
+                manufacturingTemplateEditResponse={manufacturingTemplateEditResponse}
+            />
             <Confirmation
                 isOpen={isOpen}
                 cancelConfirm={cancelConfirm}

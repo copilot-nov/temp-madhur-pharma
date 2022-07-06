@@ -19,7 +19,7 @@ import ManufactureTemplateTabs from "./tabs";
 //     'Dispatch'
 // ]
 const ManufactureTemplate = (props) => {
-    const { GET_PROCESS_MASTER_LIST, processMaster, isOpen, titleModal, setIsOpen, closeModal } = props
+    const { GET_PROCESS_MASTER_LIST, processMaster, isOpen, titleModal, setIsOpen, closeModal, manufacturingTemplateEditResponse, Id } = props
     const [select, setSelcted] = useState([])
     const [processId, setProcessId] = useState([])
     const [selectedProcessData, setSelectedProcessData] = useState()
@@ -103,6 +103,8 @@ const ManufactureTemplate = (props) => {
                                             selectedProcessData={selectedProcessData}
                                             setSelectedMaterial={setSelectedMaterial}
                                             selectedMaterial={selectedMaterial}
+                                            manufacturingTemplateEditResponse={manufacturingTemplateEditResponse}
+                                            Id={Id}
                                         />
 
                                         <div>
