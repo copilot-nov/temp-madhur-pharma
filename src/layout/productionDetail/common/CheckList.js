@@ -1,12 +1,12 @@
 import React from 'react';
-import { CheckCircle } from '@mui/icons-material';
+import { CheckCircle, AddCircleTwoTone } from '@mui/icons-material';
 import { Box, Grid, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { green } from '@mui/material/colors';
 
 const useStyles = makeStyles({
   checkMainHeading: {
-    marginRight: '7px'
+    marginRight: '8px'
   },
   checkCircle: {
     color: green[600],
@@ -18,7 +18,7 @@ const CheckList = ({ data = [] }) => {
   const classes = useStyles();
   return (
     <Box>
-      <div style={{ float: 'right', fontSize: '15px' }}>
+      <div style={{ float: 'right', marginRight:27, fontSize: '15px' }}>
         <span className={classes.checkMainHeading}>ST</span>
         <span className={classes.checkMainHeading}>PR</span>
         <span className={classes.checkMainHeading}>QA</span>
@@ -32,6 +32,7 @@ const CheckList = ({ data = [] }) => {
             <CheckCircle style={{ color: green[600], marginRight: '5px' }} />
             <CheckCircle style={{ color: green[600], marginRight: '5px' }} />
             <CheckCircle style={{ color: green[600], marginRight: '5px' }} />
+            <AddCircleTwoTone style={{ marginRight: '5px' }}/>
           </Grid>
         </Grid>
       ))}
