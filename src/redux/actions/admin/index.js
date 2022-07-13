@@ -406,6 +406,38 @@ export const ADD_PRODUCT_FORMULATION = (payload) => {
     }
 }
 
+export const UPDATE_PRODUCT_FORMULATION_BY_ID = async (payload) => {
+    // console.log(payload)
+    if (payload.formulationId) {
+        let url = `${baseUrl}/manufacturing-template/product/formulation/${payload.formulationId}`
+        try {
+            let res = await axios.put(url, payload, { headers: getHeaders() })
+            // console.log(res)
+            if (res?.data.success) {
+                console.log(res);
+                return { status: 'success', msg: 'Product Formulation Updated successfully!' }
+            } else {
+                return { status: 'info', msg: res.data?.msg }
+            }
+        }
+        catch (error) {
+            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+        }
+    } return { status: 'error', msg: 'No Formulation Id' }
+}
+
+export const GET_PRODUCT_FORMULATION_BY_ID = async ({ formulationId }) => {
+    let url = `${baseUrl}/manufacturing-template/product/formulation/${formulationId}`;
+    try {
+        let res = await axios.get(url, { headers: getHeaders() });
+        if (res?.data.success) {
+            return { status: 'success', data: res.data?.data?.[0] }
+        }
+    } catch (error) {
+        return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+    }
+};
+
 export const ADD_PRODUCTION_PROCESS = (payload) => {
     // console.log(payload)
     let url = `${baseUrl}/manufacturing-template/production/process/create`

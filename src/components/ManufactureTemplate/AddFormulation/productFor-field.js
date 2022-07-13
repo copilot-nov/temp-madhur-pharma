@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { ADD_PRODUCT_FORMULATION } from "../../../redux/actions/admin";
+import { ADD_PRODUCT_FORMULATION, UPDATE_PRODUCT_FORMULATION_BY_ID } from "../../../redux/actions/admin";
 import AutoSearch from "../../autoComplete";
 import { Alert } from "../../alert";
 
@@ -18,9 +18,9 @@ const defaultState = {
 
 
 const ProductFormulationField = (props) => {
-    const { productList, ADD_PRODUCT_FORMULATION } = props
+    const { productList, ADD_PRODUCT_FORMULATION, manufacturingTemplateEditResponse, Id } = props
     const [productname, setProductname] = useState(productList[0])
-    const [payload, setPayload] = useState(defaultState)
+    const [payload, setPayload] = useState(manufacturingTemplateEditResponse || defaultState)
     const [handleResponse, setHandleResponse] = useState(null)
     // console.log(productname)
     // const [disable, setDisable] = useState(false)
@@ -36,6 +36,12 @@ const ProductFormulationField = (props) => {
         copypayload.product_id = productname.id
         copypayload.notes = "Testing"
         copypayload.iconpic = "img"
+
+        if (manufacturingTemplateEditResponse) {
+            await UPDATE_PRODUCT_FORMULATION_BY_ID({ ...payload, formulationId: Id });
+            return;
+        }
+
         let istrue = await ADD_PRODUCT_FORMULATION(copypayload)
 
         if (istrue?.status) {
@@ -61,6 +67,7 @@ const ProductFormulationField = (props) => {
                         Formulation Name
                     </p>
                     <input
+                        value={payload?.name}
                         onChange={handleOnChange}
                         required
                         type="text"
@@ -73,6 +80,7 @@ const ProductFormulationField = (props) => {
                         License no.
                     </p>
                     <input
+                        value={payload?.license_no}
                         onChange={handleOnChange}
                         required
                         type="number"
@@ -86,6 +94,7 @@ const ProductFormulationField = (props) => {
                     Description
                 </p>
                 <textarea
+                    value={payload?.description}
                     rows={1}
                     onChange={handleOnChange}
                     type="text"

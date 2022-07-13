@@ -38,7 +38,7 @@ export default function Navbar(props) {
                         <div className="flex items-center justify-between h-16">
                             <div className="flex items-center justify-between sm:items-stretch sm:justify-start">
                                 <div className="flex-shrink-0 flex items-center">
-                                    <img src={'./logo.png'} alt='logo' className='w-14' />
+                                    <img src={'/logo.png'} alt='logo' className='w-14' />
                                 </div>
                                 <div className="hidden sm:block sm:ml-6 sm:flex sm:items-center ">
                                     <div className="flex items-center  space-x-4">
