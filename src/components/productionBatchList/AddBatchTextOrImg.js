@@ -1,10 +1,32 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dialog, Transition } from '@headlessui/react';
-
+import ReactAvatarEditor from 'react-avatar-editor'
 
 const AddBatchTextOrImg = (props) => {
+    const [state, setState] = useState({
+        'image': 'avatar.jpg', 'scale': 1, 'position': { x: 0.5, y: 0.5 },
+        'allowZoomOut': false,
+        'rotate': 0,
+        'borderRadius': 0,
+        'preview': null,
+        'width': 200,
+        'height': 200,
+    });
     const { open, closeModal, setOpen } = props;
+
+    const handleNewImage = (e) => {
+        setState({ ...state, 'image': e.target.files[0] });
+    }
+
+    const handleScale = (e) => {
+        const scale = parseFloat(e.target.value);
+        setState({ ...state, 'scale': scale });
+    }
+
+    const handlePositionChange = (position) => {
+        setState({ ...state, position });
+    }
 
     const handleOnChange = (e) => {
         // let { name, value, type } = e.target
@@ -86,22 +108,38 @@ const AddBatchTextOrImg = (props) => {
                                                                 />
                                                             </div>
                                                         </div>
-                                                        {/* <div className="col-span-6 sm:col-span-6">
+                                                        <div className="col-span-6 sm:col-span-6">
                                                             <div className='w-full items-start'>
-                                                                <p className="block text-sm font-medium text-gray-900">
-                                                                    Notes
-                                                                </p>
-                                                                <textarea
-                                                                    rows={2}
-                                                                    id="notes"
-                                                                    required
-                                                                    name="notes"
-                                                                    // onChange={handleOnChange}
-                                                                    // defaultValue={payload?.notes}
-                                                                    className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
-                                                                />
+                                                                <div>
+                                                                    <div>
+                                                                        <ReactAvatarEditor
+                                                                            scale={parseFloat(state.scale)}
+                                                                            width={state.width}
+                                                                            height={state.height}
+                                                                            position={state.position}
+                                                                            onPositionChange={(e) => { handlePositionChange(e) }}
+                                                                            rotate={parseFloat(state.rotate)}
+                                                                            // borderRadius={state.width /   (100 / state.borderRadius)}
+                                                                            image={state.image}
+                                                                            className="editor-canvas"
+                                                                        />
+                                                                    </div>
+                                                                    <br />
+                                                                    New File:
+                                                                    <input name="newImage" type="file" onChange={handleNewImage} />
+                                                                    Zoom:
+                                                                    <input
+                                                                        name="scale"
+                                                                        type="range"
+                                                                        onChange={handleScale}
+                                                                        min={state.allowZoomOut ? '0.1' : '1'}
+                                                                        max="2"
+                                                                        step="0.01"
+                                                                        defaultValue="1"
+                                                                    />
+                                                                </div>
                                                             </div>
-                                                        </div> */}
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
