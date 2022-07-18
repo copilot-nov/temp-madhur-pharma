@@ -82,27 +82,27 @@ const MobileView = ({ data = [], navigate }) =>
   data.map((obj) => (
       <div onClick={() => navigate(`/production/${obj.id}`)} key={obj.id} style={{ paddingInline: '5px', backgroundColor: '#f0f0f0', marginTop: '10px' }}>
         <div style={{ fontSize: '14px', display: 'flex', padding: '10px', flexWrap: 'wrap' }}>
-          <div style={{ width: '50%', display: 'flex' }}>
+          <div style={{ width: '100%', display: 'flex' }}>
             <div style={{ width: '50%', fontWeight: 'bold' }}>Batch ID</div>
             <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{obj?.batch_code}</div>
           </div>
-          <div style={{ width: '50%', display: 'flex' }}>
+          <div style={{ width: '100%', display: 'flex' }}>
             <div style={{ width: '50%', fontWeight: 'bold' }}>Status</div>
-            <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{obj?.status}</div>
+            <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{obj?.production_batch_status?.label}</div>
           </div>
-          <div style={{ width: '50%', display: 'flex' }}>
+          <div style={{ width: '100%', display: 'flex' }}>
             <div style={{ width: '50%', fontWeight: 'bold' }}>Product</div>
             <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{obj?.production_batch_product_id?.name}</div>
           </div>
-          <div style={{ width: '50%', display: 'flex' }}>
+          <div style={{ width: '100%', display: 'flex' }}>
             <div style={{ width: '50%', fontWeight: 'bold' }}>Customer</div>
             <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{obj?.emp_id}</div>
           </div>
-          <div style={{ width: '50%', display: 'flex' }}>
+          <div style={{ width: '100%', display: 'flex' }}>
             <div style={{ width: '50%', fontWeight: 'bold' }}>Start Date</div>
             <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{moment(obj?.plan_startdate).format('DD/MM/YYYY')}</div>
           </div>
-          <div style={{ width: '50%', display: 'flex' }}>
+          <div style={{ width: '100%', display: 'flex' }}>
             <div style={{ width: '50%', fontWeight: 'bold' }}>Quantity</div>
             <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{`${obj?.plan_quantity} ${obj?.production_batch_uom?.label}`}</div>
           </div>
