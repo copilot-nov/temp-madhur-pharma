@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -11,6 +11,7 @@ import Navbar from '../../components/navbar';
 import { Grid } from '@mui/material';
 import CheckList from './common/CheckList';
 import Guidelines from './common/Guidelines';
+import { connect } from 'react-redux';
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -96,11 +97,15 @@ const accordionData = [
   }
 ];
 
-export default function CustomizedAccordions() {
+function CustomizedAccordions(props) {
+  const { productionBatchList } = props
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState('panel1');
   const [isGuidelinesOpen, setGuidelinesOpen] = useState(false);
-
+  const {id} = useParams()
+  
+  // let selectedBatch = productionBatchList.filter((item)=> (item === id))
+  console.log(productionBatchList)
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -108,7 +113,7 @@ export default function CustomizedAccordions() {
   const handleGuidelinesStatus = () => {
     setGuidelinesOpen((open) => !open);
   };
-
+  // console.log(accordionData)
   return (
     <div>
       <Navbar current={'/production'} />
@@ -123,23 +128,70 @@ export default function CustomizedAccordions() {
       {isGuidelinesOpen && <Guidelines handleClose={handleGuidelinesStatus} />}
 
       <Grid container spacing={2} p={2}>
-        {accordionData.map((item) => (
+        {accordionData.map((item, i) => (
           <Grid item width="100%">
-            <Accordion expanded={expanded === item.panel} onChange={handleChange(item.panel)}>
-              <AccordionSummary
-                aria-controls={`${item.panel}d-content`}
-                id={`${item.panel}d-header`}>
-                <Typography onClick={() => expanded !== item.panel && handleGuidelinesStatus()}>
+            {item?.heading === "Batch Details" ?
+              (<>
+                <Typography>
                   {item.heading}
                 </Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{item.value}</Typography>
-              </AccordionDetails>
-            </Accordion>
+                {/* <AccordionDetails>
+                  <Typography>{item.value}</Typography>
+                </AccordionDetails> */}
+                <div style={{ fontSize: '14px', display: 'flex', padding: '10px', flexWrap: 'wrap',borderTop: "1 solid #e0e0e0"}}>
+                  <div style={{ width: '100%', display: 'flex' }}>
+                    <div style={{ width: '50%', fontWeight: 'bold' }}>Batch ID</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>243</div>
+                  </div>
+                  <div style={{ width: '100%', display: 'flex' }}>
+                    <div style={{ width: '50%', fontWeight: 'bold' }}>Status</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}> Completed</div>
+                  </div>
+                  <div style={{ width: '100%', display: 'flex' }}>
+                    <div style={{ width: '50%', fontWeight: 'bold' }}>Product</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>Iluvia Smoothwave Intensive Haircare Liquid
+</div>
+                  </div>
+                  <div style={{ width: '100%', display: 'flex' }}>
+                    <div style={{ width: '50%', fontWeight: 'bold' }}>Customer</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}></div>
+                  </div>
+                  <div style={{ width: '100%', display: 'flex' }}>
+                    <div style={{ width: '50%', fontWeight: 'bold' }}>Start Date</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>11/01/2022</div>
+                  </div>
+                  <div style={{ width: '100%', display: 'flex' }}>
+                    <div style={{ width: '50%', fontWeight: 'bold' }}>Quantity</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>75 KG</div>
+                  </div>
+                </div>
+              </>
+              ) : (
+                <Accordion expanded={expanded === item.panel} onChange={handleChange(item.panel)}>
+                  <AccordionSummary
+                    aria-controls={`${item.panel}d-content`}
+                    id={`${item.panel}d-header`}>
+                    <Typography onClick={() => expanded !== item.panel && handleGuidelinesStatus()}>
+                      {item.heading}
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography>{item.value}</Typography>
+                  </AccordionDetails>
+                </Accordion>
+              )}
           </Grid>
         ))}
       </Grid>
     </div>
   );
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    productionBatchList: state?.ProductionReducer.productionBatchList
+  };
+};
+
+export default connect(mapStateToProps, null)(CustomizedAccordions);
