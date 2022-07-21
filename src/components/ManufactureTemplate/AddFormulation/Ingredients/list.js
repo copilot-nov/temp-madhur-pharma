@@ -1,6 +1,6 @@
 
-import CheckBox from '../../../assets/svg/unSelectCheck.svg'
-import SelectedCheckBox from '../../../assets/svg/selectedCheck.svg'
+import CheckBox from '../../../../assets/svg/unSelectCheck.svg'
+import SelectedCheckBox from '../../../../assets/svg/selectedCheck.svg'
 
 const ListOfIngredients = ({ handleSearch, listOfFilter, select,handleSelect }) => {
     return (

@@ -46,7 +46,7 @@ const EditDeleteActionForMaterial = (props) => {
                 cancelConfirm={cancelConfirm}
                 btnTitle={'Remove'}
                 deleteConfirm={deleteConfirm}
-                title={'Remove this user'}
+                title={'Remove this Material'}
                 des={`Delete ${row?.name} !`} />
             <EditMaterial Id={Id} openEdit={openEdit} setOpenEdit={setOpenEdit} type={type} row={row} />
         </Fragment>

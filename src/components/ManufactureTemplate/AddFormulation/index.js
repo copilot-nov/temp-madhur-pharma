@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { GET_PROCESS_MASTER_LIST } from "../../redux/actions/admin";
+import { GET_PROCESS_MASTER_LIST } from "../../../redux/actions/admin";
 // import ProcessMaster from "./process-master";
 import ManufactureTemplateTabs from "./tabs";
 
@@ -19,7 +19,7 @@ import ManufactureTemplateTabs from "./tabs";
 //     'Dispatch'
 // ]
 const ManufactureTemplate = (props) => {
-    const { GET_PROCESS_MASTER_LIST, processMaster, isOpen, titleModal, setIsOpen, closeModal } = props
+    const { GET_PROCESS_MASTER_LIST, processMaster, isOpen, titleModal, setIsOpen, closeModal, manufacturingTemplateEditResponse, Id } = props
     const [select, setSelcted] = useState([])
     const [processId, setProcessId] = useState([])
     const [selectedProcessData, setSelectedProcessData] = useState()
@@ -103,6 +103,8 @@ const ManufactureTemplate = (props) => {
                                             selectedProcessData={selectedProcessData}
                                             setSelectedMaterial={setSelectedMaterial}
                                             selectedMaterial={selectedMaterial}
+                                            manufacturingTemplateEditResponse={manufacturingTemplateEditResponse}
+                                            Id={Id}
                                         />
 
                                         <div>

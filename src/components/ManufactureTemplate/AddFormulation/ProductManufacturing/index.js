@@ -2,8 +2,8 @@ import { Listbox, Transition } from "@headlessui/react"
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 import { Fragment, useState } from "react"
 import { connect } from "react-redux"
-import { ADD_PRODUCTION_PROCESS_STAGES } from "../../../redux/actions/admin"
-import { Alert } from "../../alert"
+import { ADD_PRODUCTION_PROCESS_STAGES } from "../../../../redux/actions/admin"
+import { Alert } from "../../../alert"
 import StageSteps from "./stageSteps"
 
 const ProductManufacturing = (props) => {

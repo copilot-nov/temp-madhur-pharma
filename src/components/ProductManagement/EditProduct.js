@@ -5,26 +5,21 @@ import AutoSearch from '../autoComplete';
 import { Dialog, Transition } from '@headlessui/react';
 
 const defaultState = {
-    "name": "",
-    "description": "",
-    "code": "",
-    "class_id": 0,
-    "sub_class_id": 0,
-    "customer_id": 0,
-    "hsn_code": "",
-    "notes": "",
-    "iconpic": ""
+    
 }
 
 
 const EditProduct = (props) => {
-    const { setOpenEdit, setHandleResponse, openEdit, titleModal, Id, type, row} = props
+    const { setOpenEdit, openEdit, Id, row } = props
     // redux functions 
-    const { UPDATE_PRODUCT, masterDataList } = props
+    const { UPDATE_PRODUCT, masterDataList, CustomerManagmentList } = props
+    let classList = masterDataList?.filter((item) => item?.type_id === 16)
+    let subClassList = masterDataList?.filter((item) => item?.type_id === 17)
     const [payload, setPayload] = useState(defaultState)
-    const [mainclass, setMainClass] = useState(masterDataList[0])
-    const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
-    const [code, setCode] = useState(masterDataList[0])
+    const [mainclass, setMainClass] = useState(classList)
+    const [mainSubclass, setMainSubClass] = useState(subClassList)
+    const [customer, setCustomer] = useState(CustomerManagmentList)
+
 
     const handleOnChange = (e) => {
         let { name, value, type } = e.target
@@ -34,24 +29,31 @@ const EditProduct = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let copypayload = payload
-        copypayload.class_id = mainclass.id
-        copypayload.sub_class_id = mainSubclass.id
-        // copypayload.code = mainSubclass.data_code
+        if (mainclass !== undefined){
+            copypayload.class_id = mainclass.id
+        }
+        if (subClassList !== undefined){
+            copypayload.sub_class_id = mainSubclass.id
+        }
+        if (customer !== undefined){
+            copypayload.customer_id = customer.id
+        }
         let istrue = await UPDATE_PRODUCT(copypayload, Id)
         if (istrue?.status) {
-            setPayload(defaultState)
-            setHandleResponse(istrue)
+            // setPayload(defaultState)
+            // setHandleResponse(istrue)
             setOpenEdit(false)
-        } else {
-            setHandleResponse(istrue)
-        }
+        } 
+        // else {
+        //     setHandleResponse(istrue)
+        // }
     }
 
 
     return (
         <div >
             <Transition appear show={openEdit} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => {setOpenEdit(false)}}>
+                <Dialog as="div" className="relative z-10" onClose={() => { setOpenEdit(false) }}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -90,7 +92,7 @@ const EditProduct = (props) => {
                                                         <div className="col-span-6 sm:col-span-3">
                                                             <div className='w-full items-center'>
                                                                 <p className="block text-sm font-medium text-gray-900">
-                                                                    Name
+                                                                    Product Name
                                                                 </p>
                                                                 <input
                                                                     required
@@ -105,34 +107,39 @@ const EditProduct = (props) => {
                                                         <div className="col-span-6 sm:col-span-3">
                                                             <div className='w-full items-center'>
                                                                 <p className="block text-sm font-medium text-gray-900">
-                                                                    Customer Id
+                                                                    Customer Name
                                                                 </p>
-                                                                <input
-                                                                    required
-                                                                    type='number'
-                                                                    name='customer_id'
-                                                                    onChange={handleOnChange}
-                                                                    defaultValue={payload?.customer_id}
-                                                                    className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                                                />
+                                                                <AutoSearch data={CustomerManagmentList} keyname='name' valuename='id' selected={customer} setSelected={setCustomer} />
                                                             </div>
                                                         </div>
-
+                                                        <div className="col-span-4 sm:col-span-3">
+                                                            <div className='w-full items-center'>
+                                                                <p className="block text-sm font-medium text-gray-900">
+                                                                    Class
+                                                                </p>
+                                                                <AutoSearch data={classList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-span-4 sm:col-span-3">
+                                                            <div className='w-full items-center'>
+                                                                <p className="block text-sm font-medium text-gray-900">
+                                                                    Sub Class
+                                                                </p>
+                                                                <AutoSearch data={subClassList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
+                                                            </div>
+                                                        </div>
                                                         <div className="col-span-4 sm:col-span-3">
                                                             <div className='w-full items-center'>
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     Code
                                                                 </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={code} setSelected={setCode} />
-
-                                                                {/* <input
+                                                                <input
                                                                     required
-                                                                    type='text'
                                                                     name='code'
                                                                     onChange={handleOnChange}
-                                                                    defaultValue={payload?.code}
+                                                                    defaultValue={row?.code}
                                                                     className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                                                /> */}
+                                                                />
                                                             </div>
                                                         </div>
                                                         <div className="col-span-4 sm:col-span-3">
@@ -150,27 +157,11 @@ const EditProduct = (props) => {
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="col-span-4 sm:col-span-3">
-                                                            <div className='w-full items-center'>
-                                                                <p className="block text-sm font-medium text-gray-900">
-                                                                    Class
-                                                                </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-span-4 sm:col-span-3">
-                                                            <div className='w-full items-center'>
-                                                                <p className="block text-sm font-medium text-gray-900">
-                                                                    Sub Class
-                                                                </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                                     <button
-                                                        onClick={() => {setOpenEdit(false)}}
+                                                        onClick={() => { setOpenEdit(false) }}
                                                         className="mr-2 inline-flex justify-center py-2 px-8 border border-green-900 shadow-sm text-sm font-medium text-green-900 bg-white hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                                     >
                                                         Cancel
@@ -190,7 +181,7 @@ const EditProduct = (props) => {
                         </div>
                     </div>
                 </Dialog>
-            </Transition> 
+            </Transition>
         </div>
     )
 }
@@ -199,6 +190,8 @@ const mapStateToProps = (state) => {
     // console.log(state)
     return {
         masterDataList: state?.AdminReducer.masterDataList,
+        CustomerManagmentList: state?.AdminReducer.CustomerManagmentList,
+
     };
 };
 export default connect(mapStateToProps, { UPDATE_PRODUCT })(EditProduct);

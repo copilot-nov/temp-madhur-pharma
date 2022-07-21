@@ -13,8 +13,10 @@ const defaultState = {
 const CustomerManagment = (props) => {
     const { closeModal, setHandleResponse, isOpen,titleModal,setIsOpen } = props
     const { ADD_CUSTOMER_ADMIN, masterDataList } = props
+    let cityList = masterDataList?.filter((item) => item?.type_id === 31)
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
+    const [city, setCity] = useState(cityList)
     // redux functions 
     const [payload, setPayload] = useState(defaultState)
 
@@ -28,13 +30,13 @@ const CustomerManagment = (props) => {
         let copypayload = payload
         // copypayload.class_id = mainclass.id
         // copypayload.sub_class_id = mainSubclass.id
-        copypayload.city = "CITY_BANGALORE"
+        copypayload.city = city?.data_code
 
         let istrue = await ADD_CUSTOMER_ADMIN(copypayload)
         // setPayload(defaultState)
         setIsOpen(false)
         setHandleResponse(istrue)
-        console.log(istrue)
+        // console.log(istrue)
     }
     // console.log(mainclass)
 
@@ -169,18 +171,13 @@ const CustomerManagment = (props) => {
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="col-span-6 sm:col-span-3">
+                                                        <div  className="col-span-4 sm:col-span-3 ">
                                                             <div className='w-full items-center'>
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     City
                                                                 </p>
-                                                                <input
-                                                                    type='text'
-                                                                    name='city'
-                                                                    onChange={handleOnChange}
-                                                                    defaultValue={payload?.city}
-                                                                    className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                                                />
+                                                                {/* <input disabled="true" className='border border-gray-700 relative w-full cursor-default overflow-hidden h-10 bg-white text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'/> */}
+                                                                <AutoSearch className=" cursor-not-allowed" data={cityList} keyname='label' valuename='id' selected={city} setSelected={setCity} />
                                                             </div>
                                                         </div>
                                                         <div  className="col-span-4 sm:col-span-3 ">

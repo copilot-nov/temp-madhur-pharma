@@ -35,10 +35,11 @@ const EditUser = (props) => {
             setOpenEdit(false)
             // setPayload(defaultState)
             // setroledata(roleState)
-            setHandleResponse(istrue)
-        } else {
-            setHandleResponse(istrue)
-        }
+            // setHandleResponse(istrue)
+        } 
+        // else {
+        //     // setHandleResponse(istrue)
+        // }
     }
 
     return (

@@ -9,13 +9,15 @@ const defaultState = {
 }
 
 const EditMaterial = (props) => {
-    const { setOpenEdit, setHandleResponse, openEdit, Id, type, row} = props
+    const { setOpenEdit, setHandleResponse, openEdit, Id, type, row } = props
     // redux functions 
     const { UPDATE_MATERIAL, masterDataList } = props
+    let UOMList = masterDataList?.filter((item) => item?.type_id === 32)
+
     const [payload, setPayload] = useState(defaultState)
     const [mainclass, setMainClass] = useState(masterDataList[0])
     const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
-    const [uom, setUOM] = useState(masterDataList[0])
+    const [uom, setUOM] = useState(UOMList)
 
     const handleOnChange = (e) => {
         let { name, value, type } = e.target
@@ -27,22 +29,27 @@ const EditMaterial = (props) => {
         let copypayload = payload
         // copypayload.class_id = mainclass.id
         // copypayload.sub_class_id = mainSubclass.id
-        copypayload.uom = uom.data_code
-        let istrue = await UPDATE_MATERIAL(copypayload,Id)
+
+        if (uom !== undefined) {
+            copypayload.uom = uom.data_code
+        }
+        let istrue = await UPDATE_MATERIAL(copypayload, Id)
+        // console.log(istrue)
         if (istrue?.status) {
             setPayload(defaultState)
-            setHandleResponse(istrue)
+            // setHandleResponse(istrue)
             setOpenEdit(false)
-        } else {
-            setHandleResponse(istrue)
         }
+        //  else {
+        //     // setHandleResponse(istrue)
+        // }
     }
 
 
     return (
         <div>
             <Transition appear show={openEdit} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => {setOpenEdit(false)}}>
+                <Dialog as="div" className="relative z-10" onClose={() => { setOpenEdit(false) }}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -126,29 +133,28 @@ const EditMaterial = (props) => {
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     UOM
                                                                 </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={uom} setSelected={setUOM} />
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-span-4 sm:col-span-3">
-                                                            <div className='w-full items-center'>
-                                                                <p className="block text-sm font-medium text-gray-900">
-                                                                    SKU
-                                                                </p>
-                                                                <input
-                                                                    required
-                                                                    name='sku'
-                                                                    onChange={handleOnChange}
-                                                                    defaultValue={row?.sku}
-                                                                    className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                                                <AutoSearch
+                                                                    data={masterDataList}
+                                                                    keyname='label'
+                                                                    valuename='id'
+                                                                    selected={uom}
+                                                                    setSelected={setUOM}
                                                                 />
                                                             </div>
                                                         </div>
+
                                                         <div className="col-span-4 sm:col-span-3">
                                                             <div className='w-full items-center opacity-30'>
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     Class
                                                                 </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
+                                                                <AutoSearch
+                                                                    data={masterDataList}
+                                                                    keyname='label'
+                                                                    valuename='id'
+                                                                    selected={mainclass}
+                                                                    setSelected={setMainClass}
+                                                                />
                                                             </div>
                                                         </div>
                                                         <div className="col-span-4 sm:col-span-3">
@@ -156,14 +162,20 @@ const EditMaterial = (props) => {
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     Sub Class
                                                                 </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
+                                                                <AutoSearch
+                                                                    data={masterDataList}
+                                                                    keyname='label'
+                                                                    valuename='id'
+                                                                    selected={mainSubclass}
+                                                                    setSelected={setMainSubClass}
+                                                                />
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                                     <button
-                                                        onClick={() => {setOpenEdit(false)}}
+                                                        onClick={() => { setOpenEdit(false) }}
                                                         className="mr-2 inline-flex justify-center py-2 px-8 border border-green-900 shadow-sm text-sm font-medium text-green-900 bg-white hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                                     >
                                                         Cancel

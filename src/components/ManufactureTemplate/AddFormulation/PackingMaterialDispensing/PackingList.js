@@ -1,6 +1,6 @@
 
-import CheckBox from '../../../assets/svg/unSelectCheck.svg'
-import SelectedCheckBox from '../../../assets/svg/selectedCheck.svg'
+import CheckBox from '../../../../assets/svg/unSelectCheck.svg'
+import SelectedCheckBox from '../../../../assets/svg/selectedCheck.svg'
 
 const ListOfPackingProcess = ({ handleSearch, listOfFilter, select, handleSelect }) => {
     // console.log(listOfFilter)

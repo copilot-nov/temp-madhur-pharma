@@ -6,40 +6,43 @@ import { Dialog, Transition } from '@headlessui/react';
 
 const defaultState = {
     "name": "",
-    "description": "",
     "code": "",
     "class_id": 0,
     "sub_class_id": 0,
     "customer_id": 0,
     "hsn_code": "",
-    "notes": "",
-    "iconpic": ""
+    
 }
 
 
 const ProductManagment = (props) => {
-    const { closeModal, setHandleResponse, isOpen, titleModal} = props
+    const { closeModal, setHandleResponse, isOpen, titleModal,setIsOpen} = props
     // redux functions 
-    const { ADD_PRODUCT_ADMIN, masterDataList } = props
+    const { ADD_PRODUCT_ADMIN, masterDataList, CustomerManagmentList } = props
+    let classList = masterDataList?.filter((item) => item?.type_id === 16)
+    let subClassList = masterDataList?.filter((item) => item?.type_id === 17)
+    // let codeList = masterDataList?.filter((item) => item?.type_id === 17)
     const [payload, setPayload] = useState(defaultState)
-    const [mainclass, setMainClass] = useState(masterDataList[0])
-    const [mainSubclass, setMainSubClass] = useState(masterDataList[0])
-    const [code, setCode] = useState(masterDataList[0])
+    const [mainclass, setMainClass] = useState(classList)
+    const [mainSubclass, setMainSubClass] = useState(subClassList)
+    const [customer, setCustomer] = useState(CustomerManagmentList)
 
     const handleOnChange = (e) => {
         let { name, value, type } = e.target
         setPayload({ ...payload, [name]: type === 'number' ? Number(value) : value })
     }
+    // console.log(masterDataList)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         let copypayload = payload
         copypayload.class_id = mainclass.id
         copypayload.sub_class_id = mainSubclass.id
-        // copypayload.code = mainSubclass.data_code
+        copypayload.customer_id = customer.id
         let istrue = await ADD_PRODUCT_ADMIN(copypayload)
         if (istrue?.status) {
             setPayload(defaultState)
+            setIsOpen(false)
             setHandleResponse(istrue)
         } else {
             setHandleResponse(istrue)
@@ -89,7 +92,7 @@ const ProductManagment = (props) => {
                                                         <div className="col-span-6 sm:col-span-3">
                                                             <div className='w-full items-center'>
                                                                 <p className="block text-sm font-medium text-gray-900">
-                                                                    Name
+                                                                    Product Name
                                                                 </p>
                                                                 <input
                                                                     required
@@ -100,20 +103,28 @@ const ProductManagment = (props) => {
                                                                 />
                                                             </div>
                                                         </div>
-
-                                                        <div className="col-span-6 sm:col-span-3">
+                                                        <div className="col-span-4 sm:col-span-3">
                                                             <div className='w-full items-center'>
                                                                 <p className="block text-sm font-medium text-gray-900">
-                                                                    Customer Id
+                                                                    Customer Name
                                                                 </p>
-                                                                <input
-                                                                    required
-                                                                    type='number'
-                                                                    name='customer_id'
-                                                                    onChange={handleOnChange}
-                                                                    defaultValue={payload?.customer_id}
-                                                                    className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                                                />
+                                                                <AutoSearch data={CustomerManagmentList} keyname='name' valuename='id' selected={customer} setSelected={setCustomer} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-span-4 sm:col-span-3">
+                                                            <div className='w-full items-center'>
+                                                                <p className="block text-sm font-medium text-gray-900">
+                                                                    Class
+                                                                </p>
+                                                                <AutoSearch data={classList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-span-4 sm:col-span-3">
+                                                            <div className='w-full items-center'>
+                                                                <p className="block text-sm font-medium text-gray-900">
+                                                                    Sub Class
+                                                                </p>
+                                                                <AutoSearch data={subClassList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
                                                             </div>
                                                         </div>
 
@@ -122,16 +133,14 @@ const ProductManagment = (props) => {
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     Code
                                                                 </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={code} setSelected={setCode} />
-
-                                                                {/* <input
+                                                                <input
                                                                     required
-                                                                    type='text'
+                                                                    // type='text'
                                                                     name='code'
                                                                     onChange={handleOnChange}
                                                                     defaultValue={payload?.code}
                                                                     className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
-                                                                /> */}
+                                                                />
                                                             </div>
                                                         </div>
                                                         <div className="col-span-4 sm:col-span-3">
@@ -149,22 +158,22 @@ const ProductManagment = (props) => {
                                                                 />
                                                             </div>
                                                         </div>
-                                                        <div className="col-span-4 sm:col-span-3">
-                                                            <div className='w-full items-center'>
+                                                        {/* <div className="col-span-6 sm:col-span-6">
+                                                            <div className='w-full items-start'>
                                                                 <p className="block text-sm font-medium text-gray-900">
-                                                                    Class
+                                                                    description
                                                                 </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainclass} setSelected={setMainClass} />
+                                                                <textarea
+                                                                    rows={2}
+                                                                    id="description"
+                                                                    required
+                                                                    name="description"
+                                                                    onChange={handleOnChange}
+                                                                    // defaultValue={payload?.description}
+                                                                    className="p-2 shadow-sm focus:ring-green-500 focus:border-green-500 mt-1 block w-full sm:text-sm border border-gray-900"
+                                                                />
                                                             </div>
-                                                        </div>
-                                                        <div className="col-span-4 sm:col-span-3">
-                                                            <div className='w-full items-center'>
-                                                                <p className="block text-sm font-medium text-gray-900">
-                                                                    Sub Class
-                                                                </p>
-                                                                <AutoSearch data={masterDataList} keyname='label' valuename='id' selected={mainSubclass} setSelected={setMainSubClass} />
-                                                            </div>
-                                                        </div>
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
@@ -198,6 +207,7 @@ const mapStateToProps = (state) => {
     // console.log(state)
     return {
         masterDataList: state?.AdminReducer.masterDataList,
+        CustomerManagmentList: state?.AdminReducer.CustomerManagmentList,
     };
 };
 export default connect(mapStateToProps, { ADD_PRODUCT_ADMIN })(ProductManagment);

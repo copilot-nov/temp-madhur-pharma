@@ -1,18 +1,19 @@
-import { useState } from "react";
 import { connect } from "react-redux";
-import { ADD_PRODUCTION_GUIDELINES } from "../../redux/actions/admin";
-import { Alert } from "../alert";
+import AutoSearch from "../autoComplete";
 
+const DetailedFields = (props) => {
+    const { MaterialList, productList, inputList, setInputList } = props
+    
 
-const Guidlines = (props) => {
-    const { selectedProcessData, ADD_PRODUCTION_GUIDELINES, formulationData } = props
-    const [numberOfList, setNumberOfList] = useState(1)
-    const [inputList, setInputList] = useState([{ text: "", key: Math.floor(Math.random(9) * 1000000) }])
-    const [handleResponse, setHandleResponse] = useState(null)
-
-
-    const handleOnChange = (e, i) => {
+    const handleSelected = (e,index,key) => {
         let newInputList = inputList
+        newInputList[index][key] = e
+        setInputList([...newInputList])
+    }
+    const handleOnChange = (e, i) => {
+        // console.log(i)
+        let newInputList = inputList
+        // console.log(newInputList)
         newInputList[i][e.target.name] = e.target.value
         setInputList([...newInputList])
     }
@@ -20,56 +21,49 @@ const Guidlines = (props) => {
         let newInputList = inputList
         newInputList = newInputList?.filter((item) => item.key !== i.key)
         setInputList(newInputList)
-        setNumberOfList(numberOfList - 1)
     }
     const handlePlusButton = () => {
-        setInputList([...inputList, { text: "", key: Math.floor(Math.random(9) * 1000000) }])
-        setNumberOfList(numberOfList + 1)
+        setInputList([...inputList, { text: 0,product: {}, material: {}, key: Math.floor(Math.random(9) * 1000000) }])
     }
+    // console.log(inputList)
 
-    const handleSubmit = async () => {
-        let payload = {
-            "data": []
-        }
-        formulationData.filter((data) => {
-            if (data?.process_id === selectedProcessData?.id)
-                inputList.map((item, i) => {
-                    payload?.data.push({
-                        "prod_proc_id": data?.id,
-                        "text": inputList[i].text,
-                        "sequence": i + 1,
-                        "notes": "test"
-                    })
-                })
-        })
-        let istrue = await ADD_PRODUCTION_GUIDELINES(payload)
-        if (istrue?.status) {
-            setHandleResponse(istrue)
-        } else {
-            setHandleResponse(istrue)
-        }
-    }
 
     return (
-        <div className="p-4">
-            {handleResponse !== null && <Alert type={handleResponse?.status} msg={handleResponse?.msg} />}
+        <div className="pt-10">
             {
                 inputList.map((item, i) => {
                     return (
                         <div key={i} >
-                            <div className="flex justify-between items-center">
+                            <div className="flex items-center">
+                                {/* <div className="col-span-4 sm:col-span-2"> */}
                                 <div className='w-full items-center'>
                                     <p className="block text-sm font-medium text-gray-900">
-                                        Enter Guidelines
+                                        Select Product
+                                    </p>
+                                    <AutoSearch data={productList} keyname='name' valuename='id' selected={item?.product} setSelected={(selectedVale) => handleSelected(selectedVale, i, "product")} />
+                                </div>
+                                {/* </div> */}
+                                {/* <div className="col-span-4 sm:col-span-2"> */}
+                                <div className='w-full items-center ml-8'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Select SKU
+                                    </p>
+                                    <AutoSearch data={MaterialList} keyname='name' valuename='id' selected={item?.material} setSelected={(selectedVale) => handleSelected(selectedVale, i, "material")}/>
+                                </div>
+                                {/* </div> */}
+                                {/* <div className="col-span-4 sm:col-span-2"> */}
+                                <div className='w-full items-center ml-8'>
+                                    <p className="block text-sm font-medium text-gray-900">
+                                        Number Of SKU
                                     </p>
                                     <input
-                                        value={item?.text}
-                                        onChange={(e) => handleOnChange(e, i)}
-                                        required
+                                        type="number"
                                         name='text'
-                                        className="w-full focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
+                                        onChange={(e) => handleOnChange(e, i)}
+                                        className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                     />
                                 </div>
+                                {/* </div> */}
                                 <div className="ml-6 flex justify-end">
                                     <button onClick={handlePlusButton} className="flex justify-center items-center mt-4 text-white rounded-full h-8 w-8 bg-green-700">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -88,7 +82,7 @@ const Guidlines = (props) => {
                     )
                 })
             }
-            <div className="pr-10 py-3 flex justify-end sm:px-6 mt-10">
+            {/* <div className="pr-10 py-3 flex justify-end sm:px-6 mt-10">
                 <button
                     onClick={handleSubmit}
                     type="submit"
@@ -96,7 +90,7 @@ const Guidlines = (props) => {
                 >
                     Save
                 </button>
-            </div>
+            </div> */}
         </div>
     )
 }
@@ -107,5 +101,4 @@ const mapStateToProps = (state) => {
 
     };
 };
-export default connect(mapStateToProps, { ADD_PRODUCTION_GUIDELINES })(Guidlines);
-
+export default connect(mapStateToProps, null)(DetailedFields);

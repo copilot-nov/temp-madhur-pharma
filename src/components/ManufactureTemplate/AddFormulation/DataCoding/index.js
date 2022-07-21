@@ -1,13 +1,31 @@
 import { useState } from "react";
-import CheckBox from '../../../assets/svg/unSelectCheck.svg'
-import SelectedCheckBox from '../../../assets/svg/selectedCheck.svg'
-import { data } from "autoprefixer";
+import CheckBox from '../../../../assets/svg/unSelectCheck.svg'
+import SelectedCheckBox from '../../../../assets/svg/selectedCheck.svg'
 import { connect } from "react-redux";
-import { ADD_PRODUCTION_PROCESS_INSPECTION } from "../../../redux/actions/admin";
-import { Alert } from "../../alert";
+import { ADD_PRODUCTION_PROCESS_INSPECTION } from "../../../../redux/actions/admin";
+import { Alert } from "../../../alert";
 
-const CleaningAndInspection = (props) => {
-    const { selectedProcessData, selectedMaterial, formulationData, ADD_PRODUCTION_PROCESS_INSPECTION} = props
+// const IngredientsList = [
+//     { id: 1, name: 'Cyclopentasiloxane' },
+//     { id: 2, name: 'Dimethiconol' },
+//     { id: 3, name: 'Polydimethylsiloxane' },
+//     { id: 4, name: 'Squalene Oil' },
+//     { id: 5, name: 'Argania Spinosa Kernel Oil' },
+//     { id: 6, name: 'Baobab Oil' },
+//     { id: 7, name: 'Vitamin E-Acetate' },
+//     { id: 8, name: 'Geogaard' },
+//     { id: 9, name: 'Aqua Tonus Fragrance' },
+// ]
+
+const ProcessList = [
+    { name: "Batch No." },
+    { name: 'Manufacture Date' },
+    { name: 'Expirary Date' },
+    { name: 'MRP Rs.' }
+]
+
+const DataCoding = (props) => {
+    const { selectedProcessData, selectedMaterial, formulationData, ADD_PRODUCTION_PROCESS_INSPECTION } = props
     const [select, setSelect] = useState([])
     const [handleResponse, setHandleResponse] = useState(null)
 
@@ -68,16 +86,16 @@ const CleaningAndInspection = (props) => {
                 {
                     selectedMaterial?.map((item, i) => {
                         return (
-                            // <div className="">
+
                             <div key={i} className="m-1 flex justify-between items-center text-green-900 hover:shadow p-2 ">
                                 <p className="text-sm"> <span className="mr-2">{i + 1} .</span> {item?.name}</p>
-                                <div className="grid grid-cols-3" style={{ width: 950 }}>
+                                <div className="grid grid-cols-4" style={{ width: 950 }}>
                                     {ProcessList.map((process, index) => {
                                         return (
                                             <div key={index} className='p-1'>
                                                 <button
                                                     onClick={() => { handleSelect(process, item?.materialId) }}
-                                                    className="w-full hover:shadow flex items-center gap-2 p-2 mt-2"
+                                                    className="w-full flex items-center gap-2 p-2 mt-2"
                                                 >
                                                     <img className="w-6 h-6" src={select?.includes(process?.name) ? SelectedCheckBox : CheckBox} alt={process?.name} />
                                                     <div className="flex flex-col">
@@ -86,14 +104,10 @@ const CleaningAndInspection = (props) => {
                                                 </button>
                                             </div>
                                         )
-                                    })}
+                                    })
+                                    }
                                 </div>
                             </div>
-
-
-
-                            // </div>
-
                         )
                     })
                 }
@@ -119,14 +133,4 @@ const mapStateToProps = (state) => {
 
     };
 };
-export default connect(mapStateToProps, {ADD_PRODUCTION_PROCESS_INSPECTION})(CleaningAndInspection);
-
-const ProcessList = [
-    { name: "Previous Product" },
-    { name: "Previous Batch" },
-    { name: 'Previous Inspection Start Time' },
-    { name: 'Previous Inspection End Time' },
-    { name: "Inspected Unit" },
-    { name: 'Rejected Unit' },
-    { name: 'Rejection Type' }
-]
+export default connect(mapStateToProps, { ADD_PRODUCTION_PROCESS_INSPECTION })(DataCoding);
