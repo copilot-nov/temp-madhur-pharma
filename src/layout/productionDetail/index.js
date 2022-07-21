@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import { useNavigate, useParams } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
@@ -102,10 +103,9 @@ function CustomizedAccordions(props) {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState('panel1');
   const [isGuidelinesOpen, setGuidelinesOpen] = useState(false);
-  const {id} = useParams()
-  
-  // let selectedBatch = productionBatchList.filter((item)=> (item === id))
-  console.log(productionBatchList)
+  const { id } = useParams();
+  let selectedBatch = productionBatchList.find((item) => { return item.id == id });
+  console.table(selectedBatch,"This is info tech!")
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
@@ -138,31 +138,31 @@ function CustomizedAccordions(props) {
                 {/* <AccordionDetails>
                   <Typography>{item.value}</Typography>
                 </AccordionDetails> */}
-                <div style={{ fontSize: '14px', display: 'flex', padding: '10px', flexWrap: 'wrap',borderTop: "1 solid #e0e0e0"}}>
+                <div style={{ fontSize: '14px', display: 'flex', padding: '10px', flexWrap: 'wrap', borderTop: "1 solid #e0e0e0" }}>
                   <div style={{ width: '100%', display: 'flex' }}>
                     <div style={{ width: '50%', fontWeight: 'bold' }}>Batch ID</div>
-                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>243</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{selectedBatch?.batch_code}</div>
                   </div>
                   <div style={{ width: '100%', display: 'flex' }}>
                     <div style={{ width: '50%', fontWeight: 'bold' }}>Status</div>
-                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}> Completed</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}> {selectedBatch?.production_batch_status?.label}</div>
                   </div>
                   <div style={{ width: '100%', display: 'flex' }}>
                     <div style={{ width: '50%', fontWeight: 'bold' }}>Product</div>
-                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>Iluvia Smoothwave Intensive Haircare Liquid
-</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{selectedBatch?.production_batch_product_id?.name}
+                    </div>
                   </div>
                   <div style={{ width: '100%', display: 'flex' }}>
                     <div style={{ width: '50%', fontWeight: 'bold' }}>Customer</div>
-                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}></div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{selectedBatch?.emp_id}</div>
                   </div>
                   <div style={{ width: '100%', display: 'flex' }}>
                     <div style={{ width: '50%', fontWeight: 'bold' }}>Start Date</div>
-                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>11/01/2022</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{moment(selectedBatch?.plan_startdate).format('DD/MM/YYYY')}</div>
                   </div>
                   <div style={{ width: '100%', display: 'flex' }}>
                     <div style={{ width: '50%', fontWeight: 'bold' }}>Quantity</div>
-                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>75 KG</div>
+                    <div style={{ paddingRight: '5px', width: '50%', textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{`${selectedBatch?.plan_quantity} ${selectedBatch?.production_batch_uom?.label}`}</div>
                   </div>
                 </div>
               </>
