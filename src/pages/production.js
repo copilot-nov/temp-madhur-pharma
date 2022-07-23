@@ -14,10 +14,7 @@ const Production = (props) => {
         GET_MASTER_DATA_LIST()
         GET_PRODUCT_LIST()
         GET_ORDER_LIST()
-    }, [GET_PRODUCTION_BATCH_LIST, 
-        GET_MATERIAL_LIST,
-        GET_MASTER_DATA_LIST, 
-        GET_PRODUCT_LIST, GET_ORDER_LIST])
+    }, [])
 
     return (
         <div>
