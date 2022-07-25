@@ -9,7 +9,7 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import Navbar from "../../components/navbar";
-import { Grid } from "@mui/material";
+import { Divider, Grid } from "@mui/material";
 import CheckList from "./common/CheckList";
 import Guidelines from "./common/Guidelines";
 import { connect } from "react-redux";
@@ -109,6 +109,7 @@ const accordionData = [
             },
           ].map((e) => (
             <Grid item xs={12} marginTop={2} justifyContent="space-between">
+              <Divider />
               <Grid container>
                 <Grid xs={6}></Grid>
                 <Grid xs={2}>
