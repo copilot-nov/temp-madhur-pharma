@@ -72,7 +72,121 @@ const accordionData = [
   {
     heading: "Ingredient Dispensing",
     panel: "panel2",
-    value: <CheckList data={checkListData} />,
+    value: (
+      <React.Fragment>
+        <CheckList data={checkListData} />,
+        <Grid container mt={2}>
+          {[
+            {
+              medName: "Somedocinol",
+              percentage: 10,
+              PQ: 89,
+              AQ: 87.26,
+              AR: "RWR2102",
+              G: "1.000",
+              T: 87.6,
+              N: 88.6,
+            },
+            {
+              medName: "Somedocinol 2",
+              percentage: 10,
+              PQ: 89,
+              AQ: 87.26,
+              AR: "RWR2102",
+              G: "1.000",
+              T: 87.6,
+              N: 88.6,
+            },
+            {
+              medName: "Somedocinol 3",
+              percentage: 10,
+              PQ: 89,
+              AQ: 87.26,
+              AR: "RWR2102",
+              G: "1.000",
+              T: 87.6,
+              N: 88.6,
+            },
+          ].map((e) => (
+            <Grid item xs={12} marginTop={2} justifyContent="space-between">
+              <Grid container>
+                <Grid xs={6}></Grid>
+                <Grid xs={2}>
+                  <strong>%</strong>
+                </Grid>
+                <Grid xs={2}>
+                  <strong>AQ</strong>
+                </Grid>
+                <Grid xs={2}>
+                  <strong>PQ</strong>
+                </Grid>
+              </Grid>
+              <Grid container mt={5}>
+                <Grid xs={6}>{e.medName}</Grid>
+                <Grid xs={2}>{e.percentage}</Grid>
+                <Grid xs={2}>{e.AQ}</Grid>
+                <Grid xs={2}>
+                  <input
+                    value={e.PQ}
+                    style={{
+                      border: "1px solid black",
+                      width: "50px",
+                      textAlign: "center",
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container mt={5} justifyContent="space-between">
+                <Grid xs={4}>
+                  <strong>AR: </strong>{" "}
+                  <input
+                    value={e.AR}
+                    style={{
+                      border: "1px solid black",
+                      width: "90px",
+                      textAlign: "center"
+                    }}
+                  />
+                </Grid>
+                <Grid xs={2.5}>
+                  <strong>G: </strong>{" "}
+                  <input
+                    value={e.G}
+                    style={{
+                      border: "1px solid black",
+                      width: "50px",
+                      textAlign: "center",
+                    }}
+                  />
+                </Grid>
+                <Grid xs={2.5}>
+                  <strong>T: </strong>{" "}
+                  <input
+                    value={e.T}
+                    style={{
+                      border: "1px solid black",
+                      width: "50px",
+                      textAlign: "center",
+                    }}
+                  />
+                </Grid>
+                <Grid xs={2.5}>
+                  <strong>N: </strong>{" "}
+                  <input
+                    value={e.N}
+                    style={{
+                      border: "1px solid black",
+                      width: "50px",
+                      textAlign: "center",
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+          ))}
+        </Grid>
+      </React.Fragment>
+    ),
   },
   {
     heading: "Product Manufacturing",
