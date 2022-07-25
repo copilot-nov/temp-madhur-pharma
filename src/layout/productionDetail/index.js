@@ -73,7 +73,7 @@ const accordionData = [
     heading: "Ingredient Dispensing",
     panel: "panel2",
     value: (
-      <React.Fragment>
+      <div style={{height: "300px", overflow: "scroll"}}>
         <CheckList data={checkListData} />,
         <Grid container mt={2}>
           {[
@@ -185,7 +185,7 @@ const accordionData = [
             </Grid>
           ))}
         </Grid>
-      </React.Fragment>
+      </div>
     ),
   },
   {
