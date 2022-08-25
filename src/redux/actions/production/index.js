@@ -37,13 +37,13 @@ export const GET_PRODUCTION_BATCH_BY_ID = async (production_batch_id) => {
             return res?.data?.data[0]
         } else {
             toast.info(res.data?.msg, styleToastify);
-            return false 
+            return false
         }
     }
     catch (error) {
         toast.error((error.message).replace(/\\/g, ""), styleToastify);
     }
-    
+
 }
 
 export const ADD_PRODUCTION_BATCH = (payload) => {
@@ -54,12 +54,13 @@ export const ADD_PRODUCTION_BATCH = (payload) => {
             if (res?.data.success) {
                 dispatch(GET_PRODUCTION_BATCH_LIST())
                 toast.success(('Production Batch Added successfully!').replace(/\\/g, ""), styleToastify);
+                return { success: true };
             } else {
-                return { status: 'info', msg: res.data?.msg }
+                return { status: 'info', msg: res.data?.msg, success: false };
             }
         }
         catch (error) {
-            return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+            return { status: 'error', msg: (error.message).replace(/\\/g, ""), success: false };
         }
     }
 }
@@ -70,7 +71,7 @@ export const UPDATE_PRODUCTION_BATCH = (payload, Id) => {
             let res = await axios.put(url, payload, { headers: getHeaders() })
             if (res?.data.success) {
                 dispatch(GET_PRODUCTION_BATCH_LIST())
-                return(toast.success(('Production Batch Added successfully!').replace(/\\/g, ""), styleToastify))
+                return (toast.success(('Production Batch Added successfully!').replace(/\\/g, ""), styleToastify))
             } else {
                 return { status: 'info', msg: res.data?.msg }
             }

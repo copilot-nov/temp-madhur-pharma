@@ -34,9 +34,8 @@ const ProductionBatch = (props) => {
         copypayload.product_id = Product?.id
         copypayload.uom = UOM?.data_code
 
-        // console.log(copypayload)
         let istrue = await ADD_PRODUCTION_BATCH(copypayload)
-        if (istrue?.status) {
+        if (istrue?.success) {
             setPayload(defaultState)
             setHandleResponse(istrue)
             setOpen(false)
