@@ -274,7 +274,6 @@ const ProductionBatch = (props) => {
     )
 }
 const mapStateToProps = (state) => {
-    // console.log(state)
     return {
         materialList: state?.AdminReducer.materialList,
         masterDataList: state?.AdminReducer.masterDataList,
