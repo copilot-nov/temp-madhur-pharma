@@ -9,10 +9,11 @@ const defaultState = {
 
 }
 const ProductionBatch = (props) => {
-    const { open, closeModal, setOpen, materialList, masterDataList, productList, orderList, ADD_PRODUCTION_BATCH,setHandleResponse,handleResponse } = props
-    let UOMList = masterDataList?.filter((item) => item?.type_id === 32)
+    const { open, closeModal, setOpen, materialList, masterDataList, productList, orderList, ADD_PRODUCTION_BATCH,setHandleResponse,handleResponse } = props;
+    let UOMList = masterDataList?.filter((item) => item?.type_id === 32);
+    let filterMaterialList = materialList?.filter((item)=> item.sku === true);
     const [payload, setPayload] = useState(defaultState)
-    const [SKU, setSKU] = useState(materialList)
+    const [SKU, setSKU] = useState(filterMaterialList)
     const [UOM, setUOM] = useState(UOMList)
     const [Product, setProduct] = useState(productList)
     const [POID, setPOID] = useState(orderList)
@@ -119,7 +120,7 @@ const ProductionBatch = (props) => {
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     SKU
                                                                 </p>
-                                                                <AutoSearch data={materialList} keyname='name' valuename='id' selected={SKU} setSelected={setSKU} />
+                                                                <AutoSearch data={filterMaterialList} keyname='name' valuename='id' selected={SKU} setSelected={setSKU} />
                                                             </div>
                                                         </div>
                                                         <div className="col-span-6 sm:col-span-3">
