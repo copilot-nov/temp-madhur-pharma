@@ -66,7 +66,7 @@ const CheckBox = (props) => {
         ) : (
           <Circle
             onClick={() => setCheckST(true)}
-            style={{ color: green[600], marginRight: "5px" }}
+            style={{ color: '#808080', marginRight: "5px" }}
           />
         )}
         {checkPR ? (
@@ -74,19 +74,19 @@ const CheckBox = (props) => {
         ) : (
           <Circle
             onClick={() => setCheckPR(true)}
-            style={{ color: green[600], marginRight: "5px" }}
+            style={{ color: '#808080', marginRight: "5px" }}
           />
         )}
         {checkQA ? (
-          <CheckCircle style={{ color: green[600], marginRight: "5px" }} />
+          <CheckCircle style={{ color:green[600], marginRight: "5px" }} />
         ) : (
           <Circle
             onClick={() => setCheckQA(true)}
-            style={{ color: green[600], marginRight: "5px" }}
+            style={{ color: '#808080', marginRight: "5px" }}
           />
         )}
         <button onClick={props.openModal}>
-          <AddCircleTwoTone style={{ color: "#FBDF01", marginRight: "5px" }} />
+          <AddCircleTwoTone style={{ color: "#808080", marginRight: "5px" }} />
         </button>
       </Grid>
     </Grid>
