@@ -9,7 +9,7 @@ const defaultState = {
 
 }
 const ProductionBatch = (props) => {
-    const { openEdit, setOpenEdit, materialList, masterDataList, productList, orderList, Id, row, setHandleResponse, handleResponse, UPDATE_PRODUCTION_BATCH} = props
+    const { openEdit, setOpenEdit, materialList, masterDataList, productList, orderList, Id, row, setHandleResponse, handleResponse, UPDATE_PRODUCTION_BATCH } = props
     let UOMList = masterDataList?.filter((item) => item?.type_id === 32)
     let statusList = masterDataList?.filter((item) => item?.type_id === 27)
     const [payload, setPayload] = useState(defaultState)
@@ -28,32 +28,34 @@ const ProductionBatch = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        let copypayload = payload
-        if (POID !== undefined) {
-            copypayload.po_id = POID?.po_id
-        }
-        if (SKU !== undefined) {
-            copypayload.sku_id = SKU?.id
-        }
-        if (Product !== undefined) {
-            copypayload.product_id = Product?.id
-        }
-        if (UOM !== undefined) {
-            copypayload.uom = UOM?.data_code
-        }
-        if (status !== undefined) {
-            copypayload.status = status?.data_code
-        }
+        if (Object.keys(payload).length) {
+            let copypayload = payload
+            if (POID !== undefined) {
+                copypayload.po_id = POID?.po_id
+            }
+            if (SKU !== undefined) {
+                copypayload.sku_id = SKU?.id
+            }
+            if (Product !== undefined) {
+                copypayload.product_id = Product?.id
+            }
+            if (UOM !== undefined) {
+                copypayload.uom = UOM?.data_code
+            }
+            if (status !== undefined) {
+                copypayload.status = status?.data_code
+            }
 
 
-        // console.log(copypayload)
-        let istrue = await UPDATE_PRODUCTION_BATCH(copypayload, Id)
-        // console.log(istrue)
-        if (istrue) {
-            setOpenEdit(false)
-            // setHandleResponse(istrue)
-        } else {
-            // setHandleResponse(istrue)
+            // console.log(copypayload)
+            let istrue = await UPDATE_PRODUCTION_BATCH(copypayload, Id)
+            // console.log(istrue)
+            if (istrue) {
+                setOpenEdit(false)
+                // setHandleResponse(istrue)
+            } else {
+                // setHandleResponse(istrue)
+            }
         }
     }
 

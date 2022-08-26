@@ -4,15 +4,18 @@ import { connect } from 'react-redux';
 import AutoSearch from '../autoComplete';
 import { Dialog, Transition } from '@headlessui/react';
 import { ADD_PRODUCTION_BATCH } from '../../redux/actions/production';
+import Swal from "sweetalert2";  
+
 
 const defaultState = {
 
 }
 const ProductionBatch = (props) => {
-    const { open, closeModal, setOpen, materialList, masterDataList, productList, orderList, ADD_PRODUCTION_BATCH,setHandleResponse,handleResponse } = props
-    let UOMList = masterDataList?.filter((item) => item?.type_id === 32)
+    const { open, closeModal, setOpen, materialList, masterDataList, productList, orderList, ADD_PRODUCTION_BATCH, setHandleResponse, handleResponse } = props;
+    let UOMList = masterDataList?.filter((item) => item?.type_id === 32);
+    let filterMaterialList = materialList?.filter((item) => item.sku === true);
     const [payload, setPayload] = useState(defaultState)
-    const [SKU, setSKU] = useState(materialList)
+    const [SKU, setSKU] = useState(filterMaterialList)
     const [UOM, setUOM] = useState(UOMList)
     const [Product, setProduct] = useState(productList)
     const [POID, setPOID] = useState(orderList)
@@ -23,7 +26,20 @@ const ProductionBatch = (props) => {
         let { name, value, type } = e.target
         setPayload({ ...payload, [name]: type === 'number' ? Number(value) : value })
     }
-    // console.log(SKU)
+
+    const closeModalBox = (e) => {
+        Swal.fire({
+            text: "Are you sure you want to exit ?",
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+        })
+            .then((res) => {
+                if(res.value){
+                    closeModal()
+                }
+            });
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -33,9 +49,8 @@ const ProductionBatch = (props) => {
         copypayload.product_id = Product?.id
         copypayload.uom = UOM?.data_code
 
-        // console.log(copypayload)
         let istrue = await ADD_PRODUCTION_BATCH(copypayload)
-        if (istrue?.status) {
+        if (istrue?.success) {
             setPayload(defaultState)
             setHandleResponse(istrue)
             setOpen(false)
@@ -119,7 +134,7 @@ const ProductionBatch = (props) => {
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     SKU
                                                                 </p>
-                                                                <AutoSearch data={materialList} keyname='name' valuename='id' selected={SKU} setSelected={setSKU} />
+                                                                <AutoSearch data={filterMaterialList} keyname='name' valuename='id' selected={SKU} setSelected={setSKU} />
                                                             </div>
                                                         </div>
                                                         <div className="col-span-6 sm:col-span-3">
@@ -249,7 +264,7 @@ const ProductionBatch = (props) => {
                                                 </div>
                                                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                                     <button
-                                                        onClick={closeModal}
+                                                        onClick={() => { closeModalBox() }}
                                                         className="mr-2 inline-flex justify-center py-2 px-8 border border-green-900 shadow-sm text-sm font-medium text-green-900 bg-white hover:bg-green-100 hover:text-green-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
                                                     >
                                                         Cancel
@@ -274,7 +289,6 @@ const ProductionBatch = (props) => {
     )
 }
 const mapStateToProps = (state) => {
-    // console.log(state)
     return {
         materialList: state?.AdminReducer.materialList,
         masterDataList: state?.AdminReducer.masterDataList,
