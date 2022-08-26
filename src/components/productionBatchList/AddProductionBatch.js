@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 const defaultState = {
 
 }
+
+
 const ProductionBatch = (props) => {
     const { open, closeModal, setOpen, materialList, masterDataList, productList, orderList, ADD_PRODUCTION_BATCH, setHandleResponse, handleResponse } = props;
     let UOMList = masterDataList?.filter((item) => item?.type_id === 32);
