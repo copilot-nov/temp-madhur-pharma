@@ -5,7 +5,7 @@ import LoginForm from './loginForm';
 
 const Login = (props) => {
     const { LOGIN_USER } = props
-    // console.log(process.env)
+   
 
 
     return (

@@ -10,6 +10,28 @@ const getHeaders = () => {
         'accept': 'application/json',
     }
 }
+export const GET_PRODUCTION_BATCH_STAGES=async(id)=>{
+
+    let  url= `${baseUrl}/manufacturing-template/prod_proc_procedure/${id}`
+    try 
+    {
+        let res= await axios.get(url,{headers:getHeaders()})
+        if(res?.data?.success)
+        {
+             return res.data.data[0];
+   
+        }
+        else {
+         toast.info(res.data?.msg, styleToastify);
+         return false
+     }
+    }
+    catch (error) {
+     toast.error((error.message).replace(/\\/g, ""), styleToastify);
+   }
+   
+   
+   }
 
 export const GET_USER_BY_ADMIN = () => {
     let url = `${baseUrl}/users`
@@ -213,6 +235,7 @@ export const GET_PRODUCTION_PROCESS_MATERIAL = () => {
     }
 } 
 
+
 export const GET_PRODUCTION_PROCESS_INSPECTION = (prodprocId) => {
     let url = `${baseUrl}/manufacturing-template/prod_proc_inspection/${prodprocId}`
     return async dispatch => {
@@ -370,13 +393,14 @@ export const UPDATE_INGREDIENT = (payload, Id) => {
 }
 
 export const FORMULATION_DATA = (info) => {
-    // console.log(info)
+
     return async (dispatch) => {
         try {
             if (info) {
                 dispatch({
                     type: "FORMULATION_DATA",
                     payload: info,
+                    
                 });
             }
         } catch (error) {
@@ -384,6 +408,7 @@ export const FORMULATION_DATA = (info) => {
         }
     };
 };
+
 
 export const ADD_PRODUCT_FORMULATION = (payload) => {
     // console.log(payload)
@@ -406,6 +431,32 @@ export const ADD_PRODUCT_FORMULATION = (payload) => {
     }
 }
 
+export const GET_FORMULATION_DATA= async() =>{
+
+    let url= `${baseUrl}/manufacturing-template/product/formulation`
+    try
+    {
+       let res= await axios.get(url, { headers:getHeaders()})
+
+       if(res?.data.success)
+       {
+
+        return { status: 'success', data:res.data.data}
+       }
+       else
+       {
+        return { status: 'info', msg: res.data?.msg }
+       }
+
+
+    }
+    catch (error) {
+        return { status: 'error', msg: (error.message).replace(/\\/g, "") }
+    }
+
+
+
+}
 export const UPDATE_PRODUCT_FORMULATION_BY_ID = async (payload) => {
     // console.log(payload)
     if (payload.formulationId) {
@@ -414,7 +465,7 @@ export const UPDATE_PRODUCT_FORMULATION_BY_ID = async (payload) => {
             let res = await axios.put(url, payload, { headers: getHeaders() })
             // console.log(res)
             if (res?.data.success) {
-                console.log(res);
+             
                 return { status: 'success', msg: 'Product Formulation Updated successfully!' }
             } else {
                 return { status: 'info', msg: res.data?.msg }
@@ -426,14 +477,16 @@ export const UPDATE_PRODUCT_FORMULATION_BY_ID = async (payload) => {
     } return { status: 'error', msg: 'No Formulation Id' }
 }
 
-export const GET_PRODUCT_FORMULATION_BY_ID = async ({ formulationId }) => {
+export const GET_PRODUCT_FORMULATION_BY_ID = async ( formulationId ) => {
+
     let url = `${baseUrl}/manufacturing-template/product/formulation/${formulationId}`;
     try {
         let res = await axios.get(url, { headers: getHeaders() });
         if (res?.data.success) {
-            return { status: 'success', data: res.data?.data?.[0] }
+            return { status: 'success', data: res.data }
         }
     } catch (error) {
+  
         return { status: 'error', msg: (error.message).replace(/\\/g, "") }
     }
 };
@@ -659,12 +712,12 @@ export const ADD_PRODUCTION_PROCESS_STAGES = (payload) => {
 }
 
 export const ADD_PRODUCTION_PROCESS_INSPECTION = (payload,prod_proc_id) => {
-    console.log(prod_proc_id)
+    
     let url = `${baseUrl}/manufacturing-template/prod_proc_inspection/create`
     return async dispatch => {
         try {
             let res = await axios.post(url, payload, { headers: getHeaders() })
-            console.log(res)
+  
             if (res?.data.success) {
                 dispatch(GET_PRODUCTION_PROCESS_INSPECTION(prod_proc_id))
                 return { status: 'success', msg: 'Stages Added successfully!' }

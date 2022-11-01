@@ -31,16 +31,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Guidelines = ({ handleClose }) => {
+const Guidelines = ({ handleClose ,data=[],p_id}) => {
+  
+
   const classes = useStyles();
   return (
     <Box className={classes.container}>
       <CloseIcon onClick={handleClose} className={classes.closeIcon} />
       <Typography variant="h6" className={classes.heading}>Guidelines</Typography>
       <List>
+         {
+           data.filter(guidelines => guidelines.prod_proc_id === p_id).map(guidelines => {
+            return(
+            <ListItem key={guidelines.id}>{guidelines.text} </ListItem>
+            )
+           })
+
+
+         }
+       
+
+        {/* <ListItem>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</ListItem>
         <ListItem>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</ListItem>
-        <ListItem>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</ListItem>
-        <ListItem>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</ListItem>
+        <ListItem>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</ListItem> */}
       </List>
     </Box>
   );

@@ -6,6 +6,8 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 export default function AutoSearch(props) {
     const { data, keyname, selected, setSelected } = props
     const [query, setQuery] = useState('')
+    
+    
 
     const filteredData =
         query === ''
@@ -19,13 +21,20 @@ export default function AutoSearch(props) {
 
     return (
         <div>
-            <Combobox value={selected} onChange={setSelected}>
+            <Combobox value={selected} onChange={setSelected} 
+            >
                 <div className="relative">
                     <div className="border border-gray-700 relative w-full cursor-default overflow-hidden  bg-white text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <Combobox.Input
                             className="w-full h-9 border-none pl-3 pr-10 text-sm leading-5 text-green-900 focus:ring-0"
                             displayValue={(person) => person[keyname]}
-                            onChange={(event) => setQuery(event.target.value)}
+                            onChange={(event) =>
+                            {
+                                 
+                                 
+                                 console.log(query)
+                                 
+                                 }}
                         />
                         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                             <SelectorIcon
@@ -41,7 +50,7 @@ export default function AutoSearch(props) {
                         leaveTo="opacity-0"
                         afterLeave={() => setQuery('')}
                     >
-                        <Combobox.Options style={{ zIndex: 10 }} className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        <Combobox.Options style={{ zIndex: 10 }} className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">-
                             {filteredData.length === 0 && query !== '' ? (
                                 <div className="relative cursor-default select-none py-2 px-4 text-green-700">
                                     Nothing found.
@@ -54,6 +63,7 @@ export default function AutoSearch(props) {
                                             `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-teal-600 text-white' : 'text-green-900'
                                             }`
                                         }
+                                       
                                         value={person}
                                     >
                                         {({ selected, active }) => (
@@ -73,7 +83,9 @@ export default function AutoSearch(props) {
                                                     </span>
                                                 ) : null}
                                             </>
-                                        )}
+                                            
+                                        )
+                                       }
                                     </Combobox.Option>
                                 ))
                             )}

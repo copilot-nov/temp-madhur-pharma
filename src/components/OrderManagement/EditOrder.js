@@ -93,7 +93,7 @@ const EditOrder = (props) => {
 
             })
         })
-        console.log(copypayload)
+     
         let istrue = await UPDATE_ORDER(copypayload, Id)
         if (istrue?.status) {
             setOpenEdit(false)
