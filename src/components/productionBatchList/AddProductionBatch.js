@@ -1,10 +1,11 @@
-import React, { Fragment, useState } from 'react';
-import { ADD_ORDER_ADMIN } from '../../redux/actions/admin';
+import React, { Fragment, useEffect, useState } from 'react';
+import { ADD_ORDER_ADMIN,GET_PRODUCT_FORMULATION_BY_ID,GET_FORMULATION_DATA} from '../../redux/actions/admin';
 import { connect } from 'react-redux';
 import AutoSearch from '../autoComplete';
 import { Dialog, Transition } from '@headlessui/react';
 import { ADD_PRODUCTION_BATCH } from '../../redux/actions/production';
 import Swal from "sweetalert2";  
+import { ConstructionOutlined } from '@mui/icons-material';
 
 
 const defaultState = {
@@ -21,14 +22,40 @@ const ProductionBatch = (props) => {
     const [UOM, setUOM] = useState(UOMList)
     const [Product, setProduct] = useState(productList)
     const [POID, setPOID] = useState(orderList)
+    const [filteredFormulationData,setFilteredFormulationData]=useState([])
+    const[FormulationDataList,setFormulationDataList]=useState([])
+    const [FormulationID,setFormulationID]=useState(filteredFormulationData)
+    
 
 
+    useEffect(()=>{
+        GET_FORMULATION_DATA().then((resp)=>{
+          console.log(resp.data);
+          setFormulationDataList(resp.data)
+        
+         
+        })
+    
+      },[])
 
     const handleOnChange = (e) => {
         let { name, value, type } = e.target
+        
         setPayload({ ...payload, [name]: type === 'number' ? Number(value) : value })
+
     }
 
+    const  fetchFormulationList=(e)=>{
+        
+        const filteredFormulationList=FormulationDataList.filter(
+
+            (product)=>product.product_id === e
+        )
+     
+        setFilteredFormulationData(filteredFormulationList);
+    
+        
+    }
     const closeModalBox = (e) => {
         Swal.fire({
             text: "Are you sure you want to exit ?",
@@ -50,6 +77,8 @@ const ProductionBatch = (props) => {
         copypayload.sku_id = SKU?.id
         copypayload.product_id = Product?.id
         copypayload.uom = UOM?.data_code
+        copypayload.formulation_id=FormulationID?.id
+        
 
         let istrue = await ADD_PRODUCTION_BATCH(copypayload)
         if (istrue?.success) {
@@ -107,6 +136,7 @@ const ProductionBatch = (props) => {
                                                                     Batch Name
                                                                 </p>
                                                                 <input
+                                                                    style={{width:300}}
                                                                     required
                                                                     name='batch_code'
                                                                     onChange={handleOnChange}
@@ -123,12 +153,36 @@ const ProductionBatch = (props) => {
                                                                 <AutoSearch data={orderList} keyname='po_id' valuename='id' selected={POID} setSelected={setPOID} />
                                                             </div>
                                                         </div>
-                                                        <div className="col-span-4 sm:col-span-3">
-                                                            <div className='w-full items-center'>
+                                                        <div   className="col-span-4 sm:col-span-3">
+                                                            <div div onSelect={()=>{
+                                                                   if(Product?.id)
+                                                                   {
+                                                                    fetchFormulationList(Product?.id) 
+
+                                                                   }
+                                                                   
+                                                                }} className='w-full items-center'>
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     Product Name
                                                                 </p>
+                                                                
                                                                 <AutoSearch data={productList} keyname='name' valuename='id' selected={Product} setSelected={setProduct} />
+                                                                
+                                                              
+                                                               
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-span-4 sm:col-span-3">
+                                                            <div className='w-full items-center' onClick={()=>{
+                                                                // console.log(ProductID)
+                                                            }}>
+                                                                <p className="block text-sm font-medium text-gray-900">
+                                                                    Formulation Name
+                                                                </p>
+                                                                
+                                                                <AutoSearch  data={filteredFormulationData} keyname='name' valuename='id' selected={FormulationID} setSelected={setFormulationID} />
+                                                                
                                                             </div>
                                                         </div>
                                                         <div className="col-span-4 sm:col-span-3">
@@ -136,7 +190,7 @@ const ProductionBatch = (props) => {
                                                                 <p className="block text-sm font-medium text-gray-900">
                                                                     SKU
                                                                 </p>
-                                                                <AutoSearch data={filterMaterialList} keyname='name' valuename='id' selected={SKU} setSelected={setSKU} />
+                                                                <AutoSearch  data={filterMaterialList} keyname='name' valuename='id' selected={SKU} setSelected={setSKU} />
                                                             </div>
                                                         </div>
                                                         <div className="col-span-6 sm:col-span-3">
@@ -145,6 +199,7 @@ const ProductionBatch = (props) => {
                                                                     Quantity
                                                                 </p>
                                                                 <input
+                                                                   style={{width:"100%"}}
                                                                     required
                                                                     type='number'
                                                                     name='plan_quantity'
@@ -168,6 +223,7 @@ const ProductionBatch = (props) => {
                                                                     Units
                                                                 </p>
                                                                 <input
+                                                                 style={{width:"100%"}}
                                                                     required
                                                                     type='number'
                                                                     name='units'
@@ -183,6 +239,7 @@ const ProductionBatch = (props) => {
                                                                     Unit Price
                                                                 </p>
                                                                 <input
+                                                                 style={{width:"100%"}}
                                                                     required
                                                                     type='number'
                                                                     name='unit_price'

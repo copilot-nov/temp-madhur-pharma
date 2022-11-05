@@ -28,6 +28,123 @@ export const GET_PRODUCTION_BATCH_LIST = () => {
         }
     }
 }
+export const GET_PRODUCTION_BATCH_STAGES=async(id)=>{
+
+ let  url= `${baseUrl}/manufacturing-template/prod_proc_procedure/${id}`
+ try 
+ {
+     let res= await axios.get(url,{headers:getHeaders()})
+     if(res?.data?.success)
+     {
+          return res.data.data;
+
+     }
+     else {
+      toast.info(res.data?.msg, styleToastify);
+      return false
+  }
+ }
+ catch (error) {
+  toast.error((error.message).replace(/\\/g, ""), styleToastify);
+}
+
+
+}
+
+export const GET_PRODUCTION_BATCH_BY_INGREDIENTS = async() =>
+{
+   let url= 'http://localhost:5000/manufacturing-template/prod_batch/ingredients'
+   try 
+   {
+       let res= await axios.get(url,{headers:getHeaders()})
+       if(res?.data?.success)
+       {
+            return res?.data.data;
+
+       }
+       else {
+        toast.info(res.data?.msg, styleToastify);
+        return false
+    }
+   }
+   catch (error) {
+    toast.error((error.message).replace(/\\/g, ""), styleToastify);
+}
+}
+
+
+export const GET_PRODUCTION_BATCH_CHECKLIST = async() =>
+{
+   let url= 'http://localhost:5000/manufacturing-template/prod_proc_checklist'
+   try 
+   {
+       let res= await axios.get(url,{headers:getHeaders()})
+       if(res?.data?.success)
+       {
+            return res.data.data;
+
+       }
+       else {
+        toast.info(res.data?.msg, styleToastify);
+        return false
+    }
+   }
+   catch (error) {
+    toast.error((error.message).replace(/\\/g, ""), styleToastify);
+}
+}
+
+
+export const GET_PRODUCTION_BATCH_GUIDELINES = async() =>
+{
+   let url= 'http://localhost:5000/manufacturing-template/prod_proc_guidelines'
+   try 
+   {
+       let res= await axios.get(url,{headers:getHeaders()})
+       if(res?.data?.success)
+       {
+            return res.data.data;
+
+       }
+       else {
+        toast.info(res.data?.msg, styleToastify);
+        return false
+    }
+   }
+   catch (error) {
+    toast.error((error.message).replace(/\\/g, ""), styleToastify);
+}
+}
+
+
+
+
+
+
+
+
+
+
+export const GET_INGREDIENT_MASTER= async()=>{
+  let url = `${baseUrl}/ingredient/master`
+  try{
+        let res=await axios.get(url,{headers:getHeaders()})
+        if(res?.data?.success)
+        {
+            return res;
+        }
+        else{
+            toast.info(res.data?.msg, styleToastify);
+            return false
+
+        }
+
+  }
+  catch (error) {
+    toast.error((error.message).replace(/\\/g, ""), styleToastify);
+}
+
+}
 
 export const GET_PRODUCTION_BATCH_BY_ID = async (production_batch_id) => {
     let url = `${baseUrl}/production_batch/${production_batch_id}`

@@ -163,3 +163,4 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {ADD_PRODUCTION_PROCESS_STAGES})(ProductManufacturing);
 
 const Stages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+

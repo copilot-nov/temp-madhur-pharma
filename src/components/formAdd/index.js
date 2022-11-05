@@ -13,7 +13,7 @@ import AddIngredientManagement from '../IngredientManagement/AddIngredientManage
 
 const MainFormAdd = (props) => {
     const { closeModal, titleModal, handleResponse, setHandleResponse, isOpen, setIsOpen, formulationId, manufacturingTemplateEditResponse, Id } = props
-    // console.log(formulationId)
+
 
     return (
         <div>

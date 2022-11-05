@@ -13,7 +13,7 @@ const Ingredient = (props) => {
     const [ingredientId, setIngredientId] = useState([])
     const [handleResponse, setHandleResponse] = useState(null)
 
-    console.log(ingredientId)
+
     const handleQty = async (e) => {
         let { name, value } = e.target
         let copydata = await ingredientPayload?.filter((item) => item?.name !== name)
@@ -48,7 +48,7 @@ const Ingredient = (props) => {
                     })
                 })
         })
-        console.log(payload)
+      
         let istrue = await ADD_PRODUCTION_PROCESS_INGREGIENTS(payload)
         if (istrue?.status) {
             setHandleResponse(istrue)
@@ -76,7 +76,7 @@ const Ingredient = (props) => {
                                         name={item}
                                         placeholder='QTY.'
                                         type={'number'}
-                                        style={{ width: 100, height: '2rem' }}
+                                        style={{ width: 100, height: '2rem',backgroundColor:"black" }}
                                         className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2"
                                     />
                                 </div>
