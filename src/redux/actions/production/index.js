@@ -198,6 +198,14 @@ export const UPDATE_PRODUCTION_BATCH = (payload, Id) => {
         }
     }
 }
+export const SAVE_EACH_INGREDIENT=async(payload)=>{
+    console.log(payload)
+
+    let url =  'http://localhost:5000/manufacturing-template/prod_batch/ingredients/create'
+     let res=axios.post(url,payload,{headers:getHeaders()}).then(res => console.log("posting data:", res))
+     return(res);
+
+    }
 
 export const DELETE_MODULE_FROM_PRODUCTION_BATCH = (deletepath) => {
     let url = `${baseUrl}/production_batch/${deletepath}`

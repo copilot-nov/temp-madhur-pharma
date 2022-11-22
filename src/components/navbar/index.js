@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 import { Link, Navigate } from "react-router-dom";
 
 const navigation = [
-    { name: 'Dashboard', href: '#', current: false },
+    // { name: 'Dashboard', href: '#', current: false },
     { name: 'Production', href: '/production', current: true },
     // { name: 'Reports', href: '#', current: false },
-    { name: 'Admin', href: '/home', current: false },
+    // { name: 'Admin', href: '/home', current: false },
 ]
 
 function classNames(...classes) {

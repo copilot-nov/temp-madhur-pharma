@@ -40,16 +40,18 @@ const CheckList = ({ data = [] , p_id }) => {
 
   return (
     
-    <Box>
+    <Box sx={{paddingBottom:10}}>
     <Typography  style={{
       fontStyle:"italic",
       paddingLeft:30,
-      paddingTop:20
+      paddingTop:20,
+      paddingBottom:20
     }}variant="h6">
       Checklist
     </Typography>
-
-          <div style={{ float: "right", marginRight: 27, fontSize: "15px" }}>
+  
+       
+          <div style={{ float: "right", marginRight: 40, fontSize: "15px" }}>
         <span className={classes.checkMainHeading}>ST</span>
         <span className={classes.checkMainHeading}>PR</span>
         <span className={classes.checkMainHeading}>QA</span>
@@ -86,6 +88,16 @@ const CheckList = ({ data = [] , p_id }) => {
           closeModal={closeModal}
           setOpen={setOpen}
         />
+
+        <div>
+        <button
+                                                        type="submit"
+                                                        style={{float:"right", margin:28}}
+                                                        className="inline-flex  py-2 px-8 border border-transparent shadow-sm text-sm font-medium text-white bg-green-900 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                                    >
+                                                        Save
+                                                    </button>
+        </div>
       </div>
     
 
