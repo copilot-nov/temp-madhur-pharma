@@ -79,9 +79,13 @@ const MobileView = ({ data = [], navigate }) =>
   ));
 
 const Productionlayout = (props) => {
+  
   const { productionBatchList } = props;
-  const navigate = useNavigate();
+  // console.log("props",props);
+  // console.log("productionBatchList", productionBatchList);
+  
 
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [handleResponse, setHandleResponse] = useState(null);
 

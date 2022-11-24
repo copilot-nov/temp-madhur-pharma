@@ -117,14 +117,6 @@ export const GET_PRODUCTION_BATCH_GUIDELINES = async() =>
 }
 
 
-
-
-
-
-
-
-
-
 export const GET_INGREDIENT_MASTER= async()=>{
   let url = `${baseUrl}/ingredient/master`
   try{
@@ -162,21 +154,45 @@ export const GET_PRODUCTION_BATCH_BY_ID = async (production_batch_id) => {
     }
 
 }
+console.log("outside add add batch function")
+
+// const payload1 = {
+//     "production_batch_id": "1",
+//     "production_batch_name": "kartik",
+//     "production_batch_description": "kartik",
+//     "production_batch_status": "kartik",
+//     "production_batch_start_date": 13-11-2022,
+//     "production_batch_end_date": 15-11-2022,
+//     "production_batch_quantity": "1",
+//     "production_batch_unit": "111",
+//     "production_sku_id": "1",
+//     "production_formulation_id": "1",
+//     "production_price": "1",
+
+// }
+
 
 export const ADD_PRODUCTION_BATCH = (payload) => {
+
+
     let url = `${baseUrl}/production_batch/create`
     return async dispatch => {
         try {
+            console.log("try block")
             let res = await axios.post(url, payload, { headers: getHeaders() })
+            console.log("above if block")
             if (res?.data.success) {
+                console.log("inside if block")
                 dispatch(GET_PRODUCTION_BATCH_LIST())
                 toast.success(('Production Batch Added successfully!').replace(/\\/g, ""), styleToastify);
                 return { success: true };
             } else {
+                console.log("inside  else block")
                 return { status: 'info', msg: res.data?.msg, success: false };
             }
         }
         catch (error) {
+            console.log("handling error")
             return { status: 'error', msg: (error.message).replace(/\\/g, ""), success: false };
         }
     }
