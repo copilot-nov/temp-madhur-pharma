@@ -53,7 +53,7 @@ export const GET_PRODUCTION_BATCH_STAGES=async(id)=>{
 
 export const GET_PRODUCTION_BATCH_BY_INGREDIENTS = async() =>
 {
-   let url= 'http://localhost:5000/manufacturing-template/prod_batch/ingredients'
+   let url= `${baseUrl}/manufacturing-template/prod_batch/ingredients`
    try 
    {
        let res= await axios.get(url,{headers:getHeaders()})
@@ -75,7 +75,7 @@ export const GET_PRODUCTION_BATCH_BY_INGREDIENTS = async() =>
 
 export const GET_PRODUCTION_BATCH_CHECKLIST = async() =>
 {
-   let url= 'http://localhost:5000/manufacturing-template/prod_proc_checklist'
+   let url= `${baseUrl}/manufacturing-template/prod_proc_checklist`
    try 
    {
        let res= await axios.get(url,{headers:getHeaders()})
@@ -97,7 +97,7 @@ export const GET_PRODUCTION_BATCH_CHECKLIST = async() =>
 
 export const GET_PRODUCTION_BATCH_GUIDELINES = async() =>
 {
-   let url= 'http://localhost:5000/manufacturing-template/prod_proc_guidelines'
+   let url= `${baseUrl}/manufacturing-template/prod_proc_guidelines`
    try 
    {
        let res= await axios.get(url,{headers:getHeaders()})
