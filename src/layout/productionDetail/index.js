@@ -1,5 +1,6 @@
 import React, { useEffect, useState} from "react";
 import Table from '@mui/material/Table';
+import axios from "axios"
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -20,20 +21,79 @@ import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import Navbar from "../../components/navbar";
-import {  Grid ,Stack,Box,TextField,Button} from "@mui/material";
+import {  Grid ,Stack,Box,TextField,Button,FormControl,MenuItem,Select,InputLabel} from "@mui/material";
 import CheckList from "./common/CheckList";
 import Guidelines from "./common/Guidelines";
 import { connect } from "react-redux";
 import { GET_PRODUCTION_BATCH_BY_ID ,GET_PRODUCTION_BATCH_BY_INGREDIENTS,GET_PRODUCTION_BATCH_CHECKLIST,GET_INGREDIENT_MASTER,
-GET_PRODUCTION_BATCH_GUIDELINES} from "../../redux/actions/production";
+GET_PRODUCTION_BATCH_GUIDELINES,SAVE_EACH_INGREDIENT} from "../../redux/actions/production";
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { GET_PRODUCT_FORMULATION_BY_ID,GET_PRODUCTION_BATCH_STAGES} from '../../redux/actions/admin';
+
 import RemoveIcon from '@mui/icons-material/Remove';
 
 
+const defaultState={
+
+
+}
+
+const CheckBox = (props) => {
+  const [checkST, setCheckST] = useState(false);
+  const [checkPR, setCheckPR] = useState(false);
+
+  const postChecklistData=(id)=>{
+                           console.log(id);
+
+  }
+  return (
+    
+     <div>
+     <Stack direction="row">
+       <div>
+        {checkST ? (
+          <CheckCircle  onClick={() => checkST ? setCheckST(false): setCheckST(true)} style={{ color: green[600]}} />
+        ) : (
+          <Circle
+                onClick={() => {checkST ? setCheckST(false): setCheckST(true)
+                postChecklistData(props.pp_ingredient_id)
+                }}
+            style={{ color: '#808080',  }}
+          />
+        )}
+        </div>
+        <div>
+        {checkPR ? (
+          <CheckCircle 
+          onClick={() => 
+          {checkPR ? setCheckPR(false): setCheckPR(true)
+              postChecklistData(props.pp_ingredient_id)          
+          }
+          }
+          style={{ color: green[600], }} />
+        ) : (
+          <Circle
+            onClick={() => 
+            {checkPR ? setCheckPR(false): setCheckPR(true)
+              postChecklistData(props.pp_ingredient_id) 
+            }
+            }
+            style={{ color: '#808080' }}
+          />
+        )}
+        </div>
+        <div>
+        <button onClick={props.openModal}>
+          <AddCircleTwoTone style={{ color: "#808080" }} />
+        </button>
+        </div>
+        </Stack> 
+      </div> 
+  );
+};
 
 
 
@@ -47,7 +107,7 @@ const Accordion = styled((props) => (
   "&:before": {
     display: "none",
   },
-}));
+})); 
 
 const AccordionSummary = styled((props) => (
   <MuiAccordionSummary
@@ -107,7 +167,7 @@ const RenderHeaderAndValue = (props) => {
 function CustomizedAccordions(props) {
 
 
- 
+  const [payload, setPayload] = useState(defaultState)
   const [dateWithNoInitialValue, setDateWithNoInitialValue] = React.useState(null);
   
   const [observation1, setObservation1] = React.useState(false);
@@ -131,6 +191,7 @@ function CustomizedAccordions(props) {
   const [prodProcStages, setProdProcStages]=useState([])
   const[stepsList, setStepList]=useState([])
   const [packingSteps,setPackingSteps]=useState([])
+  const [prevProduct,setPrevProduct]=useState(0)
  
   const yeild= Number( (Number(storedNetValue) + Number(netValue))/200) * Number(selectedBatch?.plan_quantity);
  
@@ -146,7 +207,13 @@ function CustomizedAccordions(props) {
     setOpen(true);
   }
   
-  
+   
+const getHeaders = () => {
+  return {
+      "Authorization": `${localStorage.getItem("token")}`,
+      'accept': 'application/json',
+  }
+}
  
   function setValue(value,id)
   {
@@ -169,15 +236,17 @@ function CustomizedAccordions(props) {
 
 
       setSelectedBatch(resp);
+      console.log(resp)
 
       GET_PRODUCT_FORMULATION_BY_ID(resp.formulation_id).then((resp)=>{
         
-  
+         
        
           setIngredientPercentage(resp.data?.data[0]?.prod_proc_process[0]?.process_data?.prodProcIngredients)
+         console.log(resp.data?.data[0]?.prod_proc_process[0]?.process_data?.prodProcIngredients)
           SetFormulationProcess([resp.data?.data[0]?.prod_proc_process]);
           setProdProcStages(resp.data?.data[0]?.prod_proc_process[2]?.process_data?.prodProcStages)
-          console.log(resp.data?.data[0]?.prod_proc_process[5]?.process_data?.prodProcMaterials)
+          
           setPackingSteps(resp.data?.data[0]?.prod_proc_process[5]?.process_data?.prodProcMaterials)
 
       })
@@ -206,6 +275,7 @@ function CustomizedAccordions(props) {
     GET_INGREDIENT_MASTER().then((resp)=>{
   
       setIngredientsList(resp.data.data)
+    
      
     })
 
@@ -218,6 +288,7 @@ function CustomizedAccordions(props) {
     GET_PRODUCTION_BATCH_BY_INGREDIENTS().then((resp)=>{
         
       setIngredientData(resp);  
+      console.log(resp);
     })
   
    },[])
@@ -281,30 +352,57 @@ function CustomizedAccordions(props) {
     panel: "panel2",
     value: (
       <div style={{height: "300px", overflow: "scroll"}}>
+      <div style={{float:"right"}}>
+         <FormControl style={{  m: 1, minWidth: 30 ,width:100,marginTop:10,marginRight:20}}>
+  <InputLabel id="demo-simple-select-label">Prev Product</InputLabel>
+  <Select
+    labelId="demo-simple-select-label"
+    id="demo-simple-select"
+    value={prevProduct}
+    label="Prev Product"
+    onChange={(event)=>{
+      setPrevProduct(event.target.value)
+    }}
+  >
+    <MenuItem value={1}>1</MenuItem>
+    <MenuItem value={2}>2</MenuItem>
+    <MenuItem value={2}>3</MenuItem>
+  </Select>
+</FormControl>
+</div>
         <CheckList data={checkListData} p_id= {1} />,
         <Box  lg={12} container mt={2} spacing={2}>
-      
+        <Typography  style={{
+      fontStyle:"italic",
+      paddingLeft:30,
+      paddingTop:20
+    }}variant="h6">
+      Ingredient Dispensing
+    </Typography>
+        <TableContainer sx={{marginTop:5}}component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+        {ingredientData.filter(ingredient =>ingredient.batch_id === selectedBatch.id).map((ingredient) => (
+            <TableRow
+              key={ingredient.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+              {ingredientsList.filter(ingredientname =>ingredient.pp_ingredient_id === ingredientname.id ).map(ingredientname =>(
 
-        {ingredientData.filter(ingredient =>ingredient.batch_id === selectedBatch.id).map(ingredient => (
+<Typography  sx={{ typography: 'body2',marginTop:2.6}}>
+  {/* {} */}
+  {ingredientname.name}
+ </Typography>
 
-          
-          <Grid  mt={5}  item container spacing={3}  xs={12} sm={12} lg={12}>
-                <Grid item xs={12} sm={6} lg={6}>
-                      <Stack direction="row" >
-                      <Grid container spacing={2}>
-                      <Grid item xs={6}>
-                       {ingredientsList.filter(ingredientname =>ingredient.pp_ingredient_id === ingredientname.id ).map(ingredientname =>(
+))}
 
-                        <Typography  sx={{ typography: 'body2',marginTop:2.6}}>
-                          {/* {} */}
-                          {ingredientname.name}
-                         </Typography>
+                   
+              </TableCell>
+              <TableCell align="left">
+              
 
-                       ))} 
-                        
-                         </Grid>
-                      <Grid item xs={3}>
-                      <Stack  direction="column">
+              <Stack  direction="column">
                         <Typography sx={{ typography: 'body2' ,fontWeight: '600'}}>
                           %
                          </Typography>
@@ -315,22 +413,17 @@ function CustomizedAccordions(props) {
                         
                             value={ingredientpvalue.quantity_pc}
                   
-                           />
-
-
-
-
-
-                           
-))} 
+                           />))} 
                          
                       
                       </Stack>
-                      </Grid>
-                     <Grid item xs={3}>
 
 
-                     <Stack  direction="column">
+
+            </TableCell>
+            <TableCell>
+
+            <Stack  direction="column">
                         <Typography sx={{ typography: 'body2' ,fontWeight: '600'}}>
                           PQ
                          </Typography>
@@ -344,19 +437,30 @@ function CustomizedAccordions(props) {
                     }}
                   />
                    ))} 
-                        </Stack>
-  
-                    </Grid>
-                    </Grid>                   
+                        </Stack> 
+            </TableCell>
 
-                      </Stack>
+            <TableCell>
 
-                </Grid>
-                <Grid item xs={12} sm={6} lg={6}>
-                      <Stack spacing={2}  mt={2.5}direction="row" >
-                      <Grid container   spacing={2}>
-                      <Grid item xs={4}  sm="auto" lg="auto">
-                    <Stack  spacing={0.5} direction="row">
+<Stack  spacing={0.5} direction="row">
+        <Typography sx={{ typography: 'body2',fontWeight: '600'}}>
+              AR NO:
+             </Typography>
+            <input
+        // value={e.AQ}
+        value={ingredient.ar_number}
+        style={{
+          fontSize:"12px",
+          border: "1px solid black",
+          width: "80px",
+          textAlign: "center"
+        }}
+      />
+        </Stack>
+</TableCell>
+            <TableCell>
+
+            <Stack  spacing={0.5} direction="row">
                     <Typography sx={{ typography: 'body2',fontWeight: '600'}}>
                           AQ:
                          </Typography>
@@ -371,25 +475,9 @@ function CustomizedAccordions(props) {
                     }}
                   />
                     </Stack>
-                         </Grid>
-                         <Grid item  xs={4}  sm="auto" lg="auto">
-                    <Stack spacing={0.5} direction="row">
-                    <Typography sx={{ typography: 'body2',fontWeight: '600'}}>
-                          AQ:
-                         </Typography>
-                        <input
-                    value={ingredient.ar_number}
-                    style={{
-                      fontSize:"13px",
-                      border: "1px solid black",
-                      width: "70px",
-                      textAlign: "center"
-                    }}
-                  />
-                    </Stack>
-                         </Grid>
-                         <Grid item   xs={4}  sm="auto" lg="auto">
-                    <Stack direction="row">
+            </TableCell>
+            <TableCell>
+            <Stack direction="row">
                     <Typography sx={{ typography: 'body2',fontWeight: '600'}}>
                           G:
                          </Typography>
@@ -403,9 +491,9 @@ function CustomizedAccordions(props) {
                     }}
                   />
                     </Stack>
-                         </Grid>
-                         <Grid item  xs={4}  sm="auto" lg="auto">
-                    <Stack spacing={0.5} direction="row">
+            </TableCell>
+            <TableCell>
+            <Stack spacing={0.5} direction="row">
                     <Typography sx={{ typography: 'body2',fontWeight: '600'}}>
                           T: 
                          </Typography>
@@ -419,10 +507,9 @@ function CustomizedAccordions(props) {
                     }}
                   />
                     </Stack>
-                         </Grid>
-
-                         <Grid item xs={4}  sm="auto" lg="auto" >
-                    <Stack direction="row">
+            </TableCell>
+            <TableCell>
+            <Stack direction="row">
                     <Typography sx={{ typography: 'body2',fontWeight: '600'}}>
                           N:
                          </Typography>
@@ -436,40 +523,87 @@ function CustomizedAccordions(props) {
                     }}
                   />
                     </Stack>
-                         </Grid>
-                         <Grid item xs={4} sm="auto" lg="auto" >
-                         {observation1 ? (
-          <CheckCircle  onClick={() => observation1 ? setObservation1(false): setObservation1(true)} style={{ color: "green[600]", marginRight: "5px" }} />
-        ) : (
-          <Circle
-                onClick={() => observation1 ? setObservation1(false): setObservation1(true)}
-            style={{ color: '#808080', marginRight: "5px" }}
-          />
-        )}
-        {observation2 ? (
-          <CheckCircle 
-          onClick={() => observation2 ? setObservation2(false): setObservation2(true)}
-          style={{ color: "green[600]", marginRight: "5px" }} />
-        ) : (
-          <Circle
-            onClick={() => observation2 ? setObservation2(false): setObservation2(true)}
-            style={{ color: '#808080', marginRight: "5px" }}
-          />
-        )}
-        <button onClick={props.openModal}>
-          <AddCircleTwoTone style={{ color: "#808080", marginRight: "5px" }} />
-        </button> 
-                         </Grid>   
-                    </Grid>                   
+            </TableCell>
+           
+            <TableCell>
+                <Button onClick={ async()=>{
+                  console.log("ee")
 
-                      </Stack>
+        let copypayload = payload
+         copypayload.batch_id = selectedBatch.id
+         
+         copypayload.pp_ingredient_id=ingredient.pp_ingredient_id
+         copypayload.issued_qty= ingredient.issued_qty
+         copypayload.gross_wt= ingredient.gross_wt
+         copypayload.ar_number= ingredient.ar_number
+         copypayload.tare_wt= ingredient.tare_wt
+         copypayload.net_wt= ingredient.net_wt
+         copypayload.uom=selectedBatch.uom
+         copypayload.observation_1="Null"
+         copypayload.observation_2="Null"
+         copypayload.observation_3="Null"
+         copypayload.comments_1="Null"
+         copypayload.comments_2="Null"
+         copypayload.comments_3="Null"
+         copypayload.notes="no_notes"
+         let url =  'http://localhost:5000/manufacturing-template/prod_batch/ingredients/create'
+         let res = await axios.post(url, copypayload, { headers: getHeaders() })
+            if (res?.data.success) {
+            
+                console.log("success")
+            } else {
+               console.log(res?.data.msg)
+            }
+        //  let saveIngredient= SAVE_EACH_INGREDIENT(copypayload)
+        //  if (saveIngredient?.success) {
+        //     setPayload(defaultState)
+        //      console.log("happy")
+           
+        // } else {
+        //     console.log("Sad")
+        // }
+         
+        // copypayload.uom = UOM?.data_code
+        // copypayload.formulation_id=FormulationID?.id
 
-                </Grid>
 
 
-                
-            </Grid>
-           ))}
+                }}>save</Button>
+            </TableCell>
+          
+
+                       
+
+            <TableCell align="right">
+         
+             
+           
+            </TableCell>
+          
+            <TableCell>
+              <CheckBox {...ingredient} openModal={openModal} />
+              </TableCell>
+      
+              
+               <TableCell></TableCell>   
+                 
+            </TableRow>
+           
+          ))}
+    
+        </TableHead>
+        <TableBody>
+         
+        </TableBody>
+      </Table>
+    </TableContainer>
+    <button
+                                                        type="submit"
+                                                        style={{float:"right", margin:28}}
+                                                        className="inline-flex  py-2 px-8 border border-transparent shadow-sm text-sm font-medium text-white bg-green-900 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                                    >
+                                                        Save
+                                                    </button>
 
 
         </Box>
@@ -484,17 +618,28 @@ function CustomizedAccordions(props) {
       <div style={{height: "300px", overflow: "scroll"}}>
      
         <CheckList data={checkListData} p_id= {2} />
-        
+        <Typography  style={{
+      fontStyle:"italic",
+      paddingLeft:30,
+      paddingTop:20
+    }}variant="h6">
+      Product Manufacturing
+    </Typography>
              
-       
-              <Stack direction="column">
-              {stepsList.map((step) => (
-              <Grid container mt={2} alignItems="center" spacing={3}>
-              <Grid item xs={6.8}>
-        <Typography variant="subtitle1">{step.text}</Typography>
-      </Grid>
-  <Grid item xs={2}>
-  <LocalizationProvider  key={step.id}size="small" dateAdapter={AdapterDayjs}>
+    <TableContainer sx={{marginTop:5}}component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+        {stepsList.map((step)  => (
+            <TableRow
+              key={step.id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">
+              <Typography variant="subtitle1">{step.text}</Typography>
+                  
+              </TableCell>
+              <TableCell align="right">
+              <LocalizationProvider  key={step.id}size="small" dateAdapter={AdapterDayjs}>
   <DateTimePicker
           label="From"
           value={dateWithNoInitialValue}
@@ -506,9 +651,10 @@ function CustomizedAccordions(props) {
           )}
         />
     </LocalizationProvider>
-  </Grid>
-  <Grid item xs={2}>
-  <LocalizationProvider key={step.id} size="small" dateAdapter={AdapterDayjs}>
+              </TableCell>
+             
+              <TableCell align="right">
+              <LocalizationProvider key={step.id} size="small" dateAdapter={AdapterDayjs}>
   <DateTimePicker
            label="To"
           value={dateWithNoInitialValue}
@@ -518,10 +664,12 @@ function CustomizedAccordions(props) {
           )}
         />
         
-    </LocalizationProvider>
-  </Grid>
-  <Grid item xs={2} sm="auto" lg="auto" >
-                         {observation1 ? (
+    </LocalizationProvider> 
+            </TableCell> 
+              
+            <TableCell align="right">
+                 <Stack direction="row">
+                 {observation1 ? (
           <CheckCircle  onClick={() => observation1 ? setObservation1(false): setObservation1(true)} style={{ color: "green[600]", marginRight: "5px" }} />
         ) : (
           <Circle
@@ -542,12 +690,26 @@ function CustomizedAccordions(props) {
         <button onClick={props.openModal}>
           <AddCircleTwoTone style={{ color: "#808080", marginRight: "5px" }} />
         </button> 
-                         </Grid> 
-
-</Grid>
-              ))}
-              </Stack>
-      
+                 </Stack>    
+            </TableCell>
+           
+            </TableRow>
+          ))}
+        </TableHead>
+        <TableBody>
+         
+        </TableBody>
+      </Table>
+    </TableContainer>
+       
+       
+              <button
+                                                        type="submit"
+                                                        style={{float:"right", margin:28}}
+                                                        className="inline-flex  py-2 px-8 border border-transparent shadow-sm text-sm font-medium text-white bg-green-900 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                                    >
+                                                        Save
+                                                    </button>
       </div>
     ),
   },
@@ -560,6 +722,13 @@ function CustomizedAccordions(props) {
       <Grid  sx={{padding:"10px"}}container spacing={2}>
       {/* <Grid item xs={12} md={1}></Grid> */}
   <Grid item xs={12} md={12}>
+  <Typography  style={{
+      fontStyle:"italic",
+      paddingLeft:30,
+      paddingTop:20
+    }}variant="h6">
+      Product Unloading
+    </Typography>
   <TableContainer  >
       <Table sx={{ minWidth: 650}} className="table-auto" aria-label="simple table">
         <TableHead  style={{maxWidth:10}}>
@@ -702,8 +871,15 @@ function CustomizedAccordions(props) {
   <Grid item xs={6} md={4}>
    
   </Grid>
+
   </Grid>
-         
+     <button
+                                                        type="submit"
+                                                        style={{float:"right", margin:28}}
+                                                        className="inline-flex  py-2 px-8 border border-transparent shadow-sm text-sm font-medium text-white bg-green-900 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                                    >
+                                                        Save
+                                                    </button>       
 
     </div>),
   },
@@ -716,6 +892,14 @@ function CustomizedAccordions(props) {
         <div>
     
      <CheckList data={checkListData}  p_id= {4}/>
+     <Typography  style={{
+      fontStyle:"italic",
+      paddingLeft:30,
+      paddingTop:20
+    }}variant="h6">
+      Package Material Dispensing
+    </Typography>
+
      <TableContainer sx={{marginTop:5}}component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -733,8 +917,14 @@ function CustomizedAccordions(props) {
                         Qty issued
                          </Typography></TableCell>
                          <TableCell></TableCell>
-                         <TableCell></TableCell>
-                         <TableCell></TableCell>
+                         <TableCell>  </TableCell>
+                         <TableCell>
+                         <div style={{ float: "right", marginRight: 25, fontSize: "15px" }}>
+        <span className={classes.checkMainHeading}>ST</span>
+        <span className={classes.checkMainHeading}>PR</span>
+ 
+      </div>
+                         </TableCell>
                          
                          
 
@@ -758,7 +948,13 @@ function CustomizedAccordions(props) {
             </input>
             </TableCell>
               <TableCell>
-                <div>
+              </TableCell>
+
+                         <TableCell>
+              
+                         </TableCell>
+                         <TableCell align="right">
+                         <div>
                 {observation1 ? (
           <CheckCircle  onClick={() => observation1 ? setObservation1(false): setObservation1(true)} style={{ color: "green[600]", marginRight: "5px" }} />
         ) : (
@@ -782,17 +978,19 @@ function CustomizedAccordions(props) {
         </button> 
 
                 </div>
-              </TableCell>
-
-                         <TableCell>
-              
                          </TableCell>
-                         <TableCell></TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+    <button
+                                                        type="submit"
+                                                        style={{float:"right", margin:28}}
+                                                        className="inline-flex  py-2 px-8 border border-transparent shadow-sm text-sm font-medium text-white bg-green-900 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                                    >
+                                                        Save
+                                                    </button>
      </div>
     )
   },
@@ -800,13 +998,44 @@ function CustomizedAccordions(props) {
     heading: "Cleaning & Inspection",
     process_id:5,
     panel: "panel6",
-    value: <CheckList data={checkListData}  p_id= {5} />,
+    value: (<div><CheckList data={checkListData}  p_id= {5} />
+      <Typography  style={{
+      fontStyle:"italic",
+      paddingLeft:30,
+      paddingTop:20
+    }}variant="h6">
+     Cleaning & Inspection
+    </Typography>
+    <button
+                                                        type="submit"
+                                                        style={{float:"right", margin:28}}
+                                                        className="inline-flex  py-2 px-8 border border-transparent shadow-sm text-sm font-medium text-white bg-green-900 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                                    >
+                                                        Save
+                                                    </button>
+    </div>),
   },
   {
     heading: "Filling & Packing",
     process_id:6,
     panel: "panel7",
-    value: <CheckList data={checkListData} p_id= {6} />,
+    value: (<div><CheckList data={checkListData} p_id= {6} />
+      <Typography  style={{
+      fontStyle:"italic",
+      paddingLeft:30,
+      paddingTop:20
+    }}variant="h6">
+    Filling & Packing
+    </Typography>
+    <button
+                                                        type="submit"
+                                                        style={{float:"right", margin:28}}
+                                                        className="inline-flex  py-2 px-8 border border-transparent shadow-sm text-sm font-medium text-white bg-green-900 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                                    >
+                                                        Save
+                                                    </button>
+    </div>),
+
   },
 ];
 
@@ -850,21 +1079,25 @@ function CustomizedAccordions(props) {
               header="Batch ID"
               value={selectedBatch?.batch_code}
             />
-            <RenderHeaderAndValue
-              header="Status"
-              value={selectedBatch?.production_batch_status?.label}
+      
+         
+         
+       
+              <RenderHeaderAndValue
+              header="Plan StartDate"
+              value={moment(selectedBatch?.plan_startdate).format("DD/MM/YYYY")}
             />
             <RenderHeaderAndValue
-              header="Product"
-              value={selectedBatch?.production_batch_product_id?.name}
+              header="Plan EndDate"
+              value={moment(selectedBatch?.plan_enddate).format("DD/MM/YYYY")}
             />
             <RenderHeaderAndValue
-              header="Customer"
-              value={selectedBatch?.emp_id}
+              header="plant Quantity"
+              value={`${selectedBatch?.plan_quantity} ${selectedBatch?.production_batch_uom?.label}`}
             />
              <RenderHeaderAndValue
-              header="SKU"
-              value={selectedBatch?.production_batch_sku_id?.name}
+              header="status"
+              value={selectedBatch?.status}
             />
           
           </div>
@@ -882,26 +1115,32 @@ function CustomizedAccordions(props) {
               borderTop: "1 solid #e0e0e0",
             }}
           >
-          <RenderHeaderAndValue
-              header="MFU"
-              value={selectedBatch?.mfu}
+             {/* <RenderHeaderAndValue
+
+              header="Customer"
+              value={selectedBatch?.emp_id}
+            /> */}
+               <RenderHeaderAndValue
+              header="Product"
+              value={selectedBatch?.production_batch_product_id?.name}
             />
+         
             <RenderHeaderAndValue
-              header="Plan StartDate"
+              header="Actual StartDate"
               value={moment(selectedBatch?.plan_startdate).format("DD/MM/YYYY")}
             />
             <RenderHeaderAndValue
-              header="Plan EndDate"
+              header="Actual EndDate"
               value={moment(selectedBatch?.plan_enddate).format("DD/MM/YYYY")}
             />
            
               <RenderHeaderAndValue
-              header="Plan Quantity"
-              value={`${selectedBatch?.plan_quantity} ${selectedBatch?.production_batch_uom?.label}`}
-            />
-            <RenderHeaderAndValue
               header="Actual Quantity"
-              value={selectedBatch?.mfu_id}
+              value={yeild}
+            />
+           <RenderHeaderAndValue
+              header="MFU"
+              value={selectedBatch?.mfu}
             />
           
           </div>
@@ -945,3 +1184,4 @@ function CustomizedAccordions(props) {
 }
 
 export default connect(null, null)(CustomizedAccordions);
+//last

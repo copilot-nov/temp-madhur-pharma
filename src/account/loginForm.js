@@ -13,7 +13,7 @@ const LoginForm = ({ LOGIN_USER }) => {
         e.preventDefault()
         let res = await LOGIN_USER(payload)
         if (res) {
-            history('/home')
+            history('/production')
         }
     }
     return (

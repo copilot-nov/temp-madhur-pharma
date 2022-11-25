@@ -1,3 +1,4 @@
+import { ConstructionOutlined } from "@mui/icons-material";
 import axios from "axios"
 import { toast } from 'react-toastify';
 import { styleToastify } from '../../../utility/styleToastify'
@@ -552,7 +553,9 @@ export const ADD_PRODUCT_ADMIN = (payload) => {
     let url = `${baseUrl}/product/master/create`
     return async dispatch => {
         try {
+            
             let res = await axios.post(url, payload, { headers: getHeaders() })
+            console.log(res)
             if (res?.data.success) {
                 dispatch(GET_PRODUCT_LIST())
                 return { status: 'success', msg: 'Product Added successfully!' }
