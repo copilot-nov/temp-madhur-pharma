@@ -5,10 +5,14 @@ import { useEffect, useState } from 'react';
 import { Link, Navigate } from "react-router-dom";
 
 const navigation = [
+
     // { name: 'Dashboard', href: '#', current: false },
     { name: 'Production', href: '/production', current: true },
     // { name: 'Reports', href: '#', current: false },
     // { name: 'Admin', href: '/home', current: false },
+
+ 
+
 ]
 
 function classNames(...classes) {
@@ -86,7 +90,7 @@ export default function Navbar(props) {
                         </div>
                     </div>
 
-                    <Disclosure.Panel className="sm:hidden shadow-md rounded-2">
+                    {/* <Disclosure.Panel className="sm:hidden shadow-md rounded-2">
                         <div className="px-2 pt-2 pb-3 space-y-1">
                             <Transition
                                 enter="transition duration-1000 ease-out"
@@ -124,7 +128,7 @@ export default function Navbar(props) {
                                 <span className='ml-2'> Logout </span>
                             </button>
                         </div>
-                    </Disclosure.Panel>
+                    </Disclosure.Panel> */}
                 </>
             )}
         </Disclosure>

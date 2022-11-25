@@ -10,6 +10,7 @@ const roleState = {
 
 }
 
+
 const EditUser = (props) => {
     const { setOpenEdit, setHandleResponse, openEdit, Id, type, row} = props
     // redux functions 
