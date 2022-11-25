@@ -27,13 +27,14 @@ const ProductionBatch = (props) => {
     handleResponse,
   } = props;
   let UOMList = masterDataList?.filter((item) => item?.type_id === 32);
+  let MFUList = masterDataList?.filter((item) => item?.type_id === 28);
   let filterMaterialList = materialList?.filter((item) => item.sku === true);
   const [payload, setPayload] = useState(defaultState);
   const [payload1, setPayload1] = useState(defaultState);
   const [SKU, setSKU] = useState(filterMaterialList);
   const [UOM, setUOM] = useState(UOMList);
   const [Product, setProduct] = useState(productList);
-  const [POID, setPOID] = useState(orderList);
+  const [MFU, setMFU] = useState(MFUList);
   const [filteredFormulationData, setFilteredFormulationData] = useState([]);
   const [FormulationDataList, setFormulationDataList] = useState([]);
   const [FormulationID, setFormulationID] = useState(filteredFormulationData);
@@ -139,10 +140,11 @@ const ProductionBatch = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let copypayload = payload;
-    copypayload.po_id = POID?.po_id;
+   // copypayload.po_id = POID?.po_id;
     copypayload.sku_id = SKU?.id;
     copypayload.product_id = Product?.id;
     copypayload.uom = UOM?.data_code;
+    copypayload.mfu = MFU?.id;
     copypayload.formulation_id = FormulationID?.id;
 
     let istrue = await ADD_PRODUCTION_BATCH(copypayload);
@@ -213,12 +215,21 @@ const ProductionBatch = (props) => {
                                 <p className="block text-sm font-medium text-gray-900">
                                   PO ID
                                 </p>
-                                <AutoSearch
+                                {/* <AutoSearch
                                   data={orderList}
                                   keyname="po_id"
                                   valuename="id"
                                   selected={POID}
                                   setSelected={setPOID}
+                                /> */}
+
+                                 <input
+                                  style={{ width: 300 }}
+                                  required
+                                  name="po_id"
+                                  onChange={handleOnChange}
+                                  // defaultValue={payload?.po_id}
+                                  className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                 />
                               </div>
                             </div>
@@ -279,6 +290,10 @@ const ProductionBatch = (props) => {
                                 />
                               </div>
                             </div>
+
+                           
+
+
                             <div className="col-span-6 sm:col-span-3">
                               <div className="w-full items-center">
                                 <p className="block text-sm font-medium text-gray-900">
@@ -287,14 +302,15 @@ const ProductionBatch = (props) => {
                                 <input
                                   style={{ width: "100%" }}
                                   required
-                                  type="number"
+                                  //type="number"
                                   name="plan_quantity"
                                   onChange={handleOnChange}
-                                  // defaultValue={payload?.po_id}
+                                
                                   className="focus:outline-none focus-visible:border-gray-500 placeholder:text-gray-900 border border-gray-700 h-10 px-2 py-1"
                                 />
                               </div>
                             </div>
+                            
                             <div className="col-span-4 sm:col-span-3">
                               <div className="w-full items-center">
                                 <p className="block text-sm font-medium text-gray-900">
@@ -317,7 +333,7 @@ const ProductionBatch = (props) => {
                                 <input
                                   style={{ width: "100%" }}
                                   required
-                                  type="number"
+                                 // type="number"
                                   name="units"
                                   onChange={handleOnChange}
                                   // defaultValue={payload?.po_id}
@@ -333,7 +349,7 @@ const ProductionBatch = (props) => {
                                 <input
                                   style={{ width: "100%" }}
                                   required
-                                  type="number"
+                                  //type="number"
                                   name="unit_price"
                                   onChange={handleOnChange}
                                   // defaultValue={payload?.po_id}
@@ -341,6 +357,22 @@ const ProductionBatch = (props) => {
                                 />
                               </div>
                             </div>
+                            <div className="col-span-4 sm:col-span-3">
+                              <div className="w-full items-center">
+                                <p className="block text-sm font-medium text-gray-900">
+                                  MFU
+                                </p>
+                                <AutoSearch
+                                  data={MFUList}
+                                  keyname="label"
+                                  valuename="id"
+                                  selected={MFU}
+                                  setSelected={setMFU}
+                                />
+                              </div>
+                            </div>
+
+
                             <div className="col-span-4 sm:col-span-3">
                               <div className="w-full items-center">
                                 <p className="block text-sm font-medium text-gray-900">
@@ -388,7 +420,7 @@ const ProductionBatch = (props) => {
                                 <textarea
                                   rows={2}
                                   id="description"
-                                  required
+                                
                                   name="description"
                                   onChange={handleOnChange}
                                   // defaultValue={payload?.description}
